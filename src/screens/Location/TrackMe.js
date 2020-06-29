@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {View, Button,Text, StyleSheet, Dimensions} from 'react-native';
 import MapView from 'react-native-maps';
-
 import GeoLocation from '@react-native-community/geolocation'
+
+import DefaultButton from '../../components/UI/DefaultButton/DefaultButton'
 
 class TrackMe extends Component{
     
@@ -40,6 +41,16 @@ class TrackMe extends Component{
         // })
     }
 
+    shareLocationHandler = event => {
+        if(this.state.locationChose == false){
+            alert('First choose a location in the map')
+        }
+        else{
+            console.log(this.state.focusedLocation.latitude)
+            console.log(this.state.focusedLocation.longitude)
+        }
+    }
+
     getLocationHandler = () => {
         GeoLocation.getCurrentPosition(pos => {
             const coordsEvent = { 
@@ -69,16 +80,33 @@ class TrackMe extends Component{
 
         return(
             <View style={styles.container}>
-                <MapView
-                initialRegion={this.state.focusedLocation}
-                style={styles.map}
-                onPress={this.pickLocationHandler}
-                ref={ref => this.map = ref}
-                >
-                {marker}
-                </MapView>
-                <View style={styles.button}>
-                <Button title='Locate Me' color='black' onPress={this.getLocationHandler}/>
+                <View style={styles.mapContainer}>
+                    <MapView
+                    initialRegion={this.state.focusedLocation}
+                    style={styles.map}
+                    onPress={this.pickLocationHandler}
+                    ref={ref => this.map = ref}
+                    >
+                    {marker}
+                    </MapView>
+                    <View style={styles.buttonContainer}>    
+                        <DefaultButton 
+                        color='black'
+                        onPress={this.getLocationHandler}
+                        >
+                            Locate Me
+                        </DefaultButton>    
+                        <DefaultButton 
+                        color='black'
+                        onPress={this.shareLocationHandler}
+                        >
+                            Share
+                        </DefaultButton>
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text>Hello!</Text>
+                    </View>    
+                    
                 </View>
             </View>
         )
@@ -88,11 +116,33 @@ class TrackMe extends Component{
 const styles = StyleSheet.create({  
     container: {
         flex: 1,
-        width: '90%',
-        //height: '90%',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
-        alignContent: 'center'
+        backgroundColor: '#e8e8e8'
+    },
+    mapContainer: {
+        //flex: 1,
+        width: '95%',
+        height: '70%',
+        alignItems: 'center',
+        justifyContent: 'center'
     },  
+    buttonContainer: {
+        //flex: 4,
+        flexDirection: 'row',
+        //justifyContent: 'center'
+    },
+    textContainer: {
+        width: '100%',
+        height: '25%',
+        backgroundColor: 'rgba(255,255,255,0.4)',
+        borderWidth: 1,
+        borderRadius: 15,
+        padding: 5,
+        margin: 5,
+        borderColor: '#808080'
+
+    },
     placeholder:{
         borderWidth: 1,
         borderColor: "black",
