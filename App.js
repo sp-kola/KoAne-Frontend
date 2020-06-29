@@ -1,62 +1,23 @@
-/*import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import  * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const logo = require('./assets/logo.png');
+import TrackMe from './src/screens/Location/TrackMe.js';
 
-export default class App extends Component {
-  render() {
-    return (
-      <ImageBackground
-        style={{width: '100%', height: '100%'}}
-        source={require('./assets/login1.jpg')}>
-        <View style={styles.container}>
-          <Image style={styles.logo} source={logo} />
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Login </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Sign in</Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-    );
-  }
+const RootStack = createStackNavigator();
+
+
+function App(){
+  return (
+    <NavigationContainer>
+      <RootStack.Navigator >
+        <RootStack.Screen
+        name='Map'
+        component={TrackMe}
+        />
+      </RootStack.Navigator>  
+    </NavigationContainer>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    fontSize: 22,
-    fontWeight: '500',
-    color: '#ffffff',
-    textAlign: 'center',
-    fontFamily: 'Roboto',
-  },
-
-  button: {
-    backgroundColor: '#242424',
-    width: 300,
-    borderRadius: 25,
-    marginVertical: 10,
-    paddingVertical: 16,
-  },
-
-  logo: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 300,
-    height: 200,
-  },
-});
-*/
+export default App;
