@@ -1,0 +1,1 @@
+export {shareLocation} from './location'

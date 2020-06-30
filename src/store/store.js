@@ -1,7 +1,10 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from "redux-thunk"
 
+import locationReducer from './reducers/location'
+
 const rootReducer = combineReducers({
+    location: locationReducer,
 });
 
 let composeEnhancers = compose;

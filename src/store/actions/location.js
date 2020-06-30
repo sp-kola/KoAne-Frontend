@@ -1,14 +1,25 @@
 import {SHARE_LOCATION} from './actionType'
 
-export const trackLocation = (userID,location) => {
+export const shareLocation = (lat,lon) => {
     return dispatch => {
         const locationData = {
-            userID : userID,
-            location: location
+            owner : "5ef9a843a60194f9cc392ea2",
+            lattitude: lat,
+            longitude: lon
         }
-        fetch('',{
+        console.log(locationData);
+        fetch('http://192.168.8.162:3300/location/create',{
             method: 'POST',
-            body: JSON.stringify(locationData)
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify({
+                owner : "5ef9a843a60194f9cc392ea2",
+                lattitude: lat,
+                longitude: lon
+            })
+            
         })
         .catch(err => console.log(err))
         .then(res => res.json())
@@ -19,8 +30,8 @@ export const trackLocation = (userID,location) => {
     }   
 }
 
-export const shareLocation = (location) => {
-    return {
+export const setLocation = (location) => {
+    return { 
         type: SHARE_LOCATION,
         location: location
     }
