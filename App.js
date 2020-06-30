@@ -3,19 +3,26 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import TrackMe from './src/screens/Location/TrackMe.js';
+import addProduct from './src/components/Product/addProduct';
 
 const RootStack = createStackNavigator();
 
 
 function App(){
   return (
+    // <NavigationContainer>
+    //   <RootStack.Navigator >
+    //     <RootStack.Screen
+    //     name='Map'
+    //     component={TrackMe}
+    //     />
+    //   </RootStack.Navigator>  
+    // </NavigationContainer>
+
     <NavigationContainer>
-      <RootStack.Navigator >
-        <RootStack.Screen
-        name='Map'
-        component={TrackMe}
-        />
-      </RootStack.Navigator>  
+      <RootStack.Navigator>
+        <RootStack.Screen name="Add new product" component={addProduct} />
+      </RootStack.Navigator>
     </NavigationContainer>
   )
 }
