@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet, Text, Button} from 'react-native';
 
 export default class Menuitem extends React.Component {
   render() {
@@ -14,19 +14,35 @@ export default class Menuitem extends React.Component {
 const styles = StyleSheet.create({
   menuitem: {
     width: '35%',
-    height: '70%',
-    // padding: 20,
-    backgroundColor: '#ccc',
-    borderColor: '#000',
-    borderWidth: 5,
+    height: '60%',
+    padding: 18,
+    /*backgroundColor: '#ccc',
+    borderColor: '#000',*/
+    //borderWidth: 5,
 
-    marginLeft: 20,
+    marginLeft: 30,
   },
 
   image: {
     width: '100%',
     height: '100%',
     //opacity: 0.8,
-    borderWidth: 3,
+    //borderColor: '#fff',
+    //borderWidth: 3,
+  },
+  buttonText: {
+    fontSize: 10,
+    //fontWeight: '50',
+    color: '#ffffff',
+    textAlign: 'center',
+    fontFamily: 'Roboto',
+  },
+
+  button: {
+    backgroundColor: 'yellow',
+    width: 30,
+    borderRadius: 10,
+    marginVertical: 5,
+    paddingVertical: 10,
   },
 });
