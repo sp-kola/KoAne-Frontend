@@ -1,62 +1,23 @@
-/*import React, {Component} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import React, {Component} from 'react';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 
-const logo = require('./assets/logo.png');
+import S1 from './Screen1';
+import S2 from './Screen2';
+import LoginRegister from './src/LoginRegister';
+import Select_option from './src/Select_option';
+import Login from './src/Login';
+import CustomerRegister from './src/CustomerRegister';
+import VendorRegister from './src/VendorRegister';
 
-export default class App extends Component {
-  render() {
-    return (
-      <ImageBackground
-        style={{width: '100%', height: '100%'}}
-        source={require('./assets/login1.jpg')}>
-        <View style={styles.container}>
-          <Image style={styles.logo} source={logo} />
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Login </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Sign in</Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    fontSize: 22,
-    fontWeight: '500',
-    color: '#ffffff',
-    textAlign: 'center',
-    fontFamily: 'Roboto',
-  },
-
-  button: {
-    backgroundColor: '#242424',
-    width: 300,
-    borderRadius: 25,
-    marginVertical: 10,
-    paddingVertical: 16,
-  },
-
-  logo: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 300,
-    height: 200,
-  },
+const App = createStackNavigator({
+  // S1: {screen: S1},
+  // S2: {screen: S2},
+  LoginRegister: {screen: LoginRegister},
+  Select_option: {screen: Select_option},
+  Login: {screen: Login},
+  CustomerRegister: {screen: CustomerRegister},
+  VendorRegister: {screen: VendorRegister},
 });
-*/
+
+export default createAppContainer(App);
