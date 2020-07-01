@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     text: {
         color: 'white',
         textTransform: 'uppercase',
-        textAlign: 'center'
+        textAlign: 'center',
+        padding: 1
     },
     disabled:{
         backgroundColor: '#eee',
