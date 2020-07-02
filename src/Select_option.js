@@ -6,11 +6,12 @@ import {
   ImageBackground,
   Image,
   Button,
-  Icon,
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
 import Menuitem from './MenuItem';
+import {Icon} from 'native-base';
+import DefaultButton from './components/UI/DefaultButton/DefaultButton'
 
 const logo = require('../assets/logo.png');
 
@@ -25,15 +26,16 @@ export default class Select_option extends React.Component {
 
   render() {
     return (
-      <ImageBackground
+      <View style={styles.backgroundImage}>
+      {/* <ImageBackground
         style={styles.backgroundImage}
-        source={require('../assets/login1.jpg')}>
+        source={require('../assets/login1.jpg')}> */}
         <View style={styles.top}>
           <Image style={styles.logo} source={logo} />
           <Text style={styles.header}>Select Your Option</Text>
         </View>
-        <View style={styles.menuContainer}>
-          <TouchableOpacity
+        {/* <View style={styles.menuContainer}>
+           <TouchableOpacity
             title="Cart"
             onPress={this.Cart}
             style={styles.button}>
@@ -44,14 +46,30 @@ export default class Select_option extends React.Component {
             onPress={this.Truck}
             style={styles.button}>
             <Menuitem itemImage={require('../assets/truck.png')} />
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
+          </TouchableOpacity> 
+        </View> */}
+        <View style={styles.menuContainer} >
+          <View style={styles.buttonView}>
+          <DefaultButton onPress={this.Cart}>
+           <Icon name ='cart' style={{fontSize: 80, color: 'black'}}/ >
+          </DefaultButton>
+          <Text style={styles.buttonText}>Customer</Text>
+          </View>
+          <View style={styles.buttonView}>
+          <DefaultButton  onPress={this.Truck}>
+           <Icon type='MaterialCommunityIcons' name='truck' style={{fontSize: 80, color: 'black'}}/>
+          </DefaultButton>  
+          <Text style={styles.buttonText}>Vendor</Text>
+          </View>
+        </View>  
+      {/* </ImageBackground> */}
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+
   backgroundImage: {
     width: '100%',
     height: '100%',
@@ -98,4 +116,11 @@ const styles = StyleSheet.create({
 
     //justifyContent: 'space-around',
   },
+  buttonView:{
+    alignItems: 'center'
+  },
+  buttonText:{
+    fontSize: 20
+  }
+
 });

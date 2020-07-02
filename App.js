@@ -16,7 +16,7 @@ const RootStack = createStackNavigator();
 function App(){
   return (
     <NavigationContainer>
-      <RootStack.Navigator>
+      <RootStack.Navigator headerMode='none'>
         <RootStack.Screen
           name="LoginRegister"
           component={LoginRegister}
