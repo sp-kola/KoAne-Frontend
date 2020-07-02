@@ -1,1 +1,1 @@
-export {shareLocation} from './location'
+export {shareLocation, getCustomerOrders} from './location'

@@ -7,7 +7,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import { Container, Header, Button, Icon, Fab, Footer, FooterTab, Content, Toast } from 'native-base';
 
 import DefaultButton from '../../../components/UI/DefaultButton/DefaultButton'
-import {shareLocation} from '../../../store/actions/index'
+import {shareLocation, getCustomerOrders} from '../../../store/actions/index'
 
 class Map extends Component{
     
@@ -23,6 +23,12 @@ class Map extends Component{
         watchID : null,
         pos : null,
         active: false
+    }
+
+    componentDidMount(){
+        console.log('loading')
+        this.props.onCustomerOrders()
+        //console.log('orders',this.props.orders)
     }
 
     pickLocationHandler = event => {
@@ -64,7 +70,7 @@ class Map extends Component{
             console.log(this.state.focusedLocation.latitude)
             console.log(this.state.focusedLocation.longitude)
 
-            //this.props.onShareLocation(this.state.focusedLocation.latitude,this.state.focusedLocation.longitude)
+            this.props.onShareLocation(this.state.focusedLocation.latitude,this.state.focusedLocation.longitude)
         }
     }
 
@@ -109,34 +115,16 @@ class Map extends Component{
             marker = <MapView.Marker coordinate= {this.state.focusedLocation}/>
         }
 
-        let trackMe = null;
-
-        if(this.state.shareLocation){
-            trackMe = <DefaultButton 
-            color='black'
-            onPress={this.stopSharingLocationHandler}
-            >
-                Stop Tracking
-            </DefaultButton>
-        }
-        else{
-            trackMe = <DefaultButton 
-            color='black'
-            onPress={this.trackLocationHanler}
-            >
-                Track Me
-            </DefaultButton>
-        }
+        let orders = this.props.orders.map(marker => {
+            <MapView.Marker
+              coordinate={marker.latitude, marker.longitude}
+              //title={marker.vendor}
+              //description={marker.description}
+            />
+            console.log(marker)
+        })
 
         let pos = null;
-
-        if(this.state.pos){
-            pos = <View> 
-            <Text>You are being tracked: lat {this.state.pos.coords.latitude} </Text>
-            <Text>You are being tracked: lon {this.state.pos.coords.longitude} </Text>
-            <Text>You are being tracked: accuracy {this.state.pos.coords.accuracy} </Text>
-            </View>
-        }
 
         let shareLocation = null
 
@@ -166,6 +154,7 @@ class Map extends Component{
                     ref={ref => this.map = ref}
                     >
                     {marker}
+                    {orders}
                     </MapView>
                 </View>
                 <View style={styles.textContainer}>
@@ -196,9 +185,6 @@ class Map extends Component{
 }
 
 const styles = StyleSheet.create({  
-    placeInput: {
-        width: '100%'
-    },
     container: {
         flex: 1,
         justifyContent: 'space-evenly',
@@ -212,11 +198,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },  
-    buttonContainer: {
-        //flex: 4,
-        flexDirection: 'row',
-        //justifyContent: 'center'
-    },
     textContainer: {
         width: '100%',
         height: '20%',
@@ -227,17 +208,6 @@ const styles = StyleSheet.create({
         margin: 5,
         borderColor: '#808080'
 
-    },
-    placeholder:{
-        borderWidth: 1,
-        borderColor: "black",
-        backgroundColor: '#eee',
-        width: '100%',
-        height: 150,
-        borderRadius: 15
-    },
-    button: {
-        margin: 8
     },
     map:{
         width: '100%',
@@ -254,36 +224,24 @@ const styles = StyleSheet.create({
         //backgroundColor: 'white',
         color: 'white'
     },
-    shareIconStyle: {
-        //backgroundColor: 'white',
-        color: 'white',
-        fontSize: 20,
-        //margin: 5 ,
-        //padding: 5
-    },
     textStyle: {
         fontFamily:'Open Sans',
         color: 'white'
     },
-    shareButtonView: {
-        //backgroundColor: 'black',
-        width: '100%',
-        flex: 1,
-        //flexDirection: 'row',
-        justifyContent: 'flex-end'
-    },
-    shareStyle: {
-        borderRadius: 50,
-    },
-    activeButton: {
-        color: 'white'
-    }
 })
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onShareLocation: (lat,lon) => dispatch(shareLocation(lat,lon))
+const mapStateToProps = state => {
+    //console.log(state)
+    return{
+        orders: state.location.orders
     }
 }
 
-export default connect(null, mapDispatchToProps)(Map); 
+const mapDispatchToProps = dispatch => {
+    return {
+        onShareLocation: (lat,lon) => dispatch(shareLocation(lat,lon)),
+        onCustomerOrders: () => dispatch(getCustomerOrders())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map); 
