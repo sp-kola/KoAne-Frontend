@@ -22,13 +22,15 @@ class Map extends Component{
         shareLocation: false,
         watchID : null,
         pos : null,
-        active: false
+        active: false,
+        selectedMarker : null,
+        viewOrders: false
     }
 
     componentDidMount(){
         console.log('loading')
         this.props.onCustomerOrders()
-        //console.log('orders',this.props.orders)
+        console.log('orders:',this.props.orders)
     }
 
     pickLocationHandler = event => {
@@ -49,10 +51,6 @@ class Map extends Component{
             }
         })
 
-        // this.props.onLocationPick({
-        //     latitude: coords.latitude,
-        //     longitude: coords.longitude
-        // })
     }
 
     shareLocationHandler = event => {
@@ -107,6 +105,27 @@ class Map extends Component{
         })
     }
 
+    getOrdersHandler = () => {
+        this.getLocationHandler()
+        this.setState(prevState => {
+            return{
+                ...prevState,
+                viewOrders: true
+            }
+        })
+    }
+
+    selectedMarker = (marker) => {
+        //alert(marker.description)
+        this.setState(prevState => {
+            return {
+                ...prevState,
+                selectedMarker: marker
+            }
+        })
+        //console.log(marker)
+    }
+
     render(){
 
         let marker = null;
@@ -115,16 +134,25 @@ class Map extends Component{
             marker = <MapView.Marker coordinate= {this.state.focusedLocation}/>
         }
 
-        let orders = this.props.orders.map(marker => {
-            <MapView.Marker
-              coordinate={marker.latitude, marker.longitude}
-              //title={marker.vendor}
-              //description={marker.description}
-            />
-            console.log(marker)
-        })
+        let orders = null
+
+        if(this.state.viewOrders){
+            orders = this.props.orders.map(marker => (
+            <MapView.Marker 
+              coordinate={marker}
+              title={marker.vendor}
+             onPress = {() => this.selectedMarker(marker)}
+            >
+            <Icon name="radio-button-on"/>
+            </MapView.Marker>
+          ))
+        }
 
         let pos = null;
+
+        if(this.state.selectedMarker){
+            pos = <Text>{this.state.selectedMarker.description} </Text>
+        }
 
         let shareLocation = null
 
@@ -151,6 +179,7 @@ class Map extends Component{
                     initialRegion={this.state.focusedLocation}
                     style={styles.map}
                     onPress={this.pickLocationHandler}
+                    //onRegionChange={this.onRegionChange}
                     ref={ref => this.map = ref}
                     >
                     {marker}
@@ -170,7 +199,7 @@ class Map extends Component{
                 <Text style={styles.textStyle}>Locate Me</Text>
                 </Button>
                 <Button color='black'>
-                <Icon name="cart" style={styles.iconStyle}/>
+                <Icon name="cart" style={styles.iconStyle} onPress={this.getOrdersHandler}/>
                 <Text style={styles.textStyle}>Orders</Text>
                 </Button>
                 <Button>

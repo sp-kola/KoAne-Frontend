@@ -47,7 +47,7 @@ export const shareLocation = (lat,lon) => {
 export const getCustomerOrders = () => {
     return dispatch => {
         //console.log('hi')
-        fetch('http://192.168.1.2:3300/order/customerOrders/5efce9fae4d307d108f16ad2',{
+        fetch('http://192.168.8.162:3300/order/customerOrders/5efce9fae4d307d108f16ad2',{
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -67,7 +67,7 @@ export const getCustomerOrders = () => {
             for (let _id in parsedRes){
                 orders.push({
                     ...parsedRes[_id],
-                    id:_id
+                    key: _id
                 })
             }
             console.log('loading data')
