@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
-import Menuitem from './Menuitem';
+import Menuitem from './MenuItem';
 
 const logo = require('../assets/logo.png');
 

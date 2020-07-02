@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "kooane-tvOS.app"
-               BlueprintName = "kooane-tvOS"
-               ReferencedContainer = "container:kooane.xcodeproj">
+               BuildableName = "koane-tvOS.app"
+               BlueprintName = "koane-tvOS"
+               ReferencedContainer = "container:koane.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "kooane-tvOSTests.xctest"
-               BlueprintName = "kooane-tvOSTests"
-               ReferencedContainer = "container:kooane.xcodeproj">
+               BuildableName = "koane-tvOSTests.xctest"
+               BlueprintName = "koane-tvOSTests"
+               ReferencedContainer = "container:koane.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "kooane-tvOS.app"
-            BlueprintName = "kooane-tvOS"
-            ReferencedContainer = "container:kooane.xcodeproj">
+            BuildableName = "koane-tvOS.app"
+            BlueprintName = "koane-tvOS"
+            ReferencedContainer = "container:koane.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "kooane-tvOS.app"
-            BlueprintName = "kooane-tvOS"
-            ReferencedContainer = "container:kooane.xcodeproj">
+            BuildableName = "koane-tvOS.app"
+            BlueprintName = "koane-tvOS"
+            ReferencedContainer = "container:koane.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

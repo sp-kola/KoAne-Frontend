@@ -1,5 +1,5 @@
 {
-  "name": "kooane",
+  "name": "koane",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/native": "^5.6.1",
+    "@react-navigation/stack": "^5.6.2",
     "hoist-non-react-statics": "^3.3.2",
     "react": "16.11.0",
     "react-native": "0.62.2",

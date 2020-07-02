@@ -131,7 +131,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.kooane"
+        applicationId "com.koane"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
