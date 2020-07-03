@@ -9,6 +9,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   KeyboardAvoidingView,
+  ScrollView
 } from 'react-native';
 
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -17,13 +18,13 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 export default class CustomerRegister extends React.Component {
   render() {
     return (
-      <KeyboardAwareScrollView>
         <ImageBackground
           style={styles.backgroundContainer}
-          source={require('../assets/vendorcustomerbackground8.jpg')}>
+          source={require('../assets/back1.png')}>
           <KeyboardAvoidingView
             style={styles.keyboardAwareness}
-            automaticallyAdjustContentInsets={false}>
+            automaticallyAdjustContentInsets={true}
+            >
             <View style={styles.regform}>
               <Text style={styles.header}> Registration</Text>
 
@@ -68,7 +69,6 @@ export default class CustomerRegister extends React.Component {
             </View>
           </KeyboardAvoidingView>
         </ImageBackground>
-      </KeyboardAwareScrollView>
     );
   }
 }
@@ -76,14 +76,24 @@ export default class CustomerRegister extends React.Component {
 const styles = StyleSheet.create({
   keyboardAwareness: {
     // flex: 1,
-    marginBottom: 100,
+    //marginBottom: 100,
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      
   },
   backgroundContainer: {
     width: '100%',
     height: '100%',
     //flex: 1,
   },
-
+  background:{
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    //width: '95%',
+    //alignItems: 'center',
+    //borderRadius: 25,
+    //padding: 10
+  },
   regform: {
     //alignSelf: 'stretch',
     //flex: 1,
@@ -91,6 +101,11 @@ const styles = StyleSheet.create({
     //alignItems: 'flex-end',
     paddingLeft: 60,
     paddingRight: 60,
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    width: '90%',
+    borderRadius: 25,
+    paddingBottom: 10,
+    paddingTop: 10
   },
 
   header: {

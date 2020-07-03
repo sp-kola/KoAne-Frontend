@@ -1,10 +1,12 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from "redux-thunk"
 
-import locationReducer from './reducers/location'
+import locationReducer from './reducers/location';
+import uiReducer from './reducers/ui';
 
 const rootReducer = combineReducers({
     location: locationReducer,
+    ui: uiReducer,
 });
 
 let composeEnhancers = compose;

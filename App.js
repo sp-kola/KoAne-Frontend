@@ -8,8 +8,9 @@ import LoginRegister from './src/LoginRegister';
 import Select_option from './src/Select_option';
 import Login from './src/login';
 import CustomerRegister from './src/CustomerRegister';
-import VendorRegister from './src/VendorRegister'
-import Testing from './src/screens/Testing'
+import VendorRegister from './src/VendorRegister';
+import Testing from './src/screens/Testing';
+import Home from './src/screens/HomePage/Home';
 
 const RootStack = createStackNavigator();
 
@@ -17,6 +18,8 @@ function App(){
   return (
     <NavigationContainer>
       <RootStack.Navigator headerMode='none'>
+        
+        
         <RootStack.Screen
           name="LoginRegister"
           component={LoginRegister}
@@ -45,6 +48,11 @@ function App(){
         name='Map'
         component={TrackMe}
         />
+        <RootStack.Screen
+          name="Home"
+          component={Home}
+        />
+        
       </RootStack.Navigator>  
     </NavigationContainer>  
   )

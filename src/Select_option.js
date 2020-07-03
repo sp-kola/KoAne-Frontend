@@ -27,27 +27,14 @@ export default class Select_option extends React.Component {
   render() {
     return (
       <View style={styles.backgroundImage}>
-      {/* <ImageBackground
+      <ImageBackground
         style={styles.backgroundImage}
-        source={require('../assets/login1.jpg')}> */}
+        source={require('../assets/back1.png')}>
+        <View style={styles.background}>
         <View style={styles.top}>
           <Image style={styles.logo} source={logo} />
           <Text style={styles.header}>Select Your Option</Text>
         </View>
-        {/* <View style={styles.menuContainer}>
-           <TouchableOpacity
-            title="Cart"
-            onPress={this.Cart}
-            style={styles.button}>
-            <Menuitem itemImage={require('../assets/shopping.png')} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            title="Truck"
-            onPress={this.Truck}
-            style={styles.button}>
-            <Menuitem itemImage={require('../assets/truck.png')} />
-          </TouchableOpacity> 
-        </View> */}
         <View style={styles.menuContainer} >
           <View style={styles.buttonView}>
           <DefaultButton onPress={this.Cart}>
@@ -62,7 +49,8 @@ export default class Select_option extends React.Component {
           <Text style={styles.buttonText}>Vendor</Text>
           </View>
         </View>  
-      {/* </ImageBackground> */}
+        </View>
+      </ImageBackground>
       </View>
     );
   }
@@ -74,8 +62,16 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-
+  background:{
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    width: '90%',
+    alignItems: 'center',
+    borderRadius: 25,
+    //padding: 10
+  },
   top: {
     height: '50%',
     alignItems: 'center',

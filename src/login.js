@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {
   View,
   Text,
@@ -9,24 +10,92 @@ import {
   StyleSheet,
   Dimensions,
   TextComponent,
+  ActivityIndicator,
 } from 'react-native';
 //import {TextInput} from 'react-native-gesture-handler';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Entypo from 'react-native-vector-icons/Entypo';
+import validate from './utils/validation';
+import DefaultInput from './components/UI/DefaultInput/DefaultInput';
+import {login} from './store/actions/index'
 
 const logo = require('../assets/logo.png');
 
 const {width: WIDTH} = Dimensions.get('window');
 
-export default class Login extends Component {
+class Login extends Component {
   // function for set the password vissible and hidden
   constructor() {
     super();
     this.state = {
       showPass: true,
       press: false,
+      controls : {
+        email:{
+            value: "",
+            valid: false,  
+            validationRules:{
+                isEmail: true
+            },
+            touched : false
+        },
+        password: {
+            value: "",
+            valid: false,
+            validationRules:{
+                minLength: 6
+            },
+            touched : false
+        },
+      },
+      
     };
+  }
+
+  updateInputState = (key, value) => {
+    let connectedValue = {};
+    if(this.state.controls[key].validationRules.equalTo){
+        const equalControl = this.state.controls[key].validationRules.equalTo;
+        const equalValue = this.state.controls[equalControl].value;
+        connectedValue ={
+            ...connectedValue,
+            equalTo: equalValue
+        }
+    }
+    if(key === 'password'){
+        const equalControl = "password"
+        connectedValue ={
+            ...connectedValue,
+            equalTo: value
+        }
+    }
+    this.setState(prevState => {
+        return{
+            controls: {
+                ...prevState.controls,
+                [key]: {
+                    ...prevState.controls[key],
+                    value: value,
+                    valid: validate(value, prevState.controls[key].validationRules, connectedValue),
+                    touched: true
+                    
+                }
+            }
+        }
+    })
+}
+
+  loginHandler = () => {
+    const authData ={ 
+      email: this.state.controls.email.value,
+      password: this.state.controls.password.value
+    }
+    if(this.state.controls.email.valid === true && this.state.controls.password.valid === true){
+      this.props.onLogin(authData,this.props);
+  }
+  else{ 
+      alert(`Validation error`)
+    }
   }
 
   showPass = () => {
@@ -37,25 +106,43 @@ export default class Login extends Component {
     }
   };
   render() {
+
+    let submitButton = (
+      <TouchableOpacity style={styles.loginButton} onPress={this.loginHandler}>
+          <Text style={styles.loginText}>Login</Text>
+        </TouchableOpacity>
+     )
+
+     if(this.props.isLoading){
+      submitButton = <ActivityIndicator/>
+    }
+
     return (
       <ImageBackground
         style={styles.backgroundContainer}
-        source={require('../assets/login1.jpg')}>
+        source={require('../assets/back1.png')}>
+        <View style={styles.background}>
         <View style={styles.container}>
           <Image style={styles.logo} source={logo} />
         </View>
         <View style={styles.inputContainer}>
           <FontAwesome5
             name="user"
-            size={30}
+            size={28}
             color={'rgba(1,1,1,0.7)'}
             style={styles.inputIcon}
           />
-          <TextInput
+          <DefaultInput 
+            placeholder='Your e-mail address' 
             style={styles.input}
-            placeholder={'  Username'}
+            value={this.state.controls.email.value}
+            onChangeText = {(val) => this.updateInputState('email',val)}
+            valid = {this.state.controls.email.valid}
+            touched= {this.state.controls.email.touched}
             placeholderTextColor={'rgba(1,1,1,0.7)'}
-            underlineColorAndroid="transparent"
+            autoCapitalize = 'none'
+            autoCorrect = {false}
+            keyboardType = 'email-address'
           />
         </View>
 
@@ -66,9 +153,13 @@ export default class Login extends Component {
             color={'rgba(1,1,1,0.7)'}
             style={styles.inputIcon}
           />
-          <TextInput
+          <DefaultInput 
+            placeholder='Password' 
             style={styles.input}
-            placeholder={'  Password'}
+            value={this.state.controls.password.value}
+            onChangeText = {(val) => this.updateInputState('password',val)}
+            valid = {this.state.controls.password.valid}
+            touched= {this.state.controls.password.touched}
             secureTextEntry={this.state.showPass}
             placeholderTextColor={'rgba(1,1,1,0.7)'}
             underlineColorAndroid="transparent"
@@ -83,10 +174,8 @@ export default class Login extends Component {
             />
           </TouchableOpacity>
         </View>
-
-        <TouchableOpacity style={styles.loginButton}>
-          <Text style={styles.loginText}>Login</Text>
-        </TouchableOpacity>
+        {submitButton}
+        </View>
       </ImageBackground>
     );
   }
@@ -98,6 +187,13 @@ const styles = StyleSheet.create({
     height: null,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  background:{
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    width: '95%',
+    alignItems: 'center',
+    borderRadius: 25,
+    padding: 10
   },
   container: {
     //flex: 1,
@@ -116,7 +212,7 @@ const styles = StyleSheet.create({
 
   input: {
     width: WIDTH - 55,
-    height: 45,
+    height: 48,
     borderRadius: 25,
     fontSize: 16,
     fontFamily: 'Verdana',
@@ -124,6 +220,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.35)',
     color: 'rgba(1,1,1,0.7)',
     marginHorizontal: 25,
+    borderColor: 'rgba(0,0,0,0.35)'
   },
 
   inputIcon: {
@@ -158,3 +255,17 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 });
+
+const mapStateToProps = state => {
+  return{
+      isLoading: state.ui.isLoading
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onLogin: (authData,nav) => dispatch(login(authData,nav)),
+  }
+}
+
+export default connect( mapStateToProps,mapDispatchToProps )(Login);
