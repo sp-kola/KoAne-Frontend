@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+//import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 //import {TextInput} from 'react-native-gesture-handler';
 
 export default class CustomerRegister extends React.Component {
