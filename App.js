@@ -1,21 +1,64 @@
-import React, {Component} from 'react';
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+
+import  * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import {Root} from 'native-base';
+import TrackMe from './src/screens/Location/TrackMe.js';
+import CustomerMap from './src/screens/Location/CustomerLocation/Map';
+
 
 import LoginRegister from './src/LoginRegister';
 import Select_option from './src/Select_option';
-import Login from './src/Login';
+import Login from './src/login';
 import CustomerRegister from './src/CustomerRegister';
 import VendorRegister from './src/VendorRegister';
+import Testing from './src/screens/Testing';
+import Home from './src/screens/HomePage/Home';
 
-const App = createStackNavigator({
-  // S1: {screen: S1},
-  // S2: {screen: S2},
-  LoginRegister: {screen: LoginRegister},
-  Select_option: {screen: Select_option},
-  Login: {screen: Login},
-  CustomerRegister: {screen: CustomerRegister},
-  VendorRegister: {screen: VendorRegister},
-});
+const RootStack = createStackNavigator();
 
-export default createAppContainer(App);
+function App(){
+  return (
+    <NavigationContainer>
+      <RootStack.Navigator headerMode='none'>
+        
+        
+        <RootStack.Screen
+          name="LoginRegister"
+          component={LoginRegister}
+        />
+        <RootStack.Screen
+          name="Select_option"
+          component={Select_option}
+        />
+        <RootStack.Screen
+          name="Login"
+          component={Login}
+        />
+        <RootStack.Screen
+          name="CustomerRegister"
+          component={CustomerRegister}
+        />
+        <RootStack.Screen
+          name="VendorRegister"
+          component={VendorRegister}
+        />
+        <RootStack.Screen
+          name='Customer'
+          component={CustomerMap}
+        />
+        <RootStack.Screen
+        name='Map'
+        component={TrackMe}
+        />
+        <RootStack.Screen
+          name="Home"
+          component={Home}
+        />
+        
+      </RootStack.Navigator>  
+    </NavigationContainer>  
+  )
+}
+
+export default App;
