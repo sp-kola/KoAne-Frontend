@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
-import Menuitem from './Menuitem';
+import MenuItem from './MenuItem';
 
 const logo = require('../assets/logo.png');
 
@@ -37,13 +37,13 @@ export default class Select_option extends React.Component {
             title="Cart"
             onPress={this.Cart}
             style={styles.button}>
-            <Menuitem itemImage={require('../assets/shopping.png')} />
+            <MenuItem itemImage={require('../assets/shopping.png')} />
           </TouchableOpacity>
           <TouchableOpacity
             title="Truck"
             onPress={this.Truck}
             style={styles.button}>
-            <Menuitem itemImage={require('../assets/truck.png')} />
+            <MenuItem itemImage={require('../assets/truck.png')} />
           </TouchableOpacity>
         </View>
       </ImageBackground>
