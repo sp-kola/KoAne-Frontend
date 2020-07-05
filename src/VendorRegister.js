@@ -170,7 +170,7 @@ class VendorRegister extends React.Component {
               <Text style={styles.header}> Registration</Text>
               <DefaultInput
                 style={styles.textinput}
-                placeholder="First Name"
+                placeholder="First Name*"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.firstName.value}
@@ -180,7 +180,7 @@ class VendorRegister extends React.Component {
               />
               <DefaultInput
                 style={styles.textinput}
-                placeholder="Last Name"
+                placeholder="Last Name*"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.lastName.value}
@@ -190,7 +190,7 @@ class VendorRegister extends React.Component {
               />
               <DefaultInput
                 style={styles.textinput}
-                placeholder="User Name"
+                placeholder="User Name*"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.userName.value}
@@ -200,7 +200,7 @@ class VendorRegister extends React.Component {
               />
               <DefaultInput
                 style={styles.textinput}
-                placeholder="Business Name"
+                placeholder="Business Name*"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.businessName.value}
@@ -209,7 +209,7 @@ class VendorRegister extends React.Component {
                 touched= {this.state.controls.businessName.touched}
               />
               <DefaultInput 
-                placeholder='Email' 
+                placeholder='Email*' 
                 style={styles.textinput}
                 value={this.state.controls.email.value}
                 onChangeText = {(val) => this.updateInputState('email',val)}
@@ -223,7 +223,7 @@ class VendorRegister extends React.Component {
               />
               <DefaultInput
                 style={styles.textinput}
-                placeholder="Vehicle number (Not required)"
+                placeholder="Vehicle number"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.vehicleNo.value}
@@ -233,7 +233,7 @@ class VendorRegister extends React.Component {
               />
               <DefaultInput
                 style={styles.textinput}
-                placeholder="Mobile Phone Number"
+                placeholder="Mobile Phone Number*"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.contactNo.value}
@@ -243,7 +243,7 @@ class VendorRegister extends React.Component {
               />
               <DefaultInput
                 style={styles.textinput}
-                placeholder="Password"
+                placeholder="Password*"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.password.value}
@@ -254,7 +254,7 @@ class VendorRegister extends React.Component {
               />
               <DefaultInput
                 style={styles.textinput}
-                placeholder="Re-enter the Password"
+                placeholder="Re-enter the Password*"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.confrimPassword.value}

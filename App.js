@@ -22,25 +22,14 @@ const RootStack = createStackNavigator();
 
 function App(){
   return (
-    // <NavigationContainer>
-    //   <RootStack.Navigator >
-    //     <RootStack.Screen
-    //     name='Map'
-    //     component={TrackMe}
-    //     />
-    //   </RootStack.Navigator>  
-    // </NavigationContainer>
 
-    <NavigationContainer>
-
-      
+    <NavigationContainer>     
       <RootStack.Navigator headerMode='none' >
       <RootStack.Screen
           name="LoginRegister"
           component={LoginRegister}
-        />
-    
-        <RootStack.Screen name="Add new product" component={addProduct} />
+        /> 
+        <RootStack.Screen name="Addnewproduct" component={addProduct} />
       <RootStack.Screen
         name="VenderSearch"
         component= {VenderSearch}

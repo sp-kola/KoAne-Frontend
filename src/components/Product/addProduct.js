@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet, TextInput} from 'react-native';
+import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
 // import CheckBox from '@react-native-community/checkbox';
+import DefaultButton from '../UI/DefaultButton/DefaultButton'
 
 export default function addProduct() {
   return (
@@ -13,13 +14,19 @@ export default function addProduct() {
       <TextInput multiline style={styles.inputMultiline} />
       <Text style={styles.text}>CATEGORY</Text>
       <Text style={styles.text}>UPLOAD AN IMAGE</Text>
+      <DefaultButton color='black'>
+        Add
+        </DefaultButton>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ffe694',
+    backgroundColor: '#eee',
+    flex: 1,
+    alignContent: 'center',
+    justifyContent: 'center'
   },
   input: {
     borderWidth: 1,

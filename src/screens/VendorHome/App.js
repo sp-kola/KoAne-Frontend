@@ -98,7 +98,7 @@ export default function VendorHome(props) {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {props.navigation.push('Addnewproduct')}}>
             <View style={styles.buttonAddProduct}>
               <Text style={[styles.text, styles.viewOrders]}
               > ADD PRODUCT <Icon

@@ -153,7 +153,7 @@ submitHandler = () => {
               <Text style={styles.header}> Registration</Text>
               <DefaultInput
                 style={styles.textinput}
-                placeholder="First Name"
+                placeholder="First Name*"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.firstName.value}
@@ -163,7 +163,7 @@ submitHandler = () => {
               />
               <DefaultInput
                 style={styles.textinput}
-                placeholder="Last Name"
+                placeholder="Last Name*"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.lastName.value}
@@ -173,7 +173,7 @@ submitHandler = () => {
               />
               <DefaultInput
                 style={styles.textinput}
-                placeholder="User Name"
+                placeholder="User Name*"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.userName.value}
@@ -182,7 +182,7 @@ submitHandler = () => {
                 touched= {this.state.controls.userName.touched}
               />
               <DefaultInput 
-                placeholder='Email' 
+                placeholder='Email*' 
                 style={styles.textinput}
                 value={this.state.controls.email.value}
                 onChangeText = {(val) => this.updateInputState('email',val)}
@@ -196,7 +196,7 @@ submitHandler = () => {
               />
               <DefaultInput
                 style={styles.textinput}
-                placeholder="Mobile Phone Number"
+                placeholder="Mobile Phone Number*"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.contactNo.value}
@@ -206,7 +206,7 @@ submitHandler = () => {
               />
               <DefaultInput
                 style={styles.textinput}
-                placeholder="Password"
+                placeholder="Password*"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.password.value}
@@ -217,7 +217,7 @@ submitHandler = () => {
               />
               <DefaultInput
                 style={styles.textinput}
-                placeholder="Re-enter the Password"
+                placeholder="Re-enter the Password*"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.confrimPassword.value}
