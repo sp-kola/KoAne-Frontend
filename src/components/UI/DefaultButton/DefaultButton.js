@@ -33,7 +33,9 @@ const styles = StyleSheet.create({
         borderRadius: 18,
         borderWidth: 1,
         borderColor: 'black',
-        backgroundColor: '#000000'
+        backgroundColor: '#000000',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
         //height: 20
     },
     text: {

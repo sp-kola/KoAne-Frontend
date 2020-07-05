@@ -14,7 +14,7 @@ import Menuitem from './MenuItem';
 //import {Icon} from 'native-base';
 // import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 // import Ionicon from 'react-native-vector-icons/Ionicons';
-import FontAweseomeIcon from 'react-native-vector-icons/FontAwesome5'
+import FontAweseomeIcon from 'react-native-vector-icons/FontAwesome5';
 import DefaultButton from './components/UI/DefaultButton/DefaultButton'
 
 // import Ionicons from 'react-native-vector-icons/Ionicons';

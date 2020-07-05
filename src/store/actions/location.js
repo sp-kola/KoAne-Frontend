@@ -8,7 +8,7 @@ export const shareLocation = (lat,lon) => {
             longitude: lon
         }
         console.log(locationData);
-        fetch('http://192.168.1.2:3300/location/create',{
+        fetch('http://192.168.8.162:3300/location/create',{
             method: 'POST',
             headers: {
                 Accept: 'application/json',

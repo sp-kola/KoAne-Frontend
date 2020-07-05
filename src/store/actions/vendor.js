@@ -1,7 +1,7 @@
-export const signup = (signupData,nav) => {
+export const vendorSignup = (signupData,nav) => {
     return dispatch => {
         //console.log(locationData);
-        fetch('http://192.168.8.162:3300/customer/signup',{
+        fetch('http://192.168.8.162:3300/vendor/signup',{
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -13,11 +13,11 @@ export const signup = (signupData,nav) => {
         .catch(err => console.log(err))
         .then(res => {
             return res.json()
-            console.log(res)
+            
         })
         .then(parsedRes => {
             console.log(parsedRes)
-            nav.navigation.push('CustomerHome',{
+            nav.navigation.push('VendorHome',{
                 user: parsedRes
             })
         })

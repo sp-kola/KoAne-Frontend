@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import {View,Text,TextInput,ScrollView,Dimensions,StyleSheet,CheckBox} from 'react-native';
+import { Container, Header, Title, Content, Button, Left, Right, Body,  Tab, Tabs, ScrollableTab} from "native-base";
 import Icon from 'react-native-vector-icons/FontAwesome5';
+
 
 const { width } = Dimensions.get('window');
 
@@ -16,7 +18,11 @@ export default class VenderSearch extends Component{
         //const [isSelected, setSelection] = useState(false);
         return(
             <View>
-                <Text>Vender Search </Text>
+                <Header noLeft style={styles.header} hasTabs>
+            <Body>
+                <Title>SEARCH</Title>
+            </Body>
+            </Header>
                 <View style={{flexDirection:'row',borderWidth:1,justifyContent:'center',
                             alignItems:'center',width:380,height:50,margin:'5%',borderRadius:118}}> 
                 {/* <TextInput style={{borderWidth:1, borderColor:'black',margin:10, borderRadius:18,flex:1,flexDirection:'row'}}> */}
@@ -157,6 +163,9 @@ export default class VenderSearch extends Component{
 }
 const styles = StyleSheet.create({
     container: {},
+    header:{
+        backgroundColor: 'black'
+    },
     view: {
       marginTop: 10,
       //backgroundColor: 'blue',

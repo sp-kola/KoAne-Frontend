@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {
   View,
   Image,
@@ -16,9 +17,10 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import validate from './utils/validation';
 import DefaultInput from './components/UI/DefaultInput/DefaultInput';
+import {vendorSignup} from './store/actions/index'
 //import {TextInput} from 'react-native-gesture-handler';
 
-export default class VendorRegister extends React.Component {
+class VendorRegister extends React.Component {
 
     state = {
       controls : {
@@ -147,6 +149,7 @@ export default class VendorRegister extends React.Component {
       }
       if(this.state.controls.email.valid === true && this.state.controls.password.valid === true && this.state.controls.firstName.valid === true && this.state.controls.lastName.valid === true && this.state.controls.contactNo.valid === true && this.state.controls.userName.valid === true && this.state.controls.businessName.valid === true && this.state.controls.vehicleNo.valid === true){
         alert(`Pass`)
+        this.props.onSignup(signUpData,this.props)
     }
     else{ 
         alert(`Validation error`)
@@ -357,3 +360,11 @@ const styles = StyleSheet.create({
     right: 37,
   },
 });
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onSignup: (signupData,nav) => dispatch(vendorSignup(signupData,nav))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(VendorRegister); 

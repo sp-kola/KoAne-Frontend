@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 import MapView from 'react-native-maps';
 import GeoLocation from '@react-native-community/geolocation'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { Container, Header, Button, Icon, Fab, Footer, FooterTab, Content, Toast } from 'native-base';
-
+import { Container, Header, Button,  Fab, Footer, FooterTab, Content, Toast } from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import DefaultButton from '../../../components/UI/DefaultButton/DefaultButton'
 import {shareLocation, getCustomerOrders} from '../../../store/actions/index'
 
@@ -143,7 +143,7 @@ class Map extends Component{
               title={marker.vendor}
              onPress = {() => this.selectedMarker(marker)}
             >
-            <Icon name="radio-button-on"/>
+            <Icon name="map-pin" size={20} color="black" style={styles.iconStyle}/>
             </MapView.Marker>
           ))
         }
@@ -159,14 +159,14 @@ class Map extends Component{
         if(this.state.shareLocation){
             shareLocation=
             <Button  onPress={this.stopSharingLocationHandler} danger>
-            <Icon name="alert" style={styles.iconStyle}/>
+            <Icon name="stop" size={20} color="red" style={styles.iconStyle}/>
             <Text style={styles.textStyle}>Stop Sharing</Text>
             </Button>
         }
         else{
             shareLocation =
             <Button color='black' onPress={this.shareLocationHandler}>
-            <Icon name="send" style={styles.iconStyle}/>
+            <Icon name="share" size={20} color="#fff" style={styles.iconStyle}/>
             <Text style={styles.textStyle}>Share location</Text>
             </Button>
         }
@@ -195,15 +195,15 @@ class Map extends Component{
             <FooterTab style={styles.footerTabStyle}>
                 {shareLocation}
                 <Button verticle color='black'  onPress={this.getLocationHandler}>
-                <Icon name="locate" style={styles.iconStyle}/>
+                <Icon name="street-view" size={20} color="#fff" style={styles.iconStyle}/>
                 <Text style={styles.textStyle}>Locate Me</Text>
                 </Button>
-                <Button color='black'>
-                <Icon name="cart" style={styles.iconStyle} onPress={this.getOrdersHandler}/>
+                <Button color='black' onPress={this.getOrdersHandler}>
+                <Icon name="shopping-cart" size={20} color="#fff" style={styles.iconStyle}/>
                 <Text style={styles.textStyle}>Orders</Text>
                 </Button>
                 <Button>
-                <Icon name="search" style={styles.iconStyle}/>
+                <Icon name="search" size={20} color="#fff" style={styles.iconStyle}/>
                 <Text style={styles.textStyle}>Search</Text>
                 </Button>
           </FooterTab>
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     },
     iconStyle: {
         //backgroundColor: 'white',
-        color: 'white'
+       // color: 'white'
     },
     textStyle: {
         fontFamily:'Open Sans',

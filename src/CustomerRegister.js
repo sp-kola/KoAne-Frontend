@@ -133,7 +133,7 @@ submitHandler = () => {
     }
     if(this.state.controls.email.valid === true && this.state.controls.password.valid === true && this.state.controls.firstName.valid === true && this.state.controls.lastName.valid === true && this.state.controls.contactNo.valid === true && this.state.controls.userName.valid === true){
       alert(`Pass`)
-      this.props.onSignup(signUpData)
+      this.props.onSignup(signUpData,this.props)
   }
   else{ 
       alert(`Validation error`)
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
   return {
-      onSignup: (signupData) => dispatch(signup(signupData))
+      onSignup: (signupData,nav) => dispatch(signup(signupData,nav))
   }
 }
 

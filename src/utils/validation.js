@@ -16,7 +16,7 @@ const validate = (val, rules, connectedValue) => {
                 break;
             case 'strongPassword':
                 isValid = isValid && strongPasswordValidator(val);
-                console.log('pwd',isValid)    
+                //console.log('pwd',isValid)    
                 break;
             default: 
                 isValid = true
@@ -33,7 +33,7 @@ const emailValidator = val => {
 
 const strongPasswordValidator = val =>{
     const passwordReg = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/
-    console.log('pwd',passwordReg.test(String(val)))
+    //console.log('pwd',passwordReg.test(String(val)))
     return passwordReg.test(String(val))
 }
 
