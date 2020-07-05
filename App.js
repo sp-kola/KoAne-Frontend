@@ -19,19 +19,19 @@ function App(){
     <NavigationContainer>
       <RootStack.Navigator headerMode='none'>
         
-        
+{/*         
         <RootStack.Screen
           name="LoginRegister"
           component={LoginRegister}
-        />
+        /> */}
         <RootStack.Screen
           name="Select_option"
           component={Select_option}
         />
-        <RootStack.Screen
+        {/* <RootStack.Screen
           name="Login"
           component={Login}
-        />
+        /> */}
         <RootStack.Screen
           name="CustomerRegister"
           component={CustomerRegister}

@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     input: {
         width: '100%',
         borderWidth: 1,
-        borderColor: '#000',
+        //borderColor: '#000',
         padding: 5,
         //margin: 8,
         borderRadius: 5,
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     },
     invalid: {
         backgroundColor: 'rgba(249, 192, 192, 0.5)',
-        borderColor: 'red'
+        //borderColor: 'red'
     }
 })
 
