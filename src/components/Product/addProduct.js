@@ -1,18 +1,8 @@
 import React from 'react';
 import {Text, StyleSheet, ImageBackground} from 'react-native';
-import {
-  Content,
-  Form,
-  Item,
-  Input,
-  Textarea,
-  CheckBox,
-  Icon,
-  Button,
-} from 'native-base';
+import {Form, Item, Input, Textarea, CheckBox, Button} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import img from '../../../assets/login1.jpg';
-// const backgroundImg = 
 
 export default function addProduct() {
   return (
