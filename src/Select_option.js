@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
 } from 'react-native';
+
 import Menuitem from './MenuItem';
 //import {Icon} from 'native-base';
 // import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -42,6 +43,7 @@ export default class Select_option extends React.Component {
           <Image style={styles.logo} source={logo} />
           <Text style={styles.header}>Select Your Option</Text>
         </View>
+
         <View style={styles.menuContainer} >
           <View style={styles.buttonView}>
           <DefaultButton onPress={this.Cart}>
@@ -56,6 +58,7 @@ export default class Select_option extends React.Component {
           <Text style={styles.buttonText}>Vendor</Text>
           </View>
         </View>  
+       
         </View>
       </ImageBackground>
       </View>
