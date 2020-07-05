@@ -1,4 +1,3 @@
-
 import  * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -17,21 +16,20 @@ import VenderSearch from './src/screens/VenderSearch'
 import Testing from './src/screens/Testing';
 import Home from './src/screens/HomePage/Home';
 import AdminHome from './src/screens/AdminHome'
+import viewProduct from './src/components/Product/viewProduct';
 
 const RootStack = createStackNavigator();
 
 function App(){
   return (
-    // <NavigationContainer>
-    //   <RootStack.Navigator >
-    //     <RootStack.Screen
-    //     name='Map'
-    //     component={TrackMe}
-    //     />
-    //   </RootStack.Navigator>  
-    // </NavigationContainer>
-
     <NavigationContainer>
+
+//       <RootStack.Navigator>
+//         <RootStack.Screen name="View all products" component={viewProduct} />
+//       </RootStack.Navigator>
+//     </NavigationContainer>
+//   );
+
 
       
       <RootStack.Navigator headerMode='none' >
@@ -89,6 +87,7 @@ function App(){
       </RootStack.Navigator>  
     </NavigationContainer>  
   )
+
 }
 
 export default App;
