@@ -10,8 +10,15 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import Menuitem from './MenuItem';
-import {Icon} from 'native-base';
+//import {Icon} from 'native-base';
+// import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+// import Ionicon from 'react-native-vector-icons/Ionicons';
+import FontAweseomeIcon from 'react-native-vector-icons/FontAwesome5'
 import DefaultButton from './components/UI/DefaultButton/DefaultButton'
+
+// import Ionicons from 'react-native-vector-icons/Ionicons';
+// import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const logo = require('../assets/logo.png');
 
@@ -38,13 +45,13 @@ export default class Select_option extends React.Component {
         <View style={styles.menuContainer} >
           <View style={styles.buttonView}>
           <DefaultButton onPress={this.Cart}>
-           <Icon name ='cart' style={{fontSize: 80, color: 'black'}}/ >
+          <FontAweseomeIcon name="shopping-cart" size={80} color="#000" />
           </DefaultButton>
           <Text style={styles.buttonText}>Customer</Text>
           </View>
           <View style={styles.buttonView}>
           <DefaultButton  onPress={this.Truck}>
-           <Icon type='MaterialCommunityIcons' name='truck' style={{fontSize: 80, color: 'black'}}/>
+          <FontAweseomeIcon name="truck" size={80} color="#000" />
           </DefaultButton>  
           <Text style={styles.buttonText}>Vendor</Text>
           </View>
@@ -104,7 +111,11 @@ const styles = StyleSheet.create({
 
     //flexWrap: 'wrap',
   },
-
+  inputIcon: {
+    position: 'absolute',
+    top: 8,
+    left: 37,
+  },
   button: {
     width: '80%',
     height: '75%',

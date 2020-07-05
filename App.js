@@ -18,20 +18,18 @@ function App(){
   return (
     <NavigationContainer>
       <RootStack.Navigator headerMode='none'>
-        
-{/*         
         <RootStack.Screen
           name="LoginRegister"
           component={LoginRegister}
-        /> */}
+        />
         <RootStack.Screen
           name="Select_option"
           component={Select_option}
         />
-        {/* <RootStack.Screen
+        <RootStack.Screen
           name="Login"
           component={Login}
-        /> */}
+        />
         <RootStack.Screen
           name="CustomerRegister"
           component={CustomerRegister}
@@ -44,7 +42,7 @@ function App(){
           name='Customer'
           component={CustomerMap}
         />
-        <RootStack.Screen
+         <RootStack.Screen
         name='Map'
         component={TrackMe}
         />
