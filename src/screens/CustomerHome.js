@@ -42,7 +42,7 @@ export default class CustomerHome extends Component
                 <Title>CUSTOMER</Title>
                 
                 <Right>
-                <Button transparent onPress={()=> this.props.navigation.push('VenderSearch')}>
+                <Button transparent onPress={()=> this.props.navigation.push('CustomerMap')}>
                 <FontAweseomeIcon name="map" size={20} color="#fff" style={styles.iconStyle}/>
                 <Text style={styles.headerText}>Map</Text>
             </Button>
@@ -63,7 +63,7 @@ export default class CustomerHome extends Component
                 
                 <View style={{flexDirection: 'row',marginLeft:'15%',marginTop:12}}>    
                 
-                <TouchableOpacity onPress={()=> this.props.navigation.push('CustomerMap')}>
+                <TouchableOpacity onPress={()=> this.props.navigation.push('VenderSearch')}>
                     <View style={{ borderRadius: 15,
                                     width: '95%',
                                     height: 25,
