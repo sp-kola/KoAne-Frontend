@@ -32,14 +32,17 @@ const styles = StyleSheet.create({
         margin: 5,
         borderRadius: 18,
         borderWidth: 1,
-        borderColor: '#bfbfbf',
-        backgroundColor: '#000000'
+        borderColor: 'black',
+        backgroundColor: '#000000',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
         //height: 20
     },
     text: {
         color: 'white',
         textTransform: 'uppercase',
-        textAlign: 'center'
+        textAlign: 'center',
+        padding: 1
     },
     disabled:{
         backgroundColor: '#eee',
