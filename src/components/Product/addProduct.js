@@ -43,7 +43,9 @@ export default function addProduct() {
           {/* <Icon icon="camera" style={styles.icon} /> */}
           {/* <Icon icon="camera" style={styles.icon} /> */}
         </Item>
+
         <DefaultButton color="black" onPress={() => alert('Product succefully added')}>Add Product</DefaultButton>
+
       </Form>
     </View>
   );
@@ -54,7 +56,9 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
+
     backgroundColor: '#eee'
+
   },
   input: {
     borderWidth: 1,

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import {Text, StyleSheet, ImageBackground, Image,View} from 'react-native';
+
 import {Card, CardItem, Left, Body, Content} from 'native-base';
 
 import img from '../../../assets/login1.jpg';
@@ -83,7 +85,9 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
+
     backgroundColor: '#eee'
+
   },
   card: {
     // margin: 10,
