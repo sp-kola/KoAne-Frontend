@@ -13,6 +13,11 @@ const validate = (val, rules, connectedValue) => {
                 break;
             case 'notEmpty':
                 isValid = isValid && notEmptyValidator(val);
+                break;
+            case 'strongPassword':
+                isValid = isValid && strongPasswordValidator(val);
+                //console.log('pwd',isValid)    
+                break;
             default: 
                 isValid = true
                 break;
@@ -26,6 +31,12 @@ const emailValidator = val => {
     return re.test(String(val).toLowerCase());
 }
 
+const strongPasswordValidator = val =>{
+    const passwordReg = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/
+    //console.log('pwd',passwordReg.test(String(val)))
+    return passwordReg.test(String(val))
+}
+
 const minLengthValidator = (val, minLength) => {
     return val.length >= minLength;
 
@@ -36,6 +47,8 @@ const equalToValidator = (val, checkValue) => {
 }
 
 const notEmptyValidator = val => {
+    console.log(val.trim() !== "")
+
     return val.trim() !== "";
   };
   

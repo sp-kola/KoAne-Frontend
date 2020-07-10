@@ -1,50 +1,6 @@
 // import {TRY_AUTH, AUTH_SET_TOKEN} from './actionType'
 import { uiStartLoading,uiStopLoading } from './index'
 
-// export const tryAuth = (authData,nav,authMode) => {
-//     return  dispatch => {
-//         dispatch(uiStartLoading());
-//         let url = null;
-//         const api = 'AIzaSyCfoKnnrPoGOQk3OOK6jN3odVL1Ji9tXFw'
-//         if(authMode === 'login'){
-//             url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key='+api            
-//         }
-//         else{
-//             url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+api
-//         }
-//         fetch(url,{
-//             method: "POST",
-//             body:  JSON.stringify({
-//                 email: authData.email,
-//                 password: authData.password,
-//                 returnSecureToken : true
-//             }),
-//             headers: {
-//                 "Content-Type" : "application/json"
-//             }
-
-//         })
-//         .catch(err => {
-//             dispatch(uiStopLoading())
-//             console.log(err)
-//             alert('Authentication failed! Please try again ')
-//         })
-//         .then(res => {return res.json()})
-//         .then(prasedRes => {
-//             dispatch(uiStopLoading())
-//             //console.log(prasedRes.idToken)
-//             if(!prasedRes.idToken){
-//                 alert("Authentication failed! Please try again ")
-                
-//             }
-//             else{   
-//                 dispatch(authSetToken(prasedRes.idToken))
-//                 nav.navigation.push('SideDrawer')
-//             }
-            
-//         })
-//     }
-// }
 
 export const login = (authData,nav) => {
     return dispatch => {
@@ -65,8 +21,24 @@ export const login = (authData,nav) => {
         .then(res => {return res.json()})
         .then(prasedRes => {
             dispatch(uiStopLoading())
-            console.log(prasedRes)
-            nav.navigation.push('Home')
+            console.log(prasedRes.type)
+            const type = prasedRes.type
+            if(type === 'Admin'){
+                nav.navigation.push('AdminHome',{
+                    user: prasedRes
+                })
+            }
+            else if(type === 'Vendor'){
+                nav.navigation.push('VendorHome',{
+                    user: prasedRes
+                })
+            }
+            else {
+                nav.navigation.push('CustomerHome',{
+                    user: prasedRes
+                })
+            }
+            
             // if(!prasedRes.idToken){
             //     alert("Authentication failed! Please try again ")
                 
@@ -84,6 +56,8 @@ export const login = (authData,nav) => {
         })
     }
 }
+
+
 
 // export const authSetToken = token => {
 //     return {
