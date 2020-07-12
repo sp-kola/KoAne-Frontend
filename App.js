@@ -25,6 +25,7 @@ function App() {
 
     <NavigationContainer>     
       <RootStack.Navigator headerMode='none' >
+      
       <RootStack.Screen
           name="LoginRegister"
           component={LoginRegister}

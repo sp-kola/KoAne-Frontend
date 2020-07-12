@@ -209,7 +209,7 @@ submitHandler = () => {
                 placeholder="Password*"
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
-                value={this.state.controls.password.value}
+                value={this.state.controls.password.value} 
                 onChangeText = {(val) => this.updateInputState('password',val)}
                 valid = {this.state.controls.password.valid}
                 touched= {this.state.controls.password.touched}

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, ImageBackground, TouchableOpacity, Switch } from 'react-native';
 import { Container, Header, Title, Content, Button, Left, Right, Body,  Tab, Tabs, ScrollableTab} from "native-base";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ViewProducts from '../../components/Product/viewProduct'
 
 
 export default function VendorHome(props) {
@@ -219,10 +220,7 @@ export default function VendorHome(props) {
             </Text>
           </View>
         </View>
-
-
-
-
+        <ViewProducts/>
 
       </View>
 

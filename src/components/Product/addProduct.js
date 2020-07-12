@@ -1,14 +1,15 @@
 import React from 'react';
 
-import {Text, StyleSheet, ImageBackground} from 'react-native';
+import {Text, StyleSheet, ImageBackground, View} from 'react-native';
 import {Form, Item, Input, Textarea, CheckBox, Button} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import img from '../../../assets/login1.jpg';
+import DefaultButton from '../UI/DefaultButton/DefaultButton';
 
 export default function addProduct() {
   return (
     // <Content style={styles.container}>
-    <ImageBackground source={img} style={styles.background}>
+    <View style={styles.background}>
       <Form>
         <Item>
           <Input placeholder="PRODUCT NAME" style={styles.input} />
@@ -42,8 +43,9 @@ export default function addProduct() {
           {/* <Icon icon="camera" style={styles.icon} /> */}
           {/* <Icon icon="camera" style={styles.icon} /> */}
         </Item>
+        <DefaultButton color="black" onPress={() => alert('Product succefully added')}>Add Product</DefaultButton>
       </Form>
-    </ImageBackground>
+    </View>
   );
 }
 
@@ -52,6 +54,7 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
+    backgroundColor: '#eee'
   },
   input: {
     borderWidth: 1,

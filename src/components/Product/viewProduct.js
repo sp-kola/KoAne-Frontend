@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, StyleSheet, ImageBackground, Image} from 'react-native';
+import {Text, StyleSheet, ImageBackground, Image,View} from 'react-native';
 import {Card, CardItem, Left, Body, Content} from 'native-base';
 
 import img from '../../../assets/login1.jpg';
@@ -11,7 +11,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export default function viewProduct() {
   return (
-    <ImageBackground source={img} style={styles.background}>
+    <View style={styles.background}>
       <Content>
         <TouchableOpacity>
           <Card transparent style={styles.card}>
@@ -74,7 +74,7 @@ export default function viewProduct() {
           </Card>
         </TouchableOpacity>
       </Content>
-    </ImageBackground>
+    </View>
   );
 }
 
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
+    backgroundColor: '#eee'
   },
   card: {
     // margin: 10,
