@@ -25,7 +25,7 @@ function App() {
 
     <NavigationContainer>     
       <RootStack.Navigator headerMode='none' >
-      
+      <RootStack.Screen name="Map" component={TrackMe} />
       <RootStack.Screen
           name="LoginRegister"
           component={LoginRegister}
@@ -61,7 +61,7 @@ function App() {
         />
         <RootStack.Screen name="VendorRegister" component={VendorRegister} />
         <RootStack.Screen name="CustomerMap" component={CustomerMap} />
-        <RootStack.Screen name="Map" component={TrackMe} />
+        
         <RootStack.Screen name="Home" component={Home} />
       </RootStack.Navigator>
     </NavigationContainer>
