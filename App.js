@@ -22,39 +22,18 @@ const RootStack = createStackNavigator();
 
 function App() {
   return (
-
-    <NavigationContainer>     
-      <RootStack.Navigator headerMode='none' >
-      
-      <RootStack.Screen
-          name="LoginRegister"
-          component={LoginRegister}
-        /> 
+    <NavigationContainer>
+      <RootStack.Navigator headerMode="none">
+        <RootStack.Screen name="viewProduct" component={viewProduct} />
         <RootStack.Screen name="Addnewproduct" component={addProduct} />
-      <RootStack.Screen
-        name="VenderSearch"
-        component= {VenderSearch}
-          />
-      <RootStack.Screen
-        name="CustomerHome"
-        component= {CustomerHome}
-          />
-      <RootStack.Screen
-        name="VendorHome"
-        component= {VendorHome}
-          />
-      <RootStack.Screen
-        name="AdminHome"
-        component= {AdminHome}
-          />
-        <RootStack.Screen
-          name="Select_option"
-          component={Select_option}
-        />
-        <RootStack.Screen
-          name="Login"
-          component={Login}
-        />
+        <RootStack.Screen name="LoginRegister" component={LoginRegister} />
+
+        <RootStack.Screen name="VenderSearch" component={VenderSearch} />
+        <RootStack.Screen name="CustomerHome" component={CustomerHome} />
+        <RootStack.Screen name="VendorHome" component={VendorHome} />
+        <RootStack.Screen name="AdminHome" component={AdminHome} />
+        <RootStack.Screen name="Select_option" component={Select_option} />
+        <RootStack.Screen name="Login" component={Login} />
         <RootStack.Screen
           name="CustomerRegister"
           component={CustomerRegister}

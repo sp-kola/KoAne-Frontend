@@ -1,52 +1,81 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-import {Text, StyleSheet, ImageBackground, View} from 'react-native';
+import {Text, StyleSheet, View, ActivityIndicator} from 'react-native';
 import {Form, Item, Input, Textarea, CheckBox, Button} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import img from '../../../assets/login1.jpg';
+// import img from '../../../assets/login1.jpg';
 import DefaultButton from '../UI/DefaultButton/DefaultButton';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function addProduct() {
-  return (
-    // <Content style={styles.container}>
-    <View style={styles.background}>
-      <Form>
-        <Item>
-          <Input placeholder="PRODUCT NAME" style={styles.input} />
-        </Item>
-        <Item>
-          <Input placeholder="PRICE" style={styles.input} />
-        </Item>
-        <Item>
-          <Textarea
-            rowSpan={5}
-            placeholder="DETAILS"
-            style={styles.inputMultiline}
-          />
-        </Item>
-        <Item>
-          <Text style={styles.text}>CATEGORY</Text>
-        </Item>
-        <Item style={styles.checkbox}>
-          <CheckBox checked={false} color="black" />
-        </Item>
-        <Item>
-          <TouchableOpacity>
-            <Button transparent>
-              <Text style={styles.button}>+</Text>
-            </Button>
-          </TouchableOpacity>
-          <Text style={styles.text}>ADD A NEW CATEGORY</Text>
-        </Item>
-        <Item>
-          <Text style={styles.text}>UPLOAD AN IMAGE</Text>
-          {/* <Icon icon="camera" style={styles.icon} /> */}
-          {/* <Icon icon="camera" style={styles.icon} /> */}
-        </Item>
-        <DefaultButton color="black" onPress={() => alert('Product succefully added')}>Add Product</DefaultButton>
-      </Form>
-    </View>
-  );
+export default class addProduct extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      dataSource: null,
+      isUploading: false,
+    };
+  }
+
+  // return fetch('http://192.168.1.103:3300/product/create', {
+  //   method: 'POST',
+  //   headers: {
+  //     Accept: 'application/json',
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify({
+  //     firstParam: 'yourValue'
+  //   })
+  // });
+
+  render() {
+    return (
+      <View style={styles.background}>
+        <Form>
+          <Item>
+            <Input placeholder="PRODUCT NAME" style={styles.input} />
+          </Item>
+          <Item>
+            <Input placeholder="PRICE" style={styles.input} />
+          </Item>
+          <Item>
+            <Textarea
+              rowSpan={5}
+              placeholder="DETAILS"
+              style={styles.inputMultiline}
+            />
+          </Item>
+          <Item>
+            <Text style={styles.text}>CATEGORY</Text>
+          </Item>
+          <Item style={styles.checkbox}>
+            <CheckBox checked={false} color="black" />
+          </Item>
+          <Item>
+            <TouchableOpacity>
+              <Button transparent>
+                <Icon name="add" style={styles.inputIcon} />
+                <Text style={styles.text}>ADD A NEW CATEGORY</Text>
+              </Button>
+            </TouchableOpacity>
+          </Item>
+          <Item>
+            <TouchableOpacity>
+              <Button transparent>
+                <Icon name="camera-alt" style={styles.inputIcon} />
+                <Text style={styles.text}>UPLOAD AN IMAGE</Text>
+              </Button>
+            </TouchableOpacity>
+          </Item>
+          <DefaultButton
+            color="black"
+            onPress={() => alert('Product succefully added')}>
+            Add Product
+          </DefaultButton>
+        </Form>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -54,10 +83,11 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
-    backgroundColor: '#eee'
+    backgroundColor: '#eee',
   },
   input: {
     borderWidth: 1,
+    borderRadius: 10,
     // borderBottomColor: 'black',
     // borderLeftColor: '#ffe694',
     // borderRightColor: '#ffe694',
@@ -75,6 +105,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
     flex: 1,
   },
+  inputIcon: {
+    padding: 10,
+    marginLeft: 25,
+    fontSize: 30,
+  },
   text: {
     padding: 10,
     fontSize: 18,
@@ -84,12 +119,12 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingLeft: 30,
   },
-  icon: {
-    padding: 10,
-    marginHorizontal: 25,
-    fontSize: 30,
-    color: 'black',
-  },
+  // icon: {
+  //   padding: 10,
+  //   marginHorizontal: 25,
+  //   fontSize: 30,
+  //   color: 'black',
+  // },
   button: {
     fontSize: 25,
     fontWeight: 'bold',

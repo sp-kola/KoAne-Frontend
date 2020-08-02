@@ -1,81 +1,66 @@
-import React from 'react';
-import {Text, StyleSheet, ImageBackground, Image,View} from 'react-native';
-import {Card, CardItem, Left, Body, Content} from 'native-base';
+import React, {Component} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {Content} from 'native-base';
+import Product from './Product';
+// import img from '../../../assets/login1.jpg';
+// import Fishbun from '../../../assets/fishbun.jpg';
+// import Sausagebun from '../../../assets/sausagebun.jpg';
+// import Rolls from '../../../assets/Rolls.jpg';
+// import pastry from '../../../assets/fishPastry.jpg';
+// import {TouchableOpacity} from 'react-native-gesture-handler';
 
-import img from '../../../assets/login1.jpg';
-import Fishbun from '../../../assets/fishbun.jpg';
-import Sausagebun from '../../../assets/sausagebun.jpg';
-import Rolls from '../../../assets/Rolls.jpg';
-import pastry from '../../../assets/fishPastry.jpg';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+export default class viewProduct extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      dataSource: [],
+      isUploading: false,
+    };
+  }
 
-export default function viewProduct() {
-  return (
-    <View style={styles.background}>
-      <Content>
-        <TouchableOpacity>
-          <Card transparent style={styles.card}>
-            <CardItem>
-              <Left>
-                <Body>
-                  <Text style={styles.text}>Fish bun</Text>
-                  <Text style={styles.subtext}>Price: 50.00</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem cardBody>
-              <Image source={Fishbun} style={styles.image} />
-            </CardItem>
-          </Card>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Card transparent style={styles.card}>
-            <CardItem>
-              <Left>
-                <Body>
-                  <Text style={styles.text}>Sausage bun</Text>
-                  <Text style={styles.subtext}>Price: 60.00</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem cardBody>
-              <Image source={Sausagebun} style={styles.image} />
-            </CardItem>
-          </Card>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Card transparent style={styles.card}>
-            <CardItem>
-              <Left>
-                <Body>
-                  <Text style={styles.text}>Rolls</Text>
-                  <Text style={styles.subtext}>Price: 50.00</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem cardBody>
-              <Image source={Rolls} style={styles.image} />
-            </CardItem>
-          </Card>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Card transparent style={styles.card}>
-            <CardItem>
-              <Left>
-                <Body>
-                  <Text style={styles.text}>Fish Pastry</Text>
-                  <Text style={styles.subtext}>Price: 50.00</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem cardBody>
-              <Image source={pastry} style={styles.image} />
-            </CardItem>
-          </Card>
-        </TouchableOpacity>
-      </Content>
-    </View>
-  );
+  componentDidMount() {
+    return fetch('http://192.168.1.100:3300/product/')
+      .then(res => res.json())
+      .then(resJson => {
+        this.setState({
+          isLoading: false,
+          dataSource: resJson,
+        });
+        // for (var i = 0; i < objects.length; i++) {
+        //   console.log('Item Name: ' + objects[i].productName);
+        //   console.log('Item Name: ' + objects[i].details);
+        //   console.log('Item Name: ' + objects[i].price);
+        // }
+        // console.log(this.state.dataSource);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  render() {
+    var objects = this.state.dataSource;
+    return (
+      <View style={styles.background}>
+        <Content>
+          {objects &&
+            objects.map(item => {
+              return (
+                <View key={item._id}>
+                  <Product
+                    id={item._id}
+                    Name={item.productName}
+                    price={item.price}
+                    desc={item.details}
+                  />
+                </View>
+              );
+            })}
+        </Content>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -83,7 +68,7 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
-    backgroundColor: '#eee'
+    backgroundColor: '#eee',
   },
   card: {
     // margin: 10,
