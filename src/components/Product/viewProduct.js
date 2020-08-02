@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ActivityIndicator, Text} from 'react-native';
 import {Content} from 'native-base';
 import Product from './Product';
+import Search from './SearchBar';
 // import img from '../../../assets/login1.jpg';
 // import Fishbun from '../../../assets/fishbun.jpg';
 // import Sausagebun from '../../../assets/sausagebun.jpg';
@@ -40,26 +41,33 @@ export default class viewProduct extends Component {
   }
 
   render() {
-    var objects = this.state.dataSource;
-    return (
-      <View style={styles.background}>
-        <Content>
-          {objects &&
-            objects.map(item => {
-              return (
-                <View key={item._id}>
-                  <Product
-                    id={item._id}
-                    Name={item.productName}
-                    price={item.price}
-                    desc={item.details}
-                  />
-                </View>
-              );
-            })}
-        </Content>
-      </View>
-    );
+    if (this.state.isLoading) {
+      return (
+        <View>
+          <ActivityIndicator />
+        </View>
+      );
+    } else {
+      let products = this.state.dataSource.map((val, key) => {
+        return (
+          <View key={key}>
+            <Product
+              id={val._id}
+              Name={val.productName}
+              price={val.price}
+              desc={val.details}
+            />
+          </View>
+        );
+      });
+
+      return (
+        <View style={styles.background}>
+          <Search />
+          <Content>{products}</Content>
+        </View>
+      );
+    }
   }
 }
 

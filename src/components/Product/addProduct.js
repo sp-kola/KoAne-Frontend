@@ -29,6 +29,13 @@ export default class addProduct extends Component {
   // });
 
   render() {
+    // if (this.state.isLoading) {
+    //   return (
+    //     <View>
+    //       <ActivityIndicator />
+    //     </View>
+    //   );
+    // } else {
     return (
       <View style={styles.background}>
         <Form>
@@ -75,6 +82,7 @@ export default class addProduct extends Component {
         </Form>
       </View>
     );
+    // }
   }
 }
 

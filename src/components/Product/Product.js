@@ -8,26 +8,24 @@ export default class Product extends Component {
     return (
       <TouchableOpacity>
         <View key={this.props.id}>
-        <Card transparent style={styles.card}>
-          <CardItem header button onPress={() => alert('This is Card')}>
-            <Left>
-              {/*  */}
-              {/* <List  */}
-              <Text style={styles.text}>{this.props.Name}</Text>
-            </Left>
-          </CardItem>
-          <CardItem>
-            <Body>
-              <Text style={styles.subtext}>{this.props.desc}</Text>
-            </Body>
-          </CardItem>
+          <Card transparent style={styles.card}>
+            <CardItem header button onPress={() => alert('This is Card')}>
+              <Left>
+                <Text style={styles.text}>{this.props.Name}</Text>
+              </Left>
+            </CardItem>
+            <CardItem>
+              <Body>
+                <Text style={styles.subtext}>{this.props.desc}</Text>
+              </Body>
+            </CardItem>
 
-          {/* <CardItem cardBody>
-            <Image source={Fishbun} style={styles.image} />
-          </CardItem> */}
-          <CardItem footer>
-            <Text style={styles.subtext}>{this.props.price}</Text>
-          </CardItem>
+            {/* <CardItem cardBody>
+              <Image source={} style={styles.image} />
+            </CardItem> */}
+            <CardItem footer>
+              <Text style={styles.subtext}>Rs. {this.props.price} /=</Text>
+            </CardItem>
         </Card>
         </View>
       </TouchableOpacity>
