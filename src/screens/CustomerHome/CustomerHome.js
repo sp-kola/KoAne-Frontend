@@ -33,23 +33,6 @@ export default class CustomerHome extends Component
         const itemsCount = 50
         return(
             <View>
-                <Header noLeft style={styles.header} hasTabs>
-            <Body>
-                <View style={styles.headerView}>
-                <Left>
-                <Text style={styles.headerText}>{this.props.route.params.user.userName}</Text>
-                </Left>    
-                <Title>CUSTOMER</Title>
-                
-                <Right>
-                <Button transparent onPress={()=> this.props.navigation.push('CustomerMap')}>
-                <FontAweseomeIcon name="map" size={20} color="#fff" style={styles.iconStyle}/>
-                <Text style={styles.headerText}>Map</Text>
-            </Button>
-            </Right>
-            </View>
-            </Body>
-            </Header> 
                 <View style={{flexDirection:'row',borderWidth:1,justifyContent:'center',
                             alignItems:'center',width:380,height:50,margin:'5%',borderRadius:118}}> 
                 {/* <TextInput style={{borderWidth:1, borderColor:'black',margin:10, borderRadius:18,flex:1,flexDirection:'row'}}> */}
