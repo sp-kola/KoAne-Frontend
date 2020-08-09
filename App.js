@@ -17,7 +17,9 @@ import Testing from './src/screens/Testing';
 import Home from './src/screens/HomePage/Home';
 import AdminHome from './src/screens/AdminHome';
 import viewProduct from './src/components/Product/viewProduct';
+import OrderConfirmRecipt from './src/components/Order_UI/OrderConfirmRecipt';
 import SplashScreen from './src/SplashScreen';
+import viewVendorProducts from './src/components/Product/viewVendorProducts';
 
 const RootStack = createStackNavigator();
 
@@ -43,6 +45,16 @@ function App() {
         <RootStack.Screen name="CustomerMap" component={CustomerMap} />
         <RootStack.Screen name="Map" component={TrackMe} />
         <RootStack.Screen name="Home" component={Home} />
+
+        <RootStack.Screen
+          name="viewVendorProduct"
+          component={viewVendorProducts}
+        />
+
+        <RootStack.Screen
+          name="orderConfirmRecipt"
+          component={OrderConfirmRecipt}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   );
