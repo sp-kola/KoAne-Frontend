@@ -18,6 +18,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import user from '../../assets/user.jpg'
 
 import CustomerHome from '../HomePage/CustomerHome'
+import VendorSearch from '../VenderSearch'
+import Maps from '../CustomerMaps/MapContainer'
 
 function CustomDrawerContent({ progress, ...rest }) {
   
@@ -129,11 +131,40 @@ function MyDrawer(data) {
               fontColor: 'white',
               fontWeight: 'bold'
             }
-            }
-            
+            }  
         }}
-        
-
+      />
+      <Drawer.Screen
+        name="Search"
+        component={VendorSearch}
+        options={{ 
+            drawerLabel:  'Search', 
+            activeTintColor:'black',
+            drawerIcon: () => <Icon color='white' size={20} name='search' />,
+            color: 'white',
+            contentOptions:{
+              labelStyle:{
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+            }  
+        }}
+      />
+      <Drawer.Screen
+        name="Maps"
+        component={Maps}
+        options={{ 
+            drawerLabel:  'Maps', 
+            activeTintColor:'black',
+            drawerIcon: () => <Icon color='white' size={20} name='search' />,
+            color: 'white',
+            contentOptions:{
+              labelStyle:{
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+            }  
+        }}
       />
       {/* <Drawer.Screen
         name="ShoppingList"
