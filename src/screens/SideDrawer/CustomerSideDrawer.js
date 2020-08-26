@@ -156,7 +156,7 @@ function MyDrawer(data) {
         options={{ 
             drawerLabel:  'Maps', 
             activeTintColor:'black',
-            drawerIcon: () => <Icon color='white' size={20} name='search' />,
+            drawerIcon: () => <Icon color='white' size={20} name='street-view' />,
             color: 'white',
             contentOptions:{
               labelStyle:{

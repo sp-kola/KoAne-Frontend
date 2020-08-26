@@ -3,12 +3,14 @@ import {View, Text, StyleSheet} from 'react-native'
 import { Container, Header, Left, Body, Right, Title, Subtitle , Button, Tab, Tabs, ScrollableTab } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
+import CustomerVendorsMap from '../../components/CustomerVendorsMap/CustomerVendorsMap'
+
 
 class VendorView extends Component {
     render(){
         return(
-            <View>
-                <Text>Vendor view</Text>
+            <View style={styles.container}>
+                <CustomerVendorsMap/>
             </View>       
         )
     }
@@ -17,6 +19,11 @@ class VendorView extends Component {
 const styles = StyleSheet.create({
     header:{
         backgroundColor: 'black'
+    },
+    container: {
+        flex: 1,
+        height: '100%',
+        width: '100%'
     }
 })
 

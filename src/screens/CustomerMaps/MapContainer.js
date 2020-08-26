@@ -16,16 +16,16 @@ class MapContainer extends Component {
             <Container>
             <Header hasTabs style={styles.header} androidStatusBarColor='black' backgroundColor='black'>
               <Left>
-                <Button transparent>
-                  <Icon name="home" size={30} color="white" />
+                <Button transparent onPress={() => this.props.navigation.toggleDrawer()}>
+                  <Icon name="bars" size={30} color="white" />
                 </Button>
               </Left>
               <Body>
-                <Title>Home</Title>
+                <Title>Map</Title>
               </Body>
               <Right>
-                <Button transparent onPress={() => this.props.navigation.toggleDrawer()}>
-                  <Icon name="bars" size={30} color="white" />
+                <Button transparent>
+                  <Icon name="street-view" size={30} color="white" />
                 </Button>
               </Right>
             </Header>
