@@ -15,24 +15,20 @@ class VendorHome extends Component {
             <Container>
             <Header hasTabs style={styles.header} androidStatusBarColor='black' backgroundColor='black'>
               <Left>
-                <Button transparent>
-                  <Icon name="home" size={30} color="white" />
+                <Button transparent onPress={() => this.props.navigation.toggleDrawer()}>
+                  <Icon name="bars" size={30} color="white" />
                 </Button>
               </Left>
               <Body>
                 <Title>Home</Title>
               </Body>
               <Right>
-                <Button transparent onPress={() => this.props.navigation.toggleDrawer()}>
-                  <Icon name="bars" size={30} color="white" />
+                <Button transparent>
+                  <Icon name="home" size={30} color="white" />
                 </Button>
               </Right>
             </Header>
-            <Tabs style={styles.header} backgroundColor='black' renderTabBar={()=> <ScrollableTab style={styles.header} tabsContainerStyle={{shadowColor:'black', borderColor:'black', backgroundColor:'black'}}/>}>
-            <Tab heading="Home" tabStyle={{backgroundColor: 'black'}} textStyle={{color: '#fff'}} activeTabStyle={{backgroundColor: 'black'}} activeTextStyle={{color: '#fff', fontWeight: 'bold'}}>
-                <Home />
-            </Tab>      
-            </Tabs>
+            <Home/>
           </Container>    
         )
     }

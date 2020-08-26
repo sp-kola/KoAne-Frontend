@@ -19,6 +19,7 @@ import user from '../../assets/user.jpg'
 
 import VendorHome from '../HomePage/VendorHome'
 import Product from '../ViewProduct/Product'
+import Maps from '../VendorMaps/MapContainer'
 
 function CustomDrawerContent({ progress, ...rest }) {
   
@@ -169,8 +170,25 @@ function MyDrawer(data) {
         }}
         
       >
+        
         {props => <Product {...props} />}
-        </Drawer.Screen>
+      </Drawer.Screen>
+      <Drawer.Screen
+        name="Maps"
+        component={Maps}
+        options={{ 
+            drawerLabel:  'Maps', 
+            activeTintColor:'black',
+            drawerIcon: () => <Icon color='white' size={20} name='street-view' />,
+            color: 'white',
+            contentOptions:{
+              labelStyle:{
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+            }  
+        }}
+      />
     </Drawer.Navigator>
   );
 }

@@ -3,10 +3,14 @@ import {TouchableOpacity,TouchableNativeFeedback, Text, View, StyleSheet, Platfo
 
 const locationSumButton = props => {
     const content = (
-    <View style={[styles.button, props.disabled ? styles.disabled : null]}>
+    <View style={[styles.button, props.disabled ? styles.disabled : null,props.sales ? styles.saleButton : null]}>
         <Text style={[styles.text, props.disabled? styles.disabledText: styles.title]}>{props.title}</Text>
+        <View style={[props.sales ? styles.buttonContainer : null]}>
         <Text  style={[styles.text, props.disabled? styles.disabledText: styles.text]}>{props.children}</Text>
+        <View style={[props.sales ? styles.saleText : null]}>
         <Text style={[styles.text, props.disabled? styles.disabledText: styles.text]}>{props.data}</Text>
+        </View>
+        </View>
     </View>
     )
     if(Platform.OS == 'android'){
@@ -61,6 +65,31 @@ const styles = StyleSheet.create({
         padding: 1,
         fontWeight: 'bold',
         fontSize: 16
+    },
+    saleButton:{
+        padding: 10,
+        margin: 1,
+        borderRadius: 18,
+        borderWidth: 5,
+        borderColor: '#E0B743',
+        backgroundColor: '#fff',
+        justifyContent: 'space-evenly',
+        height: '70%',
+        width: '100%',
+        flexDirection: 'column'  
+    },
+    buttonContainer:{
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        padding: 20,
+        alignContent: 'space-between'
+    },
+    saleText: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        padding: 15,
+        alignContent: 'space-between',
+        width: '80%'
     }
 
 })
