@@ -19,6 +19,7 @@ import Home from './src/screens/HomePage/Home';
 //import viewProduct from './src/components/Product/viewProduct';
 import VendorSideDrawer from './src/screens/SideDrawer/VendorSideDrawer'
 import CustomerSideDrawer from './src/screens/SideDrawer/CustomerSideDrawer'
+import Test from './src/screens/Customer/AddRating'
 
 const RootStack = createStackNavigator();
 
@@ -27,6 +28,7 @@ function App() {
 
     <NavigationContainer>     
       <RootStack.Navigator headerMode='none' >
+      <RootStack.Screen name="Test" component={Test} />
       <RootStack.Screen name="VendorSideScreen" component={VendorSideDrawer} />
       <RootStack.Screen name="CustomerSideScreen" component={CustomerSideDrawer} />
       

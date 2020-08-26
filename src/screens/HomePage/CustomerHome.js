@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native'
 import { Container, Header, Left, Body, Right, Title, Subtitle , Button, Tab, Tabs, ScrollableTab } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import Home from '../CustomerHome/CustomerHome'
+import Home from '../Customer/CustomerHome'
 
 // import AddProduct from '../AddProduct/AddProduct';
 // import ViewProduct from '../ViewProduct/ViewProduct';
