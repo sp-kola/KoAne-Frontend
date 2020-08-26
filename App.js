@@ -27,9 +27,9 @@ function App() {
 
     <NavigationContainer>     
       <RootStack.Navigator headerMode='none' >
-      <RootStack.Screen name="CustomerSideScreen" component={CustomerSideDrawer} />
       <RootStack.Screen name="VendorSideScreen" component={VendorSideDrawer} />
-
+      <RootStack.Screen name="CustomerSideScreen" component={CustomerSideDrawer} />
+      
       <RootStack.Screen
           name="LoginRegister"
           component={LoginRegister}
