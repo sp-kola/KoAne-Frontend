@@ -2,6 +2,8 @@
 import { uiStartLoading,uiStopLoading } from './index'
 
 
+//login auto login if token not expired log out storing data 
+
 export const login = (authData,nav) => {
     return dispatch => {
         dispatch(uiStartLoading());
@@ -56,28 +58,3 @@ export const login = (authData,nav) => {
         })
     }
 }
-
-
-
-// export const authSetToken = token => {
-//     return {
-//         type: AUTH_SET_TOKEN,
-//         token: token
-//     }
-// }
-
-// export const authGetToken = () => {
-//     return (dispatch, getState) => {
-//         const promise = new Promise((resolve, reject) => {
-//             const token = getState().auth.token;
-//             if(!token){
-//                 reject();
-//             }
-//             else{
-//                 resolve(token);
-//             }
-//         })
-//         return promise
-        
-//     }
-// }

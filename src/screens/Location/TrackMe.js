@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Button,Text, StyleSheet, Dimensions} from 'react-native';
 import {connect} from 'react-redux';
 import MapView from 'react-native-maps';
-import GeoLocation from '@react-native-community/geolocation'
+import Geolocation from '@react-native-community/geolocation';
 
 import DefaultButton from '../../components/UI/DefaultButton/DefaultButton'
 import {shareLocation} from '../../store/actions/index'
@@ -66,8 +66,8 @@ class TrackMe extends Component{
     }
 
     stopSharingLocationHandler = event => {
-        GeoLocation.clearWatch(this.state.watchID);
-        GeoLocation.stopObserving();
+        Geolocation.clearWatch(this.state.watchID);
+        Geolocation.stopObserving();
         this.setState(prevState => {
            return {
                ...prevState,
@@ -83,7 +83,7 @@ class TrackMe extends Component{
     }
 
     getLocationHandler = () => {
-        GeoLocation.getCurrentPosition(pos => {
+        Geolocation.getCurrentPosition(pos => {
             const coordsEvent = { 
                 nativeEvent: {
                     coordinate:{
@@ -102,9 +102,9 @@ class TrackMe extends Component{
     }
 
     trackLocationHanler = async () => {
-        var options = {timeout:100 , enableHighAccuracy: true};
-       // GeoLocation.requestAuthorization();
-        const watchID = await GeoLocation.watchPosition(pos => {
+        var options = {timeout:20000 , enableHighAccuracy: true, maximumAge: 1000,  distanceFilter: 10};
+       // Geolocation.requestAuthorization();
+        const watchID = await Geolocation.watchPosition(pos => {
             console.log(pos)
             const coordsEvent = { 
                 nativeEvent: {
@@ -145,7 +145,9 @@ class TrackMe extends Component{
         let marker = null;
 
         if (this.state.locationChose){
-            marker = <MapView.Marker coordinate= {this.state.focusedLocation}/>
+            marker = <MapView.Marker 
+            
+            coordinate= {this.state.focusedLocation}/>
         }
 
         let trackMe = null;
@@ -185,6 +187,9 @@ class TrackMe extends Component{
                     style={styles.map}
                     onPress={this.pickLocationHandler}
                     ref={ref => this.map = ref}
+                    showUserLocation
+                    followUserLocation
+                    loadingEnabled
                     >
                     {marker}
                     </MapView>
