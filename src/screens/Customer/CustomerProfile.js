@@ -3,7 +3,7 @@ import {View,Text,TextInput,ScrollView,Dimensions,TouchableOpacity,Image} from '
 import Icon from 'react-native-vector-icons/AntDesign';
 
 
-export default class CustomerOrders extends Component{
+export default class CustomerProfile extends Component{
 
     render(){
         return(

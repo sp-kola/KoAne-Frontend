@@ -20,6 +20,7 @@ import user from '../../assets/user.jpg'
 import CustomerHome from '../HomePage/CustomerHome'
 import VendorSearch from '../VenderSearch'
 import Maps from '../CustomerMaps/MapContainer'
+import Profile from '../Customer/CustomerProfileContainer'
 
 function CustomDrawerContent({ progress, ...rest }) {
   
@@ -118,6 +119,22 @@ function MyDrawer(data) {
     
   }}
     >
+      <Drawer.Screen
+        name="Profile"
+        component={Profile}
+        options={{ 
+            drawerLabel:  'Profile', 
+            activeTintColor:'black',
+            drawerIcon: () => <Icon color='white' size={20} name='user' />,
+            color: 'white',
+            contentOptions:{
+              labelStyle:{
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+            }  
+        }}
+      />
       <Drawer.Screen
         name="Home"
         component={CustomerHome}
@@ -246,7 +263,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontWeight: '300',
     fontSize: 14,
-    color: 'purple'    
+    color: 'black'    
   },
   detailText: {
     margin: 5,
