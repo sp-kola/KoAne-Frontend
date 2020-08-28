@@ -1,6 +1,5 @@
 import { uiStartLoading, uiStopLoading, authGetToken } from './index'
 import {  DELETE_CUSTOMER, SET_CUSTOMERS, REMOVE_CUSTOMER, CUSTOMER_ADDED, START_ADD_CUSTOMER,SEARCH_CUSTOMER,STOP_SEARCH_CUSTOMER, LOGIN_CUSTOMER, LOGOUT_CUSTOMER, SELECT_CUSTOMERS, CLEAR_SELECT_CUSTOMERS } from './actionType'
-import { parse } from '@babel/core'
 
 
 export const signup = (signupData,nav) => {
