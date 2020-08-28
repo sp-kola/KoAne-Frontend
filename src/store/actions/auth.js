@@ -1,18 +1,17 @@
 import {TRY_AUTH, AUTH_SET_TOKEN} from './actionType'
-import { uiStartLoading,uiStopLoading } from './index'
+import { uiStartLoading,uiStopLoading, getLoggedCustomer } from './index'
 import AsyncStorage from '@react-native-community/async-storage';
 
 export const login = (authData,nav) => {
     return dispatch => {
         dispatch(uiStartLoading());
-        //console.log('in login')
+        console.log('in login',authData)
         let url = 'http://192.168.8.111:3300/user/login'
         fetch(url,{
             method: "POST",
             body: JSON.stringify({
                 email: authData.email,
                 password: authData.password,
-                returnSecureToken: true,
             }),
             headers: {
                 "Content-Type" : "application/json"
@@ -26,7 +25,7 @@ export const login = (authData,nav) => {
                 alert("Authentication failed! Please try again ")
             }
             else{   
-                dispatch(
+                await dispatch(
                     authStoreToken(
                         prasedRes.id,
                         prasedRes.token,
@@ -34,6 +33,7 @@ export const login = (authData,nav) => {
                         prasedRes.email,
                         prasedRes.userName,
                     ))
+                await dispatch(getLoggedCustomer())
                 const type = prasedRes.type
                 if(type === 'Admin'){
                     await nav.navigation.push('AdminSideScreen',{
@@ -66,7 +66,7 @@ export const authStoreToken = (id,token,userType,email,userName) => {
     return async(dispatch) => {
     //   const now = new Date();
     //   const expiryDate = now.getTime() + expiresIn * 1000;
-      dispatch(authSetToken(id,token,userType,email,userName));
+      await dispatch(authSetToken(id,token,userType,email,userName));
       console.log('async email', email)
       if(email=== undefined){
         email = await AsyncStorage.getItem('koane:auth:email');
@@ -91,6 +91,7 @@ export const authStoreToken = (id,token,userType,email,userName) => {
   };
   
   export const authSetToken = (id,token,userType,email,userName ) => {
+    console.log('in setting token')
     return {
       type: AUTH_SET_TOKEN,
       token: token,
@@ -103,25 +104,63 @@ export const authStoreToken = (id,token,userType,email,userName) => {
   };
   
 export const authGetToken = () => {
-    return(dispatch, getState) => {
-        const promise = new Promise((resolve, reject) => {
-            const token = getState().auth.token;
-            if(!token){
-                let fetchedToken;
-                AsyncStorage.getItem('koane:auth:token')
-                .catch((err) => reject())
-                .then((tokenFromStorage) => {
-                    fetchedToken = tokenFromStorage
-                    if(!tokenFromStorage){
-                        reject();
-                        return;
-                    }
-                    else{
-                        resolve(token);
-                    }
-                })                
-            }
-        })
+    return async(dispatch, getState) => {
+      console.log('getting token')
+      try{
+        const token = await getState().auth.token
+        console.log(token)
+        if(!token){
+          let fetchedToken;
+          const tokenFromStorage = await AsyncStorage.getItem('koane:auth:token')
+          if(tokenFromStorage){
+            fetchedToken = tokenFromStorage
+            token = fetchedToken
+            console.log('returning token',token)
+            return token
+          }
+        }
+        else{
+          console.log('returning token',token)
+          return token
+        }
+      }
+      catch(e){
+        console.log(e)
+        alert('something went wrong')
+      }
+        // const promise = new Promise((resolve, reject) => {
+        //     const token = getState().auth.token;
+        //     console.log('getting token');
+        //     if(!token){
+        //         let fetchedToken;
+        //         AsyncStorage.getItem('koane:auth:token')
+        //         .catch((err) => reject())
+        //         .then((tokenFromStorage) => {
+        //             fetchedToken = tokenFromStorage
+        //             if(!tokenFromStorage){
+        //                 reject();
+        //                 return;
+        //             }
+        //             else{
+        //                 resolve(token);
+        //             }
+        //         })                
+        //     }
+        //     else{
+        //       console.log(token)
+        //       resolve(token);
+        //       return token;
+        //     }
+        // })
+        // .then((token) => {
+        //   if (!token) {
+        //     throw new Error();
+        //   } else {
+        //     return token;
+        //   }
+        // });
+        // return promise
+        // .catch(error => alert('something went wrong'))
     }
 }
   
@@ -201,7 +240,6 @@ export const authAutoSignIn = (nav) => {
                   headers: {
                     "Authorization" : "Bearer "+token
                     },
-                  body: JSON.stringify(productData)
               })
           })
           .then(res => {
