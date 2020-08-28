@@ -1,54 +1,56 @@
-// import {TRY_AUTH, AUTH_SET_TOKEN} from './actionType'
+import {TRY_AUTH, AUTH_SET_TOKEN} from './actionType'
 import { uiStartLoading,uiStopLoading } from './index'
-
-
-//login auto login if token not expired log out storing data 
+import AsyncStorage from '@react-native-community/async-storage';
 
 export const login = (authData,nav) => {
     return dispatch => {
         dispatch(uiStartLoading());
         //console.log('in login')
-        let url = 'http://192.168.8.162:3300/user/login'
+        let url = 'http://192.168.8.111:3300/user/login'
         fetch(url,{
             method: "POST",
             body: JSON.stringify({
                 email: authData.email,
                 password: authData.password,
-                returnSecureToken: true
+                returnSecureToken: true,
             }),
             headers: {
                 "Content-Type" : "application/json"
             }
         })
         .then(res => {return res.json()})
-        .then(prasedRes => {
+        .then(async(prasedRes) => {
             dispatch(uiStopLoading())
             console.log(prasedRes.type)
-            const type = prasedRes.type
-            if(type === 'Admin'){
-                nav.navigation.push('AdminHome',{
-                    user: prasedRes
-                })
+            if(!prasedRes.token){
+                alert("Authentication failed! Please try again ")
             }
-            else if(type === 'Vendor'){
-                nav.navigation.push('VendorHome',{
-                    user: prasedRes
-                })
+            else{   
+                dispatch(
+                    authStoreToken(
+                        prasedRes.id,
+                        prasedRes.token,
+                        prasedRes.type,
+                        prasedRes.email,
+                        prasedRes.userName,
+                    ))
+                const type = prasedRes.type
+                if(type === 'Admin'){
+                    await nav.navigation.push('AdminSideScreen',{
+                        user: prasedRes
+                    })
+                }
+                else if(type === 'Vendor'){
+                    await nav.navigation.push('VendorSideScreen',{
+                        user: prasedRes
+                    })
+                }
+                else {
+                    await nav.navigation.push('CustomerSideScreen',{
+                        user: prasedRes
+                    })
+                }
             }
-            else {
-                nav.navigation.push('CustomerHome',{
-                    user: prasedRes
-                })
-            }
-            
-            // if(!prasedRes.idToken){
-            //     alert("Authentication failed! Please try again ")
-                
-            // }
-            // else{   
-            //     dispatch(authSetToken(prasedRes.idToken))
-            //     nav.navigation.push('SideDrawer')
-            // }
             
         })
         .catch(err => {
@@ -58,3 +60,172 @@ export const login = (authData,nav) => {
         })
     }
 }
+
+export const authStoreToken = (id,token,userType,email,userName) => {
+
+    return async(dispatch) => {
+    //   const now = new Date();
+    //   const expiryDate = now.getTime() + expiresIn * 1000;
+      dispatch(authSetToken(id,token,userType,email,userName));
+      console.log('async email', email)
+      if(email=== undefined){
+        email = await AsyncStorage.getItem('koane:auth:email');
+        userName = await AsyncStorage.getItem('koane:auth:userName');
+        id = await AsyncStorage.getItem('koane:auth:id');
+        userType = await AsyncStorage.getItem('koane:atuh:userType')
+      }
+      //console.log(now, new Date(expiryDate))
+      console.log('initialized mail', email)
+      AsyncStorage.setItem('koane:auth:token', token);
+      //AsyncStorage.setItem('koane:auth:expiryDate', expiryDate.toString());
+      AsyncStorage.setItem('koane:auth:email', email)
+      AsyncStorage.setItem('koane:auth:userName', userName)
+      AsyncStorage.setItem('koane:auth:id', id)
+      AsyncStorage.setItem('koane:auth:userType', userType)
+      // console.log('name',(AsyncStorage.getItem('koane:auth:name')).toString())
+      // return((AsyncStorage.getItem('koane:auth:name')))
+      // .then(name){
+      //   console.log(name)
+      // }
+    };
+  };
+  
+  export const authSetToken = (id,token,userType,email,userName ) => {
+    return {
+      type: AUTH_SET_TOKEN,
+      token: token,
+      //expiryDate: expiryDate,
+      email: email,
+      userName: userName,
+      id: id,
+      userType: userType,
+    };
+  };
+  
+export const authGetToken = () => {
+    return(dispatch, getState) => {
+        const promise = new Promise((resolve, reject) => {
+            const token = getState().auth.token;
+            if(!token){
+                let fetchedToken;
+                AsyncStorage.getItem('koane:auth:token')
+                .catch((err) => reject())
+                .then((tokenFromStorage) => {
+                    fetchedToken = tokenFromStorage
+                    if(!tokenFromStorage){
+                        reject();
+                        return;
+                    }
+                    else{
+                        resolve(token);
+                    }
+                })                
+            }
+        })
+    }
+}
+  
+export const authAutoSignIn = (nav) => {
+    return (dispatch) => {
+      dispatch(authGetToken())
+        .then(async(token) => {
+        email = await AsyncStorage.getItem('koane:auth:email');
+        userName = await AsyncStorage.getItem('koane:auth:userName');
+        id = await AsyncStorage.getItem('koane:auth:id');
+        userType = await AsyncStorage.getItem('koane:atuh:userType');
+          //console.log(email)
+          await dispatch(getLoggedUser(email))
+          if(type === 'Admin'){
+            await nav.navigation.push('AdminSideScreen',{
+                user: prasedRes
+            })
+            .catch((err) => console.log('Failed to fetch token'));
+        }
+        else if(type === 'Vendor'){
+            await nav.navigation.push('VendorSideScreen',{
+                user: prasedRes
+            })
+            .catch((err) => console.log('Failed to fetch token'));
+        }
+        else {
+            await nav.navigation.push('CustomerSideScreen',{
+                user: prasedRes
+            })
+            .catch((err) => console.log('Failed to fetch token'));
+        }
+    
+        }
+    )};
+    }
+
+  export const authClearStorage = () => {
+    return (dispatch) => {
+      //AsyncStorage.removeItem('koane:auth:expiryDate');
+      AsyncStorage.removeItem('koane:auth:token');
+      AsyncStorage.removeItem('koane:auth:email');
+      AsyncStorage.removeItem('koane:auth:userName');
+      AsyncStorage.removeItem('koane:auth:id');
+      return AsyncStorage.removeItem('koane:auth:userType');
+    };
+  };
+  
+  export const authLogout = (nav) => {
+    return async(dispatch) => {
+      await dispatch(initiateLogOut());
+      await dispatch(authClearStorage()).then(() => {
+        nav.navigation.push('Login');
+      });
+      await dispatch(authRemoveToken());
+    //   dispatch(userLogOut());
+    };
+  };
+  
+  export const authRemoveToken = () => {
+    return {
+      type: AUTH_REMOVE_TOKEN,
+    };
+  };
+
+  export const initiateLogOut = () => {
+      return (dispatch) => {
+          dispatch(authGetToken())
+          .catch(() =>{
+              alert('No valid token found')
+          })
+          .then( token => {
+              //dispatch(removeProduct(key))
+              console.log('pass1')
+              let url = 'http://192.168.8.111:3300/user/logout'
+              return fetch(url, {
+                  method: "PATCH",
+                  headers: {
+                    "Authorization" : "Bearer "+token
+                    },
+                  body: JSON.stringify(productData)
+              })
+          })
+          .then(res => {
+            if(res.ok){
+  
+              return res.json()
+            }
+            else{
+              throw (new Error())
+            }
+          })
+          .then(parsedRes => {
+              console.log("Done!");
+            //   dispatch(uiStopLoading());
+            //   dispatch(getUserProducts(owner));
+            //   dispatch(stopUpdateProduct());
+          })
+          .catch(err => {
+              alert("Something went wrong, sorry :/");
+              console.log(err);
+            //   dispatch(uiStopLoading());
+            //   dispatch(getUserProducts(owner));
+            //   dispatch(stopUpdateProduct());
+          })        
+          
+      }
+  }

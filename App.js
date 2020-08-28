@@ -27,9 +27,9 @@ function App() {
   return (
 
     <NavigationContainer>     
-      <RootStack.Navigator headerMode='none' >
+      <RootStack.Navigator headerMode='none' initialRouteName="LoginRegister" >
       {/* <RootStack.Screen name="Test" component={Test} /> */}
-      {/* <RootStack.Screen name="VendorSideScreen" component={VendorSideDrawer} /> */}
+      <RootStack.Screen name="VendorSideScreen" component={VendorSideDrawer} />
       <RootStack.Screen name="CustomerSideScreen" component={CustomerSideDrawer} />
       
       <RootStack.Screen
