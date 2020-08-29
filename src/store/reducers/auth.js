@@ -10,7 +10,8 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch(action.type){
-        case AUTH_SET_TOKEN: 
+        case AUTH_SET_TOKEN:
+            console.log('in auth set token',action) 
             return{
                 ...state,
                 token: action.token,
