@@ -10,7 +10,7 @@ const rootReducer = combineReducers({
     location: locationReducer,
     ui: uiReducer,
     auth: authReducer,
-    customer: customerReducer,
+    customers: customerReducer,
 });
 
 let composeEnhancers = compose;

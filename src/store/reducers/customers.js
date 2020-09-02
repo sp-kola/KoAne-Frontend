@@ -41,7 +41,7 @@ const reducer = (state = initialState, action) => {
         }    
 
         case LOGIN_CUSTOMER:{
-            console.log('action in login', action)
+            console.log('action in login', action.id)
             return{
                 ...state,
                 loggedCustomerCustomerId: action.id,

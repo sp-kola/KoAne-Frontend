@@ -76,6 +76,72 @@ export const getLoggedCustomer = () => {
   }
   }
 
+  export const updateLoggedCustomer = (userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses) => {
+    const updateData = {
+        userName:userName,
+        firstName:firstName,
+        lastName:lastName,
+        email:email,
+        contactNo:contactNo,
+        lastReportedLocation:lastReportedLocation,
+        deliveryAddresses:deliveryAddresses
+    }
+    console.log('in update logged customer')
+    return (dispatch) =>{
+    dispatch(authGetToken())
+    .catch(() =>{
+        alert('No valid token found')
+    })
+    .then(token =>{
+        console.log('token from auth get',{userName:userName,
+        firstName:firstName,
+        lastName:lastName,
+        email:email,
+        contactNo:contactNo,
+        lastReportedLocation:lastReportedLocation,
+        deliveryAddresses:deliveryAddresses})
+        let url = 'http://192.168.8.111:3300/customer'
+        return fetch(url, {
+            method: "PATCH",
+            headers: {
+            "Authorization" : "Bearer "+token,
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updateData)
+        })
+    })
+    .then(res =>  {
+      if(res.ok){
+        console.log('res',res)
+        return res.json()
+      }
+      else{
+        throw (new Error())
+      }
+    })
+    .then(parsedRes => {
+        console.log('returned data',parsedRes)
+        let customer = {
+            _id : parsedRes._id,
+            userName: parsedRes.userName,
+            firstName: parsedRes.firstName,
+            lastName: parsedRes.lastName,
+            email: parsedRes.email,
+            contactNo: parsedRes.contactNo,
+            lastReportedLocation: parsedRes.lastReportedLocation,
+            deliveryAddresses: parsedRes.deliveryAddresses
+        }
+        console.log('loding data')
+        dispatch(customerLogIn(customer))
+    })
+    .catch(err => {
+        alert('Something went wrong, sorry :/')
+        console.log(err)
+    })
+  }
+  }
+
   export const customerLogIn = (customer) => {
     console.log('in user login', customer.userName)
     return{
