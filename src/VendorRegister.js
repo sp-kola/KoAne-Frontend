@@ -17,155 +17,170 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import validate from './utils/validation';
 import DefaultInput from './components/UI/DefaultInput/DefaultInput';
-import {vendorSignup} from './store/actions/index'
+import {vendorSignup} from './store/actions/index';
 //import {TextInput} from 'react-native-gesture-handler';
 
 class VendorRegister extends React.Component {
-
-    state = {
-      controls : {
-        email:{
-            value: "",
-            valid: false,  
-            validationRules:{
-                isEmail: true
-            },
-            touched : false
+  state = {
+    controls: {
+      email: {
+        value: '',
+        valid: false,
+        validationRules: {
+          isEmail: true,
         },
-        firstName: {
-          value: "",
-          valid: false,
-          validationRules:{
-              notEmpty: true
-          },
-          touched : false
-        },
-        lastName: {
-          value: "",
-          valid: false,
-          validationRules:{
-            notEmpty: true
-          },
-          touched : false
-        },
-        userName: {
-          value: "",
-          valid: false,
-          validationRules:{
-            notEmpty: true
-          },
-          touched : false
-        },
-        password: {
-            value: "",
-            valid: false,
-            validationRules:{
-                strongPassword: true
-            },
-            touched : false
-        },
-        confrimPassword: {
-          value: "",
-          valid: false,
-          validationRules:{
-              equalTo: "password"
-          },
-          touched : false
-        },
-        contactNo: {
-          value: "",
-          valid: false,
-          validationRules:{
-              minLength: 10
-          },
-          touched : false
-        },
-        vehicleNo: {
-          value: "",
-          valid: true,
-          validationRules:{
-              minLength: 10
-          },
-          touched : false
-        },
-        businessName: {
-          value: "",
-          valid: true,
-          validationRules:{
-              notEmpty: true
-          },
-          touched : false
-        },
+        touched: false,
       },
-    }
-    
-    updateInputState = (key, value) => {
-      let connectedValue = {};
-      if(this.state.controls[key].validationRules.equalTo){
-          const equalControl = this.state.controls[key].validationRules.equalTo;
-          const equalValue = this.state.controls[equalControl].value;
-          connectedValue ={
-              ...connectedValue,
-              equalTo: equalValue
-          }
-      }
-      if(key === 'password'){
-          const equalControl = "password"
-          connectedValue ={
-              ...connectedValue,
-              equalTo: value
-          }
-      }
-      this.setState(prevState => {
-          return{
-              controls: {
-                  ...prevState.controls,
-                  confrimPassword:{
-                      ...prevState.controls.confrimPassword,
-                      valid: key === 'password'? validate(prevState.controls.confrimPassword.value,prevState.controls.confrimPassword.validationRules,connectedValue) 
-                      : prevState.controls.confrimPassword.valid
-                  },
-                  [key]: {
-                      ...prevState.controls[key],
-                      value: value,
-                      valid: validate(value, prevState.controls[key].validationRules, connectedValue),
-                      touched: true
-                      
-                  }
-              }
-          }
-      })
-  }
+      firstName: {
+        value: '',
+        valid: false,
+        validationRules: {
+          notEmpty: true,
+        },
+        touched: false,
+      },
+      lastName: {
+        value: '',
+        valid: false,
+        validationRules: {
+          notEmpty: true,
+        },
+        touched: false,
+      },
+      userName: {
+        value: '',
+        valid: false,
+        validationRules: {
+          notEmpty: true,
+        },
+        touched: false,
+      },
+      password: {
+        value: '',
+        valid: false,
+        validationRules: {
+          strongPassword: true,
+        },
+        touched: false,
+      },
+      confrimPassword: {
+        value: '',
+        valid: false,
+        validationRules: {
+          equalTo: 'password',
+        },
+        touched: false,
+      },
+      contactNo: {
+        value: '',
+        valid: false,
+        validationRules: {
+          minLength: 10,
+        },
+        touched: false,
+      },
+      vehicleNo: {
+        value: '',
+        valid: true,
+        validationRules: {
+          minLength: 10,
+        },
+        touched: false,
+      },
+      businessName: {
+        value: '',
+        valid: true,
+        validationRules: {
+          notEmpty: true,
+        },
+        touched: false,
+      },
+    },
+  };
 
+  updateInputState = (key, value) => {
+    let connectedValue = {};
+    if (this.state.controls[key].validationRules.equalTo) {
+      const equalControl = this.state.controls[key].validationRules.equalTo;
+      const equalValue = this.state.controls[equalControl].value;
+      connectedValue = {
+        ...connectedValue,
+        equalTo: equalValue,
+      };
+    }
+    if (key === 'password') {
+      const equalControl = 'password';
+      connectedValue = {
+        ...connectedValue,
+        equalTo: value,
+      };
+    }
+    this.setState(prevState => {
+      return {
+        controls: {
+          ...prevState.controls,
+          confrimPassword: {
+            ...prevState.controls.confrimPassword,
+            valid:
+              key === 'password'
+                ? validate(
+                    prevState.controls.confrimPassword.value,
+                    prevState.controls.confrimPassword.validationRules,
+                    connectedValue,
+                  )
+                : prevState.controls.confrimPassword.valid,
+          },
+          [key]: {
+            ...prevState.controls[key],
+            value: value,
+            valid: validate(
+              value,
+              prevState.controls[key].validationRules,
+              connectedValue,
+            ),
+            touched: true,
+          },
+        },
+      };
+    });
+  };
 
   submitHandler = () => {
-    const signUpData ={ 
+    const signUpData = {
       email: this.state.controls.email.value,
       password: this.state.controls.password.value,
       firstName: this.state.controls.firstName.value,
       lastName: this.state.controls.lastName.value,
       userName: this.state.controls.userName.value,
       contactNo: this.state.controls.contactNo.value,
-      }
-      if(this.state.controls.email.valid === true && this.state.controls.password.valid === true && this.state.controls.firstName.valid === true && this.state.controls.lastName.valid === true && this.state.controls.contactNo.valid === true && this.state.controls.userName.valid === true && this.state.controls.businessName.valid === true && this.state.controls.vehicleNo.valid === true){
-        alert(`Pass`)
-        this.props.onSignup(signUpData,this.props)
+    };
+    if (
+      this.state.controls.email.valid === true &&
+      this.state.controls.password.valid === true &&
+      this.state.controls.firstName.valid === true &&
+      this.state.controls.lastName.valid === true &&
+      this.state.controls.contactNo.valid === true &&
+      this.state.controls.userName.valid === true &&
+      this.state.controls.businessName.valid === true &&
+      this.state.controls.vehicleNo.valid === true
+    ) {
+      alert(`Pass`);
+      this.props.onSignup(signUpData, this.props);
+    } else {
+      console.log(userName);
+      alert(`Validation error`);
     }
-    else{ 
-        alert(`Validation error`)
-      }
-  }
+  };
 
   render() {
     return (
-        <ImageBackground
-          style={styles.backgroundContainer}
-          source={require('../assets/back1.png')}>
-          <ScrollView>
+      <ImageBackground
+        style={styles.backgroundContainer}
+        source={require('../assets/back1.png')}>
+        <ScrollView>
           <KeyboardAvoidingView
             style={styles.keyboardAwareness}
-            automaticallyAdjustContentInsets={true}
-            >
+            automaticallyAdjustContentInsets={true}>
             <View style={styles.regform}>
               <Text style={styles.header}> Registration</Text>
               <DefaultInput
@@ -174,9 +189,9 @@ class VendorRegister extends React.Component {
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.firstName.value}
-                onChangeText = {(val) => this.updateInputState('firstName',val)}
-                valid = {this.state.controls.firstName.valid}
-                touched= {this.state.controls.firstName.touched}
+                onChangeText={val => this.updateInputState('firstName', val)}
+                valid={this.state.controls.firstName.valid}
+                touched={this.state.controls.firstName.touched}
               />
               <DefaultInput
                 style={styles.textinput}
@@ -184,9 +199,9 @@ class VendorRegister extends React.Component {
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.lastName.value}
-                onChangeText = {(val) => this.updateInputState('lastName',val)}
-                valid = {this.state.controls.lastName.valid}
-                touched= {this.state.controls.lastName.touched}
+                onChangeText={val => this.updateInputState('lastName', val)}
+                valid={this.state.controls.lastName.valid}
+                touched={this.state.controls.lastName.touched}
               />
               <DefaultInput
                 style={styles.textinput}
@@ -194,9 +209,9 @@ class VendorRegister extends React.Component {
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.userName.value}
-                onChangeText = {(val) => this.updateInputState('userName',val)}
-                valid = {this.state.controls.userName.valid}
-                touched= {this.state.controls.userName.touched}
+                onChangeText={val => this.updateInputState('userName', val)}
+                valid={this.state.controls.userName.valid}
+                touched={this.state.controls.userName.touched}
               />
               <DefaultInput
                 style={styles.textinput}
@@ -204,21 +219,21 @@ class VendorRegister extends React.Component {
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.businessName.value}
-                onChangeText = {(val) => this.updateInputState('businessName',val)}
-                valid = {this.state.controls.businessName.valid}
-                touched= {this.state.controls.businessName.touched}
+                onChangeText={val => this.updateInputState('businessName', val)}
+                valid={this.state.controls.businessName.valid}
+                touched={this.state.controls.businessName.touched}
               />
-              <DefaultInput 
-                placeholder='Email*' 
+              <DefaultInput
+                placeholder="Email*"
                 style={styles.textinput}
                 value={this.state.controls.email.value}
-                onChangeText = {(val) => this.updateInputState('email',val)}
-                valid = {this.state.controls.email.valid}
-                touched= {this.state.controls.email.touched}
+                onChangeText={val => this.updateInputState('email', val)}
+                valid={this.state.controls.email.valid}
+                touched={this.state.controls.email.touched}
                 placeholderTextColor="#000"
-                autoCapitalize = 'none'
-                autoCorrect = {false}
-                keyboardType = 'email-address'
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="email-address"
                 underlineColorAndroid={'transparent'}
               />
               <DefaultInput
@@ -227,9 +242,9 @@ class VendorRegister extends React.Component {
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.vehicleNo.value}
-                onChangeText = {(val) => this.updateInputState('vehicleNo',val)}
+                onChangeText={val => this.updateInputState('vehicleNo', val)}
                 //valid = {this.state.controls.vehicleNo.valid}
-               // touched= {this.state.controls.vehicleNo.touched}
+                // touched= {this.state.controls.vehicleNo.touched}
               />
               <DefaultInput
                 style={styles.textinput}
@@ -237,9 +252,9 @@ class VendorRegister extends React.Component {
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.contactNo.value}
-                onChangeText = {(val) => this.updateInputState('contactNo',val)}
-                valid = {this.state.controls.contactNo.valid}
-                touched= {this.state.controls.contactNo.touched}
+                onChangeText={val => this.updateInputState('contactNo', val)}
+                valid={this.state.controls.contactNo.valid}
+                touched={this.state.controls.contactNo.touched}
               />
               <DefaultInput
                 style={styles.textinput}
@@ -247,9 +262,9 @@ class VendorRegister extends React.Component {
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.password.value}
-                onChangeText = {(val) => this.updateInputState('password',val)}
-                valid = {this.state.controls.password.valid}
-                touched= {this.state.controls.password.touched}
+                onChangeText={val => this.updateInputState('password', val)}
+                valid={this.state.controls.password.valid}
+                touched={this.state.controls.password.touched}
                 secureTextEntry
               />
               <DefaultInput
@@ -258,19 +273,25 @@ class VendorRegister extends React.Component {
                 placeholderTextColor="#000"
                 underlineColorAndroid={'transparent'}
                 value={this.state.controls.confrimPassword.value}
-                onChangeText = {(val) => this.updateInputState('confrimPassword',val)}
-                valid = {this.state.controls.confrimPassword.valid}
-                touched= {this.state.controls.confrimPassword.touched}
+                onChangeText={val =>
+                  this.updateInputState('confrimPassword', val)
+                }
+                valid={this.state.controls.confrimPassword.valid}
+                touched={this.state.controls.confrimPassword.touched}
                 secureTextEntry
               />
 
               <TouchableOpacity style={styles.loginButton}>
-                <Text style={styles.loginText} onPress={() => this.submitHandler()}>Sign Up</Text>
+                <Text
+                  style={styles.loginText}
+                  onPress={() => this.submitHandler()}>
+                  Sign Up
+                </Text>
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
-          </ScrollView>
-        </ImageBackground>
+        </ScrollView>
+      </ImageBackground>
     );
   }
 }
@@ -287,7 +308,7 @@ const styles = StyleSheet.create({
     height: '100%',
     //flex: 1,
   },
-  background:{
+  background: {
     backgroundColor: 'rgba(255,255,255,0.9)',
     //width: '95%',
     //alignItems: 'center',
@@ -306,7 +327,7 @@ const styles = StyleSheet.create({
     width: '90%',
     borderRadius: 25,
     paddingBottom: 10,
-    paddingTop: 10
+    paddingTop: 10,
   },
 
   header: {
@@ -334,7 +355,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'black',
     borderTopColor: 'transparent',
     borderEndColor: 'transparent',
-    borderStartColor: 'transparent'
+    borderStartColor: 'transparent',
   },
 
   loginText: {
@@ -363,8 +384,11 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
   return {
-      onSignup: (signupData,nav) => dispatch(vendorSignup(signupData,nav))
-  }
-}
+    onSignup: (signupData, nav) => dispatch(vendorSignup(signupData, nav)),
+  };
+};
 
-export default connect(null, mapDispatchToProps)(VendorRegister); 
+export default connect(
+  null,
+  mapDispatchToProps,
+)(VendorRegister);
