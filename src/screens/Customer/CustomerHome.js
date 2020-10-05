@@ -5,13 +5,57 @@ import Feather from 'react-native-vector-icons/FontAwesome5';
 import { Container, Header, Title, Content, Button, Left, Right, Body,  Tab, Tabs, ScrollableTab} from "native-base";
 import Icon from 'react-native-vector-icons/Foundation';
 import FontAweseomeIcon from 'react-native-vector-icons/FontAwesome5';
+import Modal from 'react-native-modal';
+import Geocoder from 'react-native-geocoding';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+
+import DefaultButton from '../../components/UI/DefaultButton/DefaultButton'
 
 //import FlatButton from './Button';
+const GOOGLE_PLACES_API_KEY = 'AIzaSyBcs4ko-dTv7DhkZWp0BbcTs0z2nodA4y8'; 
+
+Geocoder.init(GOOGLE_PLACES_API_KEY);
 
 const { width } = Dimensions.get('window');
 
 export default class CustomerHome extends Component
 {
+    state = {
+        locationLatitude: '',
+        locationLongitude: '',
+        address: '',
+        modalVisible: false           
+    }
+
+
+    addressChangedHandler = (val) => {
+        console.log(val)
+        this.setState(prevState => {
+            return {
+              address: val
+            };
+          });
+        Geocoder.from(val)
+        .then(json => {
+            var location = json.results[0].geometry.location;
+            this.setState({
+              locationLatitude: location.lat,
+              locationLongitude: location.lng
+            })
+            //this.locationPicker.changeState(location);
+        })
+        .catch(error => console.warn(error));
+        
+    }
+
+    modalVisibleHandler = () => {
+        this.setState(prevState => {
+            return {
+            modalVisible: prevState.modalVisible ? false: true
+            }
+        })
+    }
+
     ShowSearch=()=>
     {
         alert("The vendors list");
@@ -31,31 +75,85 @@ export default class CustomerHome extends Component
     render()
     {
         const itemsCount = 50
+        const modal = <Modal 
+                        isVisible={this.state.modalVisible} 
+                        style={styles.modal} 
+                        backdropOpacity={0.8}
+                        animationIn="zoomInDown"
+                        animationOut="zoomOutUp"
+                        animationInTiming={600}
+                        animationOutTiming={600}
+                        backdropTransitionInTiming={600}
+                        backdropTransitionOutTiming={600}
+                        >
+                        <Header style={styles.header} androidStatusBarColor='black' backgroundColor='#E0B743'>
+                        <Left>
+                            <Button transparent>
+                            <Icon name="map" size={30} color="white" />
+                            </Button>
+                        </Left>
+                        <Body>
+                            <Title>Filter your address</Title>
+                        </Body>
+                        </Header>
+                        <GooglePlacesAutocomplete
+                        //onChangeText= {this.shopNameChangedHandler} 
+                        //value={this.state.controls.shopName.value}
+                        query={{
+                            key: GOOGLE_PLACES_API_KEY,
+                            language: 'en', // language of the results
+                            components: 'country:lk',
+                        }}
+                        onPress={( data,details = null) => {
+                            console.log(data, details)
+                            this.addressChangedHandler(data.description)
+                        }}
+                        //onPress={console.log(query)}
+                        listViewDisplayed={false}  
+                        
+                        onFail={error => console.error(error)}
+                        requestUrl={{
+                            url:
+                            'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api',
+                            useOnPlatform: 'web',
+                        }} // this in only required for use on the web. See https://git.io/JflFv more for details.
+                        styles={{
+                            textInputContainer: {
+                            backgroundColor: 'rgba(0,0,0,0)',
+                            borderTopWidth: 0,
+                            borderBottomWidth: 0,
+                            },
+                            textInput: {
+                            marginLeft: 0,
+                            marginRight: 0,
+                            height: 38,
+                            color: '#5d5d5d',
+                            fontSize: 16,
+                            },
+                            predefinedPlacesDescription: {
+                            color: '#1faadb',
+                            },
+                        }}/>
+                        <DefaultButton  
+                        color='green' 
+                        onPress={this.modalVisibleHandler}
+                        >
+                            Set Location
+                        </DefaultButton>
+                    </Modal>
+
+        //console.log('address',this.state.address)                
         return(
             <View>
-                <Header noLeft style={styles.header} hasTabs>
-            <Body>
-                <View style={styles.headerView}>
-                <Left>
-                <Text style={styles.headerText}>{this.props.route.params.user.userName}</Text>
-                </Left>    
-                <Title>CUSTOMER</Title>
-                
-                <Right>
-                <Button transparent onPress={()=> this.props.navigation.push('CustomerMap')}>
-                <FontAweseomeIcon name="map" size={20} color="#fff" style={styles.iconStyle}/>
-                <Text style={styles.headerText}>Map</Text>
-            </Button>
-            </Right>
-            </View>
-            </Body>
-            </Header> 
+                {modal}
+                <TouchableOpacity onPress={this.modalVisibleHandler}>
                 <View style={{flexDirection:'row',borderWidth:1,justifyContent:'center',
-                            alignItems:'center',width:380,height:50,margin:'5%',borderRadius:118}}> 
+                            alignItems:'center',width:'90%',height:50,margin:'5%',borderRadius:118}}> 
                 {/* <TextInput style={{borderWidth:1, borderColor:'black',margin:10, borderRadius:18,flex:1,flexDirection:'row'}}> */}
-                <TextInput style={{flex:1,}} />
+                <Text style={{flex: 1, textTransform:'uppercase', paddingLeft: 15, fontSize:16 }}>{this.state.address!=''? this.state.address : 'select your address'}</Text>
                 <Icon name="target-two" style={{color:'black',paddingRight:15,fontSize:18}}/>
-                 </View>   
+                 </View>
+                </TouchableOpacity>    
                 <Image
                     style={{width:345, height:120, marginLeft:'8%',borderRadius:10,marginTop:20}}
                     source={require('./Elements/1.jpg')}
@@ -192,5 +290,10 @@ const styles = StyleSheet.create({
     },
     headerText: {
         color: 'white'
-    }
+    },
+    modal: {
+        backgroundColor: 'rgba(255,255,255,0.8)',
+        flex: 1,
+        padding: 10
+    },
   });
