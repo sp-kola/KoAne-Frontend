@@ -5,9 +5,10 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import user from './Elements/2.jpg'
 import Modal from 'react-native-modal';
 import {connect} from 'react-redux';
-import {updateLoggedCustomer, getLoggedCustomer} from '../../store/actions/index'
+import {updateLoggedCustomer, getLoggedCustomer, updateAvatar} from '../../store/actions/index'
 import DefaultButton from '../../components/UI/DefaultButton/DefaultButton'
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
+import PickImage from '../../components/PickImage/PickImage'
 // loggedCustomerCustomerId: '',
 // loggedCustomerUserName: '',
 // loggedCustomerFirstName: '',
@@ -28,19 +29,54 @@ class CustomerProfile extends Component{
     //     deliveryAddresses: this.props.deliveryAddresses   
     state={
         modalVisible: false,
+        updateAvatarVisible: false,
         userName: '',
         firstName: '',
         lastName: '',
         email: '',
         contactNumber: '',
         lastReportedLocation: [],
-        deliveryAddresses: []          
+        deliveryAddresses: [] ,
+        image: null         
+    }
+
+    reset = () => {
+        this.setState({
+                modalVisible: false,
+                updateAvatarVisible: false,
+                userName: '',
+                firstName: '',
+                lastName: '',
+                email: '',
+                contactNumber: '',
+                lastReportedLocation: [],
+                deliveryAddresses: [], 
+                image: null
+            }
+        )
+    }
+
+    imagePickedHandler = image => {
+        this.setState(prevState => {
+            return{
+                ...prevState,
+                image: image
+            }
+        })
     }
 
     modalVisibleHandler = () => {
         this.setState(prevState => {
             return {
             modalVisible: prevState.modalVisible ? false: true
+            }
+        })
+    }
+
+    avatarModalVisibleHandler = () => {
+        this.setState(prevState => {
+            return {
+                updateAvatarVisible: prevState.updateAvatarVisible ? false: true
             }
         })
     }
@@ -105,11 +141,55 @@ class CustomerProfile extends Component{
         const lastReportedLocation= this.state.lastReportedLocation?this.state.lastReportedLocation:this.props.lastReportedLocation
         const deliveryAddresses= this.state.deliveryAddresses?this.props.deliveryAddresses:this.state.deliveryAddresses  
         this.props.onUpdateCustomer(userName,firstName,lastName,email,contactNumber,lastReportedLocation,deliveryAddresses)
+        this.reset()
+    }
+
+    updateImage = () => {
+        this.setState(prevState => {
+            return {
+                updateAvatarVisible: prevState.updateAvatarVisible ? false: true
+            }
+        })
+        this.imagePicker.reset()
+        if(this.state.image){
+            this.props.onUpdateAvatar(this.state.image)
+            alert('image updating')
+            this.reset()
+        }
+        else{
+            alert('Insert an image')
+        }
     }
     
 
     render(){
         //console.log(this.state)
+        const updateAvatar =  <Modal 
+                    isVisible={this.state.updateAvatarVisible} 
+                    style={styles.imageModal} 
+                    backdropOpacity={0.8}
+                    animationIn="zoomInDown"
+                    animationOut="zoomOutUp"
+                    animationInTiming={600}
+                    animationOutTiming={600}
+                    backdropTransitionInTiming={600}
+                    backdropTransitionOutTiming={600}
+                    swipeDirection={['up', 'left', 'right', 'down']}
+                    >
+                    <PickImage onImagePick={this.imagePickedHandler} ref={ref => this.imagePicker = ref}/>
+                    <DefaultButton  
+                    color='black' 
+                    onPress={this.avatarModalVisibleHandler}
+                    >
+                        close
+                    </DefaultButton>
+                    <DefaultButton  
+                    color='red' 
+                    onPress={this.updateImage}
+                    >
+                        update
+                    </DefaultButton>
+                </Modal>
         const modal = <Modal 
                         isVisible={this.state.modalVisible} 
                         style={styles.modal} 
@@ -120,6 +200,7 @@ class CustomerProfile extends Component{
                         animationOutTiming={600}
                         backdropTransitionInTiming={600}
                         backdropTransitionOutTiming={600}
+                        swipeDirection={['up', 'left', 'right', 'down']}
                         >
                         <Header style={styles.header} androidStatusBarColor='black' backgroundColor='#E0B743'>
                         <Left>
@@ -166,6 +247,7 @@ class CustomerProfile extends Component{
                             value={this.state.contactNumber}
                             //style={styles.inputField}
                         /> */}
+                        
                         <DefaultButton  
                         color='black' 
                         onPress={this.modalVisibleHandler}
@@ -182,11 +264,14 @@ class CustomerProfile extends Component{
         return(
             <ScrollView keyboardShouldPersistTaps='always'>
                 {modal}
+                {updateAvatar}
             <View style={styles.headerContainer}>
                 <View style={styles.shadow}>
                 <View>
                 <Thumbnail large={true} style={{width: 120, height: 120, borderRadius: 150}} source={user}/>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress= {this.avatarModalVisibleHandler}
+                >
                 <View style={styles.cameraBtn}>
                     <Icon name='camera' size={20} color='black'/>  
                 </View>
@@ -302,6 +387,9 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         padding: 5,
         marginHorizontal:'5%',
+        borderRadius: 2,
+        borderWidth: 2,
+        borderColor: 'black'
     },
     label:{
         //fontVariant: 'small-caps',
@@ -335,8 +423,20 @@ const styles = StyleSheet.create({
     },
     modal: {
         backgroundColor: 'rgba(255,255,255,0.8)',
-        flex: 1,
-        padding: 10
+        //flex: 1,
+        padding: 10,
+        //height: 200,
+        justifyContent: 'flex-start',
+        margin: 0,
+    },
+    imageModal: {
+        backgroundColor: 'rgba(255,255,255,0.8)',
+        //flex: 1,
+        padding: 10,
+        //height: 200,
+        justifyContent: 'flex-start',
+        margin: 0,
+        alignItems: 'center'
     },
     updateBtn:{
         flexDirection: 'row',
@@ -387,7 +487,8 @@ const mapDispatchToProps = dispatch => {
         // onStartAddBill: () => dispatch(startAddBill()),
         // onLoadBills: () => dispatch(getBills()),
         // onLoadUserBills: (email) => dispatch(getUserBills(email))
-        onUpdateCustomer: (userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses) => dispatch (updateLoggedCustomer(userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses))
+        onUpdateCustomer: (userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses) => dispatch (updateLoggedCustomer(userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses)),
+        onUpdateAvatar: (image) => dispatch (updateAvatar(image))
     }
 }
 

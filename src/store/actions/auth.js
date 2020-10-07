@@ -75,6 +75,7 @@ export const authStoreToken = (id,token,userType,email,userName) => {
         userType = await AsyncStorage.getItem('koane:atuh:userType')
       }
       //console.log(now, new Date(expiryDate))
+      console.log('setting token', token)
       console.log('initialized mail', email)
       AsyncStorage.setItem('koane:auth:token', token);
       //AsyncStorage.setItem('koane:auth:expiryDate', expiryDate.toString());

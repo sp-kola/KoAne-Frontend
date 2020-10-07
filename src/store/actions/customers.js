@@ -1,5 +1,6 @@
 import { uiStartLoading, uiStopLoading, authGetToken } from './index'
 import {  DELETE_CUSTOMER, SET_CUSTOMERS, REMOVE_CUSTOMER, CUSTOMER_ADDED, START_ADD_CUSTOMER,SEARCH_CUSTOMER,STOP_SEARCH_CUSTOMER, LOGIN_CUSTOMER, LOGOUT_CUSTOMER, SELECT_CUSTOMERS, CLEAR_SELECT_CUSTOMERS } from './actionType'
+import { Form } from 'native-base'
 
 
 export const signup = (signupData,nav) => {
@@ -83,7 +84,7 @@ export const getLoggedCustomer = () => {
         lastName:lastName,
         email:email,
         contactNo:contactNo,
-        lastReportedLocation:lastReportedLocation,
+        //lastReportedLocation:lastReportedLocation,
         deliveryAddresses:deliveryAddresses
     }
     console.log('in update logged customer')
@@ -93,18 +94,12 @@ export const getLoggedCustomer = () => {
         alert('No valid token found')
     })
     .then(token =>{
-        console.log('token from auth get',{userName:userName,
-        firstName:firstName,
-        lastName:lastName,
-        email:email,
-        contactNo:contactNo,
-        lastReportedLocation:lastReportedLocation,
-        deliveryAddresses:deliveryAddresses})
+        console.log('token from auth get',token)
         let url = 'http://192.168.8.111:3300/customer'
         return fetch(url, {
             method: "PATCH",
             headers: {
-            "Authorization" : "Bearer "+token,
+            Authorization : "Bearer "+token,
             Accept: 'application/json',
             'Content-Type': 'application/json'
             },
@@ -129,11 +124,68 @@ export const getLoggedCustomer = () => {
             lastName: parsedRes.lastName,
             email: parsedRes.email,
             contactNo: parsedRes.contactNo,
-            lastReportedLocation: parsedRes.lastReportedLocation,
+            //lastReportedLocation: parsedRes.lastReportedLocation,
             deliveryAddresses: parsedRes.deliveryAddresses
         }
         console.log('loding data')
         dispatch(customerLogIn(customer))
+    })
+    .catch(err => {
+        alert('Something went wrong, sorry :/')
+        console.log(err)
+    })
+  }
+  }
+
+  export const updateAvatar = (image) => {
+    console.log('in update avatar customer')
+    return (dispatch) =>{
+    dispatch(authGetToken())
+    .catch(() =>{
+        alert('No valid token found')
+    })
+    .then(token =>{
+        console.log('token from auth get',token)
+        let url = 'http://192.168.8.111:3300/customer/avatar'
+        //console.log(image)
+        const data = new FormData()
+        data.append(
+            'upload' , image
+        )
+        console.log('image ',data)
+        return fetch(url, {
+            method: "POST",
+            headers: {
+            Authorization : "Bearer "+token,
+            Accept: 'application/json',
+			'Content-Type': 'multipart/form-data;',
+            },
+            body: JSON.stringify(data)
+        })
+    })
+    .then(res =>  {
+      if(res.ok){
+        console.log('res',res)
+        return res.json()
+      }
+      else{
+        throw (new Error())
+      }
+    })
+    .then(parsedRes => {
+        console.log('returned data',parsedRes)
+        // let customer = {
+        //     _id : parsedRes._id,
+        //     userName: parsedRes.userName,
+        //     firstName: parsedRes.firstName,
+        //     lastName: parsedRes.lastName,
+        //     email: parsedRes.email,
+        //     contactNo: parsedRes.contactNo,
+        //     //lastReportedLocation: parsedRes.lastReportedLocation,
+        //     deliveryAddresses: parsedRes.deliveryAddresses
+        // }
+        // console.log('loding data')
+        // dispatch(customerLogIn(customer))
     })
     .catch(err => {
         alert('Something went wrong, sorry :/')
@@ -152,7 +204,7 @@ export const getLoggedCustomer = () => {
         lastName: customer.lastName,
         email: customer.email,
         contactNo: customer.contactNo,
-        lastReportedLocation: customer.lastReportedLocation,
+        //lastReportedLocation: customer.lastReportedLocation,
         deliveryAddresses: customer.deliveryAddresses,
     }
   }
