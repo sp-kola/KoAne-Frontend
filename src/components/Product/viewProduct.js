@@ -1,3 +1,8 @@
+// import React from 'react';
+
+// import {Text, StyleSheet, ImageBackground, Image,View} from 'react-native';
+
+// import {Card, CardItem, Left, Body, Content} from 'native-base';
 import React, {Component} from 'react';
 import {StyleSheet, View, ActivityIndicator, Text} from 'react-native';
 import {Content} from 'native-base';
@@ -45,10 +50,10 @@ export default class viewProduct extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-      <View style={styles.loading}>
-        <DefaultActivityIndicator />
-      </View>
-    );
+        <View style={styles.loading}>
+          <DefaultActivityIndicator />
+        </View>
+      );
     } else {
       let products = this.state.dataSource.map((val, key) => {
         return (

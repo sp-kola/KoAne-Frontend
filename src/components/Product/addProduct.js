@@ -8,6 +8,49 @@ import DefaultButton from '../UI/DefaultButton/DefaultButton';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ImagePicker from 'react-native-image-picker';
 
+// export default function addProduct() {
+//   return (
+//     // <Content style={styles.container}>
+//     <View style={styles.background}>
+//       <Form>
+//         <Item>
+//           <Input placeholder="PRODUCT NAME" style={styles.input} />
+//         </Item>
+//         <Item>
+//           <Input placeholder="PRICE" style={styles.input} />
+//         </Item>
+//         <Item>
+//           <Textarea
+//             rowSpan={5}
+//             placeholder="DETAILS"
+//             style={styles.inputMultiline}
+//           />
+//         </Item>
+//         <Item>
+//           <Text style={styles.text}>CATEGORY</Text>
+//         </Item>
+//         <Item style={styles.checkbox}>
+//           <CheckBox checked={false} color="black" />
+//         </Item>
+//         <Item>
+//           <TouchableOpacity>
+//             <Button transparent>
+//               <Text style={styles.button}>+</Text>
+//             </Button>
+//           </TouchableOpacity>
+//           <Text style={styles.text}>ADD A NEW CATEGORY</Text>
+//         </Item>
+//         <Item>
+//           <Text style={styles.text}>UPLOAD AN IMAGE</Text>
+//           {/* <Icon icon="camera" style={styles.icon} /> */}
+//           {/* <Icon icon="camera" style={styles.icon} /> */}
+//         </Item>
+
+//         <DefaultButton color="black" onPress={() => alert('Product succefully added')}>Add Product</DefaultButton>
+
+//       </Form>
+//     </View>
+//   );
 const options = {
   title: 'Select Image',
   // customButtons: [{name: 'fb', title: 'Choose Photo from Facebook'}],
