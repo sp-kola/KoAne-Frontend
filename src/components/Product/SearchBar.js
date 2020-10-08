@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 export default class Search extends Component {
   render() {
     return (
-      <Header searchBar rounded>
+      <Header searchBar rounded style={{backgroundColor:'#000'}}>
         <Item>
           <Icon name="search" size={30} />
           <Input placeholder="Search" />

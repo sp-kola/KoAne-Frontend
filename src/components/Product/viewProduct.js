@@ -3,6 +3,7 @@ import {StyleSheet, View, ActivityIndicator, Text} from 'react-native';
 import {Content} from 'native-base';
 import Product from './Product';
 import Search from './SearchBar';
+import DefaultActivityIndicator from '../UI/DefaultActivityIndicator/DefaultActivityIndicator';
 // import img from '../../../assets/login1.jpg';
 // import Fishbun from '../../../assets/fishbun.jpg';
 // import Sausagebun from '../../../assets/sausagebun.jpg';
@@ -21,7 +22,8 @@ export default class viewProduct extends Component {
   }
 
   componentDidMount() {
-    return fetch('http://192.168.1.100:3300/product/')
+    // cmd ipconfig ipv4
+    return fetch('http://192.168.1.103:3300/product/')
       .then(res => res.json())
       .then(resJson => {
         this.setState({
@@ -43,10 +45,10 @@ export default class viewProduct extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <View>
-          <ActivityIndicator />
-        </View>
-      );
+      <View style={styles.loading}>
+        <DefaultActivityIndicator />
+      </View>
+    );
     } else {
       let products = this.state.dataSource.map((val, key) => {
         return (
@@ -104,4 +106,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 30,
   },
+  loading: {flex: 1, alignContent: 'center'},
 });

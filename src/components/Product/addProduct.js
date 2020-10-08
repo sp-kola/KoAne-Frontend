@@ -1,11 +1,21 @@
 import React, {Component} from 'react';
 
-import {Text, StyleSheet, View, ActivityIndicator} from 'react-native';
+import {Text, StyleSheet, View, Image, ScrollView} from 'react-native';
 import {Form, Item, Input, Textarea, CheckBox, Button} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 // import img from '../../../assets/login1.jpg';
 import DefaultButton from '../UI/DefaultButton/DefaultButton';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import ImagePicker from 'react-native-image-picker';
+
+const options = {
+  title: 'Select Image',
+  // customButtons: [{name: 'fb', title: 'Choose Photo from Facebook'}],
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
 
 export default class addProduct extends Component {
   constructor(props) {
@@ -14,8 +24,32 @@ export default class addProduct extends Component {
       isLoading: true,
       dataSource: null,
       isUploading: false,
+      imgSource: null,
     };
   }
+
+  selectImage = () => {
+    ImagePicker.showImagePicker(options, response => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = {uri: response.uri};
+
+        // You can also display the image using data:
+        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+        this.setState({
+          imgSource: source,
+        });
+      }
+    });
+  };
 
   // return fetch('http://192.168.1.103:3300/product/create', {
   //   method: 'POST',
@@ -36,7 +70,18 @@ export default class addProduct extends Component {
     //     </View>
     //   );
     // } else {
+    let img;
+    if (this.state.imgSource) {
+    img = (
+        <Image
+          source={this.state.imgSource}
+          style={{width: 200, height: 200, margin: 10}}
+        />
+      );
+    }
+
     return (
+      // <ScrollView>
       <View style={styles.background}>
         <Form>
           <Item>
@@ -70,16 +115,21 @@ export default class addProduct extends Component {
             <TouchableOpacity>
               <Button transparent>
                 <Icon name="camera-alt" style={styles.inputIcon} />
-                <Text style={styles.text}>UPLOAD AN IMAGE</Text>
+                <Text style={styles.text} onPress={this.selectImage}>
+                  UPLOAD AN IMAGE
+                </Text>
               </Button>
             </TouchableOpacity>
           </Item>
+          <Item>{img}</Item>
+
           <DefaultButton
             color="black"
             onPress={() => alert('Product succefully added')}>
             Add Product
           </DefaultButton>
         </Form>
+      {/* </ScrollView> */}
       </View>
     );
     // }

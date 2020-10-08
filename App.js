@@ -24,8 +24,8 @@ function App() {
   return (
     <NavigationContainer>
       <RootStack.Navigator headerMode="none">
-        <RootStack.Screen name="viewProduct" component={viewProduct} />
         <RootStack.Screen name="Addnewproduct" component={addProduct} />
+        <RootStack.Screen name="viewProduct" component={viewProduct} />
         <RootStack.Screen name="LoginRegister" component={LoginRegister} />
 
         <RootStack.Screen name="VenderSearch" component={VenderSearch} />
