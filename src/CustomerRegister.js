@@ -17,7 +17,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import validate from './utils/validation';
 import DefaultInput from './components/UI/DefaultInput/DefaultInput';
 import {signup} from './store/actions/index'
-//import {TextInput} from 'react-native-gesture-handler';
+//import {TextInput} from 'react-native-gesture-handler';s
 
 class CustomerRegister extends React.Component {
 
@@ -139,7 +139,6 @@ submitHandler = () => {
       alert(`Validation error`)
     }
 }
-
   render() {
     return (
         <ImageBackground

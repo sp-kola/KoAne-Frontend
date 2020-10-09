@@ -1,14 +1,25 @@
+import { Right,Left, Button } from 'native-base';
 import React,{Component} from 'react';
 import {View,Text,TextInput,ScrollView,Dimensions,StyleSheet,CheckBox} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-export default class Notifications extends Component{
 
+export default class Notifications extends Component{
+  
     render(){
+
         return(
             <View>
-                <View style={{alignItems:'flex-start', marginHorizontal:10,marginTop:50}}>
-                <Text style={{fontWeight:'bold',fontSize:18}}>NOTIFICATIONS</Text></View>
+                <View style={{alignItems:'flex-start', marginHorizontal:10,marginTop:30,flexDirection:'row'}}>
+                    <Left>
+                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>NOTIFICATIONS</Text>
+                    </Left>
+                    <Right>
+                        <Button transparent onPress={() => this.props.navigation.push('CustomerSideScreen')}>
+                            <Icon name="closecircleo" style={{ color: 'black', paddingRight: 16,  fontSize: 35, fontWeight: 'bold' }} />
+                        </Button>  
+                    </Right>
+                </View>
 
                 <ScrollView >
                 <View style={{flexDirection:'row',borderWidth:3,borderColor:'blue',justifyContent:'center',

@@ -19,7 +19,8 @@ import Home from './src/screens/HomePage/Home';
 //import viewProduct from './src/components/Product/viewProduct';
 import VendorSideDrawer from './src/screens/SideDrawer/VendorSideDrawer'
 import CustomerSideDrawer from './src/screens/SideDrawer/CustomerSideDrawer'
-import Test from './src/screens/CustomerMaps/Flag'
+import Test from './src/screens/CustomerMaps/Flag';
+import Notifications from './src/screens/Customer/Notifications';
 
 const RootStack = createStackNavigator();
 
@@ -36,23 +37,27 @@ function App() {
           name="LoginRegister"
           component={LoginRegister}
         /> 
-        <RootStack.Screen name="Map" component={TrackMe} />
-        <RootStack.Screen
+      <RootStack.Screen name="Map" 
+        component={TrackMe} 
+        />
+      <RootStack.Screen
           name="Select_option"
           component={Select_option}
         />
-        <RootStack.Screen
+      <RootStack.Screen
           name="Login"
           component={Login}
         />
-        <RootStack.Screen
+      <RootStack.Screen
           name="CustomerRegister"
           component={CustomerRegister}
         />
-        <RootStack.Screen name="VendorRegister" component={VendorRegister} />
+      <RootStack.Screen name="VendorRegister" component={VendorRegister} />
         <RootStack.Screen name="CustomerMap" component={CustomerMap} />
         
         <RootStack.Screen name="Home" component={Home} />
+
+        <RootStack.Screen name="Notifications" component={Notifications} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

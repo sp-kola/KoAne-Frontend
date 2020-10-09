@@ -2,10 +2,11 @@ import { uiStartLoading, uiStopLoading, authGetToken } from './index'
 import {  DELETE_CUSTOMER, SET_CUSTOMERS, REMOVE_CUSTOMER, CUSTOMER_ADDED, START_ADD_CUSTOMER,SEARCH_CUSTOMER,STOP_SEARCH_CUSTOMER, LOGIN_CUSTOMER, LOGOUT_CUSTOMER, SELECT_CUSTOMERS, CLEAR_SELECT_CUSTOMERS } from './actionType'
 
 
+
 export const signup = (signupData,nav) => {
     return dispatch => {
         //console.log(locationData);
-        fetch('http://192.168.8.111:3300/customer/signup',{
+        fetch('http://192.168.1.100:3300/customer/signup',{
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -21,7 +22,7 @@ export const signup = (signupData,nav) => {
         })
         .then(parsedRes => {
             console.log(parsedRes)
-            nav.navigation.push('CustomerHome',{
+            nav.navigation.push('CustomerSideScreen',{
                 user: parsedRes
             })
         })
@@ -37,7 +38,7 @@ export const getLoggedCustomer = () => {
     })
     .then(token =>{
         console.log('token from auth get',token)
-        let url = 'http://192.168.8.111:3300/customer/me'
+        let url = 'http://192.168.1.100:3300/customer/me'
         return fetch(url, {
             method: "GET",
             headers: {

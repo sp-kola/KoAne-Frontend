@@ -23,6 +23,9 @@ class CustomerHome extends Component {
                 <Title>Home</Title>
               </Body>
               <Right>
+                <Button transparent onPress={()=> this.props.navigation.push('Notifications') }>
+                  <Icon name="bell" size={30} color="white" />
+                </Button>
                 <Button transparent>
                   <Icon name="home" size={30} color="white" />
                 </Button>

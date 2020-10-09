@@ -21,6 +21,8 @@ import CustomerHome from '../HomePage/CustomerHome'
 import VendorSearch from '../VenderSearch'
 import Maps from '../CustomerMaps/MapContainer'
 import Profile from '../Customer/CustomerProfileContainer'
+import MessagesHome from '../Messages/MessageContainer'
+import AdminContact from '../AdminContact/ChatPage'
 
 function CustomDrawerContent({ progress, ...rest }) {
   
@@ -181,6 +183,38 @@ function MyDrawer(data) {
               fontWeight: 'bold'
             }
             }  
+        }}
+      />
+      <Drawer.Screen
+        name="Messages"
+        component={MessagesHome}
+        options={{
+          drawerLabel: 'Messages',
+          activeTintColor: 'black',
+          drawerIcon: () => <Icon color='white' size={20} name='envelope' />,
+          color: 'white',
+          contentOptions: {
+            labelStyle: {
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+          }
+        }}
+      />
+      <Drawer.Screen
+        name="AdminContact"
+        component={AdminContact}
+        options={{
+          drawerLabel: 'Contact Admin',
+          activeTintColor: 'black',
+          drawerIcon: () => <Icon color='white' size={20} name='user-lock' />,
+          color: 'white',
+          contentOptions: {
+            labelStyle: {
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+          }
         }}
       />
       {/* <Drawer.Screen
