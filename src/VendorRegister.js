@@ -83,7 +83,7 @@ class VendorRegister extends React.Component {
         value: '',
         valid: true,
         validationRules: {
-          minLength: 10,
+          notEmpty: true,
         },
         touched: false,
       },
@@ -146,6 +146,7 @@ class VendorRegister extends React.Component {
   };
 
   submitHandler = () => {
+    console.log('userName',this.state.controls.userName.value)
     const signUpData = {
       email: this.state.controls.email.value,
       password: this.state.controls.password.value,

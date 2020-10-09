@@ -6,7 +6,7 @@ export const login = (authData,nav) => {
     return dispatch => {
         dispatch(uiStartLoading());
         console.log('in login',authData)
-        let url = 'http://192.168.8.111:3300/user/login'
+        let url = 'http://192.168.1.3:3300/user/login'
         fetch(url,{
             method: "POST",
             body: JSON.stringify({
@@ -33,7 +33,9 @@ export const login = (authData,nav) => {
                         prasedRes.email,
                         prasedRes.userName,
                     ))
-                await dispatch(getLoggedCustomer())
+                //if(parsedRes.type == 'Customer'){
+                  await dispatch(getLoggedCustomer())
+                //}
                 const type = prasedRes.type
                 if(type === 'Admin'){
                     await nav.navigation.push('AdminSideScreen',{
@@ -235,7 +237,7 @@ export const authAutoSignIn = (nav) => {
           .then( token => {
               //dispatch(removeProduct(key))
               console.log('pass1')
-              let url = 'http://192.168.8.111:3300/user/logout'
+              let url = 'http://192.168.1.3:3300/user/logout'
               return fetch(url, {
                   method: "PATCH",
                   headers: {

@@ -82,7 +82,7 @@ export default function VendorHome(props) {
         <View style={styles.orderProductView}>
           <TouchableOpacity
             onPress={() => {
-              props.navigation.push('viewVendorProduct');
+              props.nav.push('viewVendorProduct');
             }}>
             <View style={styles.buttonViewOrders}>
               <Text style={[styles.text, styles.viewOrders]}>
@@ -93,7 +93,7 @@ export default function VendorHome(props) {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              props.navigation.push('Addnewproduct');
+              props.nav.push('Test');
             }}>
             <View style={styles.buttonAddProduct}>
               <Text style={[styles.text, styles.viewOrders]}>

@@ -1,12 +1,13 @@
 import { uiStartLoading, uiStopLoading, authGetToken } from './index'
+import Geocoder from 'react-native-geocoding';
 import {  DELETE_CUSTOMER, SET_CUSTOMERS, REMOVE_CUSTOMER, CUSTOMER_ADDED, START_ADD_CUSTOMER,SEARCH_CUSTOMER,STOP_SEARCH_CUSTOMER, LOGIN_CUSTOMER, LOGOUT_CUSTOMER, SELECT_CUSTOMERS, CLEAR_SELECT_CUSTOMERS } from './actionType'
 import { Form } from 'native-base'
-
+import RNFetchBlob from 'rn-fetch-blob'
 
 export const signup = (signupData,nav) => {
     return dispatch => {
         //console.log(locationData);
-        fetch('http://192.168.8.111:3300/customer/signup',{
+        fetch('http://192.168.1.3:3300/customer/signup',{
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -38,7 +39,7 @@ export const getLoggedCustomer = () => {
     })
     .then(token =>{
         console.log('token from auth get',token)
-        let url = 'http://192.168.8.111:3300/customer/me'
+        let url = 'http://192.168.1.3:3300/customer/me'
         return fetch(url, {
             method: "GET",
             headers: {
@@ -95,7 +96,7 @@ export const getLoggedCustomer = () => {
     })
     .then(token =>{
         console.log('token from auth get',token)
-        let url = 'http://192.168.8.111:3300/customer'
+        let url = 'http://192.168.1.3:3300/customer'
         return fetch(url, {
             method: "PATCH",
             headers: {
@@ -146,22 +147,25 @@ export const getLoggedCustomer = () => {
     })
     .then(token =>{
         console.log('token from auth get',token)
-        let url = 'http://192.168.8.111:3300/customer/avatar'
-        //console.log(image)
-        const data = new FormData()
-        data.append(
-            'upload' , image
-        )
-        console.log('image ',data)
-        return fetch(url, {
-            method: "POST",
-            headers: {
-            Authorization : "Bearer "+token,
-            Accept: 'application/json',
-			'Content-Type': 'multipart/form-data;',
-            },
-            body: JSON.stringify(data)
-        })
+        let url = 'http://192.168.1.3:3300/customer/upload'
+        const data = new FormData();
+        data.append('name', 'avatar');
+        data.append('fileData', {
+         uri : image.uri,
+         type: image.type,
+         name: image.fileName
+        });
+        const config = {
+         method: 'POST',
+         body:data,
+         headers: {
+            //'Authorization' : "Bearer "+token,
+            //'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+         },
+         
+        };
+        return fetch(url, config)
     })
     .then(res =>  {
       if(res.ok){
@@ -194,8 +198,28 @@ export const getLoggedCustomer = () => {
   }
   }
 
+
+
   export const customerLogIn = (customer) => {
     console.log('in user login', customer.userName)
+    // let savedAddresses = null
+    // if(customer.deliveryAddresses){
+    //     var addressComponent = "Hello"
+    //     savedAddresses = customer.deliveryAddresses.map((data) => {
+    //         Geocoder.from(data.position[0], data.position[1])
+    //         .then(json => {
+    //             //console.log("JSON", json)
+    //             addressComponent = json.results[0].formatted_address;
+    //             console.log(addressComponent);
+    //             return addressComponent
+    //         })
+    //         .catch(error => {console.warn(error)
+    //             return "N/A"
+    //         });
+            
+    //     })
+    // }
+    // console.log('still in action', savedAddresses)
     return{
         type: LOGIN_CUSTOMER,
         id: customer._id,
@@ -206,5 +230,6 @@ export const getLoggedCustomer = () => {
         contactNo: customer.contactNo,
         //lastReportedLocation: customer.lastReportedLocation,
         deliveryAddresses: customer.deliveryAddresses,
+        //savedAddresses: savedAddresses
     }
   }

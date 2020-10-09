@@ -11,6 +11,7 @@ import {
 import {authGetToken} from './index'
 
 export const shareLocation = (lat,lon) => {
+    console.log('starting location sharing')
     return dispatch => {
         dispatch(authGetToken())
         .catch(() => {
@@ -21,7 +22,7 @@ export const shareLocation = (lat,lon) => {
                 lattitude: lat,
                 longitude: lon
             }
-            let url = ''
+            let url = 'http://192.168.1.3:3300/location/'
             return fetch(url,{
                 method: "POST",
                 headers:{
@@ -46,7 +47,7 @@ export const shareLocation = (lat,lon) => {
             let location = {
                 
             }
-            dispatch(setCurrentLocation(location))
+            //dispatch(setCurrentLocation(location))
         })
         .catch(err => {
             alert('Something went wrong, sorry :/')

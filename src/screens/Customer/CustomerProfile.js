@@ -2,13 +2,14 @@ import React,{Component} from 'react';
 import {View,Text,TextInput,ScrollView,Dimensions,TouchableOpacity,Image,StyleSheet} from 'react-native';
 import { Container, Header, Content, Thumbnail, Left, Body, Title, Right, Footer, Button} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import user from './Elements/2.jpg'
+import user from '../../assets/user.jpg';
 import Modal from 'react-native-modal';
 import {connect} from 'react-redux';
-import {updateLoggedCustomer, getLoggedCustomer, updateAvatar} from '../../store/actions/index'
-import DefaultButton from '../../components/UI/DefaultButton/DefaultButton'
-import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
-import PickImage from '../../components/PickImage/PickImage'
+import {updateLoggedCustomer, getLoggedCustomer, updateAvatar} from '../../store/actions/index';
+import DefaultButton from '../../components/UI/DefaultButton/DefaultButton';
+import DefaultInput from '../../components/UI/DefaultInput/DefaultInput';
+import PickImage from '../../components/PickImage/PickImage';
+import Geocoder from 'react-native-geocoding';
 // loggedCustomerCustomerId: '',
 // loggedCustomerUserName: '',
 // loggedCustomerFirstName: '',
@@ -37,7 +38,8 @@ class CustomerProfile extends Component{
         contactNumber: '',
         lastReportedLocation: [],
         deliveryAddresses: [] ,
-        image: null         
+        image: null,
+        savedAddresses: []         
     }
 
     reset = () => {
@@ -51,7 +53,8 @@ class CustomerProfile extends Component{
                 contactNumber: '',
                 lastReportedLocation: [],
                 deliveryAddresses: [], 
-                image: null
+                image: null,
+                savedAddresses: []
             }
         )
     }
@@ -161,9 +164,60 @@ class CustomerProfile extends Component{
         }
     }
     
+    async componentDidMount() {
+        let savedAddresses = null
+        if(this.props.deliveryAddresses){
+            var addressComponent
+            savedAddresses = await this.props.deliveryAddresses.map((data) => {
+                Geocoder.from(data.position[0], data.position[1])
+                .then(json => {
+                    //console.log("JSON", json)
+                    addressComponent = json.results[0].formatted_address;
+                    console.log(addressComponent);
+                    return addressComponent
+                })
+                .catch(error => {console.warn(error)
+                    return "N/A"
+                });
+                
+            })
+        }
+        await this.setState({
+            savedAddresses: savedAddresses
+        }) 
+
+        console.log(this.state.savedAddresses)
+    }
 
     render(){
+        console.log('addresses', this.props.savedDeliveryAddresses)
         //console.log(this.state)
+        // let savedAddresses = null
+        // if(this.props.deliveryAddresses){
+        //     var addressComponent
+        //     savedAddresses = this.props.deliveryAddresses.map(data => {
+        //         Geocoder.from(data.position[0], data.position[1])
+        //         .then(json => {
+        //             //console.log("JSON", json)
+        //             addressComponent = json.results[0].formatted_address;
+        //             console.log(addressComponent);
+        //             return addressComponent
+        //         })
+        //         .catch(error => {console.warn(error)
+        //             return "N/A"
+        //         });
+                
+        //     })
+        // }
+
+        let renderAdresses = <Text style={styles.address}>Start recording your address </Text>
+        // if(this.state.savedAddresses != []){
+        //     renderAdresses = this.state.savedAddresses.map(data =>{ 
+        //         console.log(data)
+        //         return <Text style={styles.address}>{data}</Text>}
+                
+        //     )
+        // }
         const updateAvatar =  <Modal 
                     isVisible={this.state.updateAvatarVisible} 
                     style={styles.imageModal} 
@@ -308,16 +362,14 @@ class CustomerProfile extends Component{
                 <Icon name='map' size={20}/>  
                 <Text style={styles.label}>{'\t\t'}saved deliver address: </Text>
             </View>
-            <TouchableOpacity>
+            <View>
+            {renderAdresses}
+            </View>
+            {/* <TouchableOpacity>
                 <View style={styles.addressContainer}>
-                <Text style={styles.address}>0779115739 </Text>
-                <TouchableOpacity>
-                    <View style={styles.deleteBtn}>
-                    <Icon name='times-circle' size={20}/>  
-                    </View>
-                </TouchableOpacity>
+                {renderAdresses}
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             </View>    
             </ScrollView>
         );
@@ -356,12 +408,13 @@ const styles = StyleSheet.create({
     fullName:{
         fontSize:25,
         fontWeight:'bold',
-        
+        color: 'white'
     },
     userName:{
         fontSize:15,
         //fontWeight:'bold',
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        color: 'white'
     },
     content:{
         //marginTop:50,
@@ -380,7 +433,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         padding: 5,
         marginHorizontal:'5%',
-        backgroundColor: '#E0B743'
+        backgroundColor: 'black'
     },
     bodyContainer:{
         marginTop:10,
@@ -415,8 +468,9 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     address:{
-        fontSize: 16,
-        fontWeight: 'bold'
+        fontSize: 11,
+        fontWeight: 'bold',
+        color: 'black'
     },
     deleteBtn:{
 
@@ -478,6 +532,7 @@ const mapStateToProps = state => {
         contactNumber: state.customers.loggedCustomerContactNumber,
         lastReportedLocation: state.customers.loggedCustomerLastReportedLocation,
         deliveryAddresses: state.customers.loggedCustomerDeliveryAddresses,
+        
     }
 }
 
