@@ -1,78 +1,329 @@
-import {SHARE_LOCATION, GET_CUSTOMER_ORDER_LOCATION} from './actionType'
+import { 
+    SHARE_LOCATION, 
+    GET_ORDER_LOCATIONS,
+    GET_OTHER_TYPE_USERS_LOCATION,
+    GET_SAME_TYPE_USERS_LOCATION,
+    DELETE_LOCATION,
+    GET_SAVED_LAST_LOCATION,
+    GET_SAVED_LOCATIONS,
+    UPDATE_LOCATION
+} from './actionType'
+import {authGetToken} from './index'
 
 export const shareLocation = (lat,lon) => {
+    console.log('starting location sharing')
     return dispatch => {
-        const locationData = {
-            owner : "5efce9fae4d307d108f16ad2",
-            lattitude: lat,
-            longitude: lon
-        }
-        console.log(locationData);
-        fetch('http://192.168.8.162:3300/location/create',{
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-              },
-            body: JSON.stringify({
-                owner : "5ef9a843a60194f9cc392ea2",
+        dispatch(authGetToken())
+        .catch(() => {
+            alert('No valid token found')
+        })
+        .then(token => {
+            let location = {
                 lattitude: lat,
                 longitude: lon
+            }
+            let url = 'http://192.168.1.3:3300/location/'
+            return fetch(url,{
+                method: "POST",
+                headers:{
+                    "Authorization": "Bearer "+token,
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(location)
             })
-            
         })
-        .catch(err => console.log(err))
         .then(res => {
-            res.json()
-            console.log(res)
+            if(res.ok){
+                console.log('results recieved')
+                return res.json()
+            }
+            else{
+                throw (new Error())
+            }
         })
         .then(parsedRes => {
-            console.log(parsedRes)
-            
-        })
-    }   
-}
-
-// export  const getCustomerOrders = async () => {
-//     try{
-//         let res = await fetch('http://192.168.1.2:3300/order/customerOrders/5efce9fae4d307d108f16ad2')
-//         let json = await res.json()
-//         console.log(json.data)
-//     }
-//     catch(e){
-//         console.log(e)
-//     }
-// }
-
-export const getCustomerOrders = () => {
-    return dispatch => {
-        //console.log('hi')
-        fetch('http://192.168.8.162:3300/order/customerOrders/5efce9fae4d307d108f16ad2',{
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-              },
+            console.log("returned data", parsedRes)
+            let location = {
+                
+            }
+            //dispatch(setCurrentLocation(location))
         })
         .catch(err => {
             alert('Something went wrong, sorry :/')
             console.log(err)
         })
+    }
+}
+
+export const updateCustomerLocation = () => {
+    return dispatch => {
+        dispatch(authGetToken())
+        .catch(() => {
+            alert('No valid token found')
+        })
+        .then(token => {
+            let url = ''
+            return fetch(url,{
+                method: "PATCH",
+                headers:{
+                    "Authorization": "Bearer "+token,
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            })
+        })
         .then(res => {
-            return res.json()
+            if(res.ok){
+                console.log('results recieved')
+                return res.json()
+            }
+            else{
+                throw (new Error())
+            }
         })
         .then(parsedRes => {
-            //console.log('data: ',parsedRes)
-            const orders = []
-            for (let _id in parsedRes){
-                orders.push({
-                    ...parsedRes[_id],
-                    key: _id
-                })
+            console.log("returned data", parsedRes)
+            let location = {
+                
             }
-            console.log('loading data')
-            //console.log('orders:',orders)
-            dispatch(getCustomerOrdersLocation(orders))
+            dispatch(setCurrentLocation(location))
+        })
+        .catch(err => {
+            alert('Something went wrong, sorry :/')
+            console.log(err)
+        })
+    }
+}
+
+export const deleteCustomerLocation = () => {
+    return dispatch => {
+        dispatch(authGetToken())
+        .catch(() => {
+            alert('No valid token found')
+        })
+        .then(token => {
+            let url = ''
+            return fetch(url,{
+                method: "DELETE",
+                headers:{
+                    "Authorization": "Bearer "+token,
+                    //Accept: 'application/json',
+                    //'Content-Type': 'application/json'
+                },
+            })
+        })
+        .then(res => {
+            if(res.ok){
+                console.log('results recieved')
+                return res.json()
+            }
+            else{
+                throw (new Error())
+            }
+        })
+        .then(parsedRes => {
+            console.log("returned data", parsedRes)
+            let location = {
+                
+            }
+            dispatch(setCurrentLocation(location))
+        })
+        .catch(err => {
+            alert('Something went wrong, sorry :/')
+            console.log(err)
+        })
+    }    
+}
+
+export const getCustomerLastSavedLocation = () =>{
+    return dispatch => {
+        dispatch(authGetToken())
+        .catch(() => {
+            alert('No valid token found')
+        })
+        .then(token => {
+            let url = ''
+            return fetch(url,{
+                method: "GET",
+                headers:{
+                    "Authorization": "Bearer "+token
+                },
+            })
+        })
+        .then(res => {
+            if(res.ok){
+                console.log('results recieved')
+                return res.json()
+            }
+            else{
+                throw (new Error())
+            }
+        })
+        .then(parsedRes => {
+            console.log("returned data", parsedRes)
+            let location = {
+                
+            }
+            dispatch(setCurrentLocation(location))
+        })
+        .catch(err => {
+            alert('Something went wrong, sorry :/')
+            console.log(err)
+        })
+    }
+}
+
+export const getCustomerSavedLocations = () =>{
+    return dispatch => {
+        dispatch(authGetToken())
+        .catch(() => {
+            alert('No valid token found')
+        })
+        .then(token => {
+            let url = ''
+            return fetch(url,{
+                method: "GET",
+                headers:{
+                    "Authorization": "Bearer "+token
+                },
+            })
+        })
+        .then(res => {
+            if(res.ok){
+                console.log('results recieved')
+                return res.json()
+            }
+            else{
+                throw (new Error())
+            }
+        })
+        .then(parsedRes => {
+            console.log("returned data", parsedRes)
+            let locations = {
+                
+            }
+            dispatch(setPreviousLocatoins(locations))
+        })
+        .catch(err => {
+            alert('Something went wrong, sorry :/')
+            console.log(err)
+        })
+    }
+}
+
+export const getSameTypeUsersLocations = () =>{
+    return dispatch => {
+        dispatch(authGetToken())
+        .catch(() => {
+            alert('No valid token found')
+        })
+        .then(token => {
+            let url = ''
+            return fetch(url,{
+                method: "GET",
+                headers:{
+                    "Authorization": "Bearer "+token
+                },
+            })
+        })
+        .then(res => {
+            if(res.ok){
+                console.log('results recieved')
+                return res.json()
+            }
+            else{
+                throw (new Error())
+            }
+        })
+        .then(parsedRes => {
+            console.log("returned data", parsedRes)
+            let locations = {
+                
+            }
+            dispatch(setSameTypeUsersLocations(locations))
+        })
+        .catch(err => {
+            alert('Something went wrong, sorry :/')
+            console.log(err)
+        })
+    }
+}
+
+export const getOtherTypeUsersLocations = () =>{
+    return dispatch => {
+        dispatch(authGetToken())
+        .catch(() => {
+            alert('No valid token found')
+        })
+        .then(token => {
+            let url = ''
+            return fetch(url,{
+                method: "GET",
+                headers:{
+                    "Authorization": "Bearer "+token
+                },
+            })
+        })
+        .then(res => {
+            if(res.ok){
+                console.log('results recieved')
+                return res.json()
+            }
+            else{
+                throw (new Error())
+            }
+        })
+        .then(parsedRes => {
+            console.log("returned data", parsedRes)
+            let locations = {
+                
+            }
+            dispatch(setOtherTypeUsersLocations(locations))
+        })
+        .catch(err => {
+            alert('Something went wrong, sorry :/')
+            console.log(err)
+        })
+    }
+}
+
+export const getCustomerOrders = () => {
+    return dispatch => {
+        dispatch(authGetToken())
+        .catch(() => {
+            alert('No valid token found')
+        })
+        .then(token => {
+            let url = ''
+            return fetch(url,{
+                method: "PATCH",
+                headers:{
+                    "Authorization": "Bearer "+token,
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            })
+        })
+        .then(res => {
+            if(res.ok){
+                console.log('results recieved')
+                return res.json()
+            }
+            else{
+                throw (new Error())
+            }
+        })
+        .then(parsedRes => {
+            console.log("returned data", parsedRes)
+            let location = {
+                
+            }
+            dispatch(setCurrentLocation(location))
+        })
+        .catch(err => {
+            alert('Something went wrong, sorry :/')
+            console.log(err)
         })
     }
 }
@@ -80,7 +331,7 @@ export const getCustomerOrders = () => {
 export const getCustomerOrdersLocation = (orders) => {
     //console.log(orders)
     return{
-        type: GET_CUSTOMER_ORDER_LOCATION,
+        type: GET_ORDER_LOCATIONS,
         orders: orders
     }
 }
@@ -89,5 +340,39 @@ export const setLocation = (location) => {
     return { 
         type: SHARE_LOCATION,
         location: location
+    }
+}
+
+export const setCurrentLocation = (location) => {
+    return {
+        type: GET_SAVED_LAST_LOCATION,
+        location: location
+    }
+}
+
+export const setPreviousLocatoins = (locations) => {
+    return{
+        type: GET_SAVED_LOCATIONS,
+        locations: locations
+    }
+}
+
+export const setSameTypeUsersLocations = (locations) => {
+    return {
+        type: GET_SAME_TYPE_USERS_LOCATION,
+        locations: locations
+    }
+}
+
+export const setOtherTypeUsersLocations = (locations) => {
+    return {
+        type: GET_OTHER_TYPE_USERS_LOCATION,
+        locations: locations
+    }
+}
+
+export const resetLocation = () => {
+    return {
+        type: DELETE_LOCATION
     }
 }

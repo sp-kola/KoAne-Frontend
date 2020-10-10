@@ -1,10 +1,30 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, ImageBackground, TouchableOpacity, Switch } from 'react-native';
-import { Container, Header, Title, Content, Button, Left, Right, Body,  Tab, Tabs, ScrollableTab} from "native-base";
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  ImageBackground,
+  TouchableOpacity,
+  Switch,
+} from 'react-native';
+import {
+  Container,
+  Header,
+  Title,
+  Content,
+  Button,
+  Left,
+  Right,
+  Body,
+  Tab,
+  Tabs,
+  ScrollableTab,
+} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ViewProducts from '../../components/Product/viewProduct'
-
+import ViewProducts from '../../components/Product/viewProduct';
 
 export default function VendorHome(props) {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -18,41 +38,27 @@ export default function VendorHome(props) {
         <View>
           <ImageBackground
             source={require('./cover.jpg')}
-            style={styles.backgroundImage} />
-
+            style={styles.backgroundImage}
+          />
         </View>
         <View style={styles.posImage}>
-          <Image
-            source={require('./image.jpg')}
-            style={styles.profileImage}
-          />
+          <Image source={require('./image.jpg')} style={styles.profileImage} />
         </View>
         <View style={[styles.cameraImage, styles.coverCamera]}>
           <TouchableOpacity>
-            <Icon
-              name="camera"
-              size={17}
-              color="black"
-            />
+            <Icon name="camera" size={17} color="black" />
           </TouchableOpacity>
         </View>
         <View style={[styles.cameraImage, styles.proCamera]}>
           <TouchableOpacity>
-            <Icon
-              name="camera"
-              size={17}
-              color="black"
-            />
+            <Icon name="camera" size={17} color="black" />
           </TouchableOpacity>
         </View>
         <TouchableOpacity>
           <View style={styles.buttonPublicView}>
-            <Text style={[styles.text, styles.publicView]}
-            > PUBLIC VIEW <Icon
-                name="eye"
-                size={15}
-                color="white"
-              />
+            <Text style={[styles.text, styles.publicView]}>
+              {' '}
+              PUBLIC VIEW <Icon name="eye" size={15} color="white" />
             </Text>
           </View>
         </TouchableOpacity>
@@ -60,36 +66,39 @@ export default function VendorHome(props) {
           <Text style={[styles.text, styles.profileName]}>Janitha Bakers</Text>
         </View>
         <View style={styles.statusView}>
-          <Switch style={styles.statusSwitch}
-            trackColor={{ false: '#b9b9ba', true: '#98c99c' }}
+          <Switch
+            style={styles.statusSwitch}
+            trackColor={{false: '#b9b9ba', true: '#98c99c'}}
             thumbColor={isEnabled ? 'green' : 'red'}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSwitch}
             value={isEnabled}
           />
-          <Text style={[styles.text, styles.status]}>    {isEnabled ? 'On the roads' : 'Not delivering now'}
+          <Text style={[styles.text, styles.status]}>
+            {' '}
+            {isEnabled ? 'On the roads' : 'Not delivering now'}
           </Text>
         </View>
         <View style={styles.orderProductView}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              props.nav.push('viewVendorProduct');
+            }}>
             <View style={styles.buttonViewOrders}>
-              <Text style={[styles.text, styles.viewOrders]}
-              > VIEW ORDERS <Icon
-                  name="list-alt"
-                  size={16}
-                  color="white"
-                />
+              <Text style={[styles.text, styles.viewOrders]}>
+                {' '}
+                VIEW ORDERS <Icon name="list-alt" size={16} color="white" />
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {props.navigation.push('Addnewproduct')}}>
+          <TouchableOpacity
+            onPress={() => {
+              props.nav.push('Test');
+            }}>
             <View style={styles.buttonAddProduct}>
-              <Text style={[styles.text, styles.viewOrders]}
-              > ADD PRODUCT <Icon
-                  name="plus-circle"
-                  size={16}
-                  color="white"
-                />
+              <Text style={[styles.text, styles.viewOrders]}>
+                {' '}
+                ADD PRODUCT <Icon name="plus-circle" size={16} color="white" />
               </Text>
             </View>
           </TouchableOpacity>
@@ -97,42 +106,34 @@ export default function VendorHome(props) {
         <View style={styles.deliveryDetailsView}>
           <View style={styles.deliveryHoursView}>
             <TouchableOpacity>
-              <Icon
-                name="clock-o"
-                size={29}
-                color="black"
-              />
+              <Icon name="clock-o" size={29} color="black" />
             </TouchableOpacity>
             <Text style={styles.deliveryHours}>
-              <Text>  Normal delivery hours  </Text>
-              <Text style={styles.deliveryDetails}> 6am - 9am   </Text>
+              <Text> Normal delivery hours </Text>
+              <Text style={styles.deliveryDetails}> 6am - 9am </Text>
             </Text>
           </View>
           <View style={styles.deliveryHoursView}>
             <TouchableOpacity>
-              <Icon
-                name="calendar"
-                size={25}
-                color="black"
-              />
+              <Icon name="calendar" size={25} color="black" />
             </TouchableOpacity>
             <Text style={styles.deliveryHours}>
-              <Text>   Next visiting date    </Text>
+              <Text> Next visiting date </Text>
               <Text style={styles.deliveryDetails}>06/07/2020</Text>
             </Text>
           </View>
           <View style={styles.deliveryHoursView}>
             <TouchableOpacity>
-              <Icon
-                name="map"
-                size={24}
-                color="black"
-              />
+              <Icon name="map" size={24} color="black" />
             </TouchableOpacity>
-            <Text style={styles.deliveryHours}>   Routes    </Text>
+            <Text style={styles.deliveryHours}> Routes </Text>
             <View style={styles.deliveryHours}>
-              <Text style={styles.deliveryDetails}>Sirimalgala road, Araliya uyana,</Text>
-              <Text style={styles.deliveryDetails}>Udana Mawatha, Sawsiri Place</Text>
+              <Text style={styles.deliveryDetails}>
+                Sirimalgala road, Araliya uyana,
+              </Text>
+              <Text style={styles.deliveryDetails}>
+                Udana Mawatha, Sawsiri Place
+              </Text>
             </View>
           </View>
         </View>
@@ -143,39 +144,35 @@ export default function VendorHome(props) {
                 name="truck"
                 size={22}
                 color="black"
-                style={{ transform: [{ rotateY: '180deg' }] }}
+                style={{transform: [{rotateY: '180deg'}]}}
               />
             </TouchableOpacity>
             <Text style={styles.deliveryHours}>
-              <Text>  Vehicle number    </Text>
+              <Text> Vehicle number </Text>
               <Text style={styles.deliveryDetails}>CAH 1386</Text>
             </Text>
           </View>
           <View style={styles.deliveryHoursView}>
             <TouchableOpacity>
-              <Icon
-                name="phone"
-                size={25}
-                color="black"
-              />
+              <Icon name="phone" size={25} color="black" />
             </TouchableOpacity>
             <Text style={styles.deliveryHours}>
-              <Text>   Phone number  </Text>
-              <Text style={styles.deliveryDetails}> 011-555 5559   </Text>
+              <Text> Phone number </Text>
+              <Text style={styles.deliveryDetails}> 011-555 5559 </Text>
             </Text>
           </View>
           <View style={styles.deliveryHoursView}>
             <TouchableOpacity>
-              <Icon
-                name="map-marker"
-                size={25}
-                color="black"
-              />
+              <Icon name="map-marker" size={25} color="black" />
             </TouchableOpacity>
-            <Text style={styles.deliveryHours}>    Business address    </Text>
+            <Text style={styles.deliveryHours}> Business address </Text>
             <View style={styles.deliveryHours}>
-              <Text style={styles.deliveryDetails}>Janitha Bakers, No. 39,</Text>
-              <Text style={styles.deliveryDetails}>Makola road, Kiribathgoda</Text>
+              <Text style={styles.deliveryDetails}>
+                Janitha Bakers, No. 39,
+              </Text>
+              <Text style={styles.deliveryDetails}>
+                Makola road, Kiribathgoda
+              </Text>
             </View>
           </View>
         </View>
@@ -183,39 +180,32 @@ export default function VendorHome(props) {
           <View style={[styles.deliveryHoursView, styles.reviews]}>
             <Text style={[styles.deliveryDetails, styles.reviews]}>3.9 </Text>
             <TouchableOpacity>
-              <Icon
-                name="star"
-                size={22}
-                color="black"
-              />
+              <Icon name="star" size={22} color="black" />
             </TouchableOpacity>
           </View>
           <View style={styles.deliveryHoursView}>
             <Text style={styles.deliveryHours}>
-              <Text style={styles.deliveryDetails}> Kavindu Gunaratne   </Text>
-              <Text>   Pleasant service  </Text>
+              <Text style={styles.deliveryDetails}> Kavindu Gunaratne </Text>
+              <Text> Pleasant service </Text>
             </Text>
           </View>
           <View style={styles.deliveryHoursView}>
             <Text style={styles.deliveryHours}>
-              <Text style={styles.deliveryDetails}> Gayani Kariyawasam   </Text>
-              <Text>   Delicious food  </Text>
+              <Text style={styles.deliveryDetails}> Gayani Kariyawasam </Text>
+              <Text> Delicious food </Text>
             </Text>
           </View>
         </View>
-        <ViewProducts/>
-
+        <ViewProducts />
       </View>
-
-    </ScrollView >
-
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  header:{
-        backgroundColor: 'black'
-    },
+  header: {
+    backgroundColor: 'black',
+  },
   text: {
     fontFamily: 'OpenSans-Regular',
   },
@@ -291,7 +281,7 @@ const styles = StyleSheet.create({
     left: '3%',
   },
   statusSwitch: {
-    transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }],
+    transform: [{scaleX: 1.3}, {scaleY: 1.3}],
   },
   status: {
     fontSize: 17,
@@ -335,8 +325,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     left: '7%',
     alignItems: 'flex-start',
-
-
   },
   deliveryHours: {
     fontSize: 15,
@@ -358,36 +346,18 @@ const styles = StyleSheet.create({
     left: 0,
   },
   headerView: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 10,
-    },
-    headerText: {
-        color: 'white'
-    }
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+  },
+  headerText: {
+    color: 'white',
+  },
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // eslint-disable-next-line no-lone-blocks
-{/* <View style={styles.publicView}>
+{
+  /* <View style={styles.publicView}>
           <Button buttonStyle={styles.buttonPublicView}
             title="PUBLIC VIEW "
             icon={
@@ -399,4 +369,5 @@ const styles = StyleSheet.create({
             }
             iconRight
           />
-        </View> */}
+        </View> */
+}
