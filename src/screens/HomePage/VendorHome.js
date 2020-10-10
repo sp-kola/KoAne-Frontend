@@ -11,6 +11,7 @@ import Home from '../VendorHome/App'
 
 class VendorHome extends Component {
     render(){
+      console.log('props ', this.props)
         return(
             <Container>
             <Header hasTabs style={styles.header} androidStatusBarColor='black' backgroundColor='black'>
@@ -28,7 +29,7 @@ class VendorHome extends Component {
                 </Button>
               </Right>
             </Header>
-            <Home/>
+            <Home nav={this.props.navigation}/>
           </Container>    
         )
     }

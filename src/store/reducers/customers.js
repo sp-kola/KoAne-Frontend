@@ -1,3 +1,4 @@
+import Geocoder from 'react-native-geocoding';
 import { DELETE_CUSTOMER, SET_CUSTOMERS, REMOVE_CUSTOMER, CUSTOMER_ADDED, START_ADD_CUSTOMER,SEARCH_CUSTOMER,STOP_SEARCH_CUSTOMER, LOGIN_CUSTOMER, LOGOUT_CUSTOMER, SELECT_CUSTOMERS, CLEAR_SELECT_CUSTOMERS } from '../actions/actionType'
 
 const initialState = {
@@ -12,7 +13,8 @@ const initialState = {
     loggedCustomerContactNumber: '',
     loggedCustomerLastReportedLocation: [],
     loggedCustomerDeliveryAddresses: [],
-    selectedCustomers: []
+    selectedCustomers: [],
+    savedDeliveryAddresses: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -42,6 +44,24 @@ const reducer = (state = initialState, action) => {
 
         case LOGIN_CUSTOMER:{
             console.log('action in login', action.id)
+            // let savedAddresses = []
+            // if(action.deliveryAddresses){
+            //     var addressComponent
+            //     savedAddresses = await action.deliveryAddresses.map((data) => {
+            //         Geocoder.from(data.position[0], data.position[1])
+            //         .then(json => {
+            //             //console.log("JSON", json)
+            //             addressComponent = json.results[0].formatted_address;
+            //             console.log(addressComponent);
+            //             return addressComponent
+            //         })
+            //         .catch(error => {console.warn(error)
+            //             return "N/A"
+            //         });
+                    
+            //     })
+            // }
+            // await console.log('still in action', savedAddresses)
             return{
                 ...state,
                 loggedCustomerCustomerId: action.id,
@@ -52,6 +72,7 @@ const reducer = (state = initialState, action) => {
                 loggedCustomerContactNumber: action.contactNo,
                 loggedCustomerLastReportedLocation: action.lastReportedLocation,
                 loggedCustomerDeliveryAddresses: action.deliveryAddresses,
+                //savedDeliveryAddresses: savedAddresses
             }
         }
         case LOGOUT_CUSTOMER:{

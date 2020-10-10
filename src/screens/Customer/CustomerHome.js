@@ -8,6 +8,8 @@ import FontAweseomeIcon from 'react-native-vector-icons/FontAwesome5';
 import Modal from 'react-native-modal';
 import Geocoder from 'react-native-geocoding';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import {connect} from 'react-redux';
+import {shareLocation} from '../../store/actions/index'
 
 import DefaultButton from '../../components/UI/DefaultButton/DefaultButton'
 
@@ -18,7 +20,7 @@ Geocoder.init(GOOGLE_PLACES_API_KEY);
 
 const { width } = Dimensions.get('window');
 
-export default class CustomerHome extends Component
+class CustomerHome extends Component
 {
     state = {
         locationLatitude: '',
@@ -54,6 +56,10 @@ export default class CustomerHome extends Component
             modalVisible: prevState.modalVisible ? false: true
             }
         })
+        console.log("lat ",this.state.locationLatitude)
+        if(this.state.address && this.state.locationLongitude && this.state.locationLatitude){
+            this.props.onShareLocation(this.state.locationLatitude,this.state.locationLongitude)
+        }
     }
 
     ShowSearch=()=>
@@ -297,3 +303,11 @@ const styles = StyleSheet.create({
         padding: 10
     },
   });
+
+const mapDispatchToProps = dispatch => {
+return{
+    onShareLocation : (lat,lon) => dispatch(shareLocation(lat,lon)),
+}
+}
+
+export default connect(null, mapDispatchToProps) (CustomerHome);

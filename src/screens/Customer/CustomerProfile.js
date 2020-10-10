@@ -2,12 +2,14 @@ import React,{Component} from 'react';
 import {View,Text,TextInput,ScrollView,Dimensions,TouchableOpacity,Image,StyleSheet} from 'react-native';
 import { Container, Header, Content, Thumbnail, Left, Body, Title, Right, Footer, Button} from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import user from './Elements/2.jpg'
+import user from '../../assets/user.jpg';
 import Modal from 'react-native-modal';
 import {connect} from 'react-redux';
-import {updateLoggedCustomer, getLoggedCustomer} from '../../store/actions/index'
-import DefaultButton from '../../components/UI/DefaultButton/DefaultButton'
-import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
+import {updateLoggedCustomer, getLoggedCustomer, updateAvatar} from '../../store/actions/index';
+import DefaultButton from '../../components/UI/DefaultButton/DefaultButton';
+import DefaultInput from '../../components/UI/DefaultInput/DefaultInput';
+import PickImage from '../../components/PickImage/PickImage';
+import Geocoder from 'react-native-geocoding';
 // loggedCustomerCustomerId: '',
 // loggedCustomerUserName: '',
 // loggedCustomerFirstName: '',
@@ -28,19 +30,56 @@ class CustomerProfile extends Component{
     //     deliveryAddresses: this.props.deliveryAddresses   
     state={
         modalVisible: false,
+        updateAvatarVisible: false,
         userName: '',
         firstName: '',
         lastName: '',
         email: '',
         contactNumber: '',
         lastReportedLocation: [],
-        deliveryAddresses: []          
+        deliveryAddresses: [] ,
+        image: null,
+        savedAddresses: []         
+    }
+
+    reset = () => {
+        this.setState({
+                modalVisible: false,
+                updateAvatarVisible: false,
+                userName: '',
+                firstName: '',
+                lastName: '',
+                email: '',
+                contactNumber: '',
+                lastReportedLocation: [],
+                deliveryAddresses: [], 
+                image: null,
+                savedAddresses: []
+            }
+        )
+    }
+
+    imagePickedHandler = image => {
+        this.setState(prevState => {
+            return{
+                ...prevState,
+                image: image
+            }
+        })
     }
 
     modalVisibleHandler = () => {
         this.setState(prevState => {
             return {
             modalVisible: prevState.modalVisible ? false: true
+            }
+        })
+    }
+
+    avatarModalVisibleHandler = () => {
+        this.setState(prevState => {
+            return {
+                updateAvatarVisible: prevState.updateAvatarVisible ? false: true
             }
         })
     }
@@ -105,11 +144,106 @@ class CustomerProfile extends Component{
         const lastReportedLocation= this.state.lastReportedLocation?this.state.lastReportedLocation:this.props.lastReportedLocation
         const deliveryAddresses= this.state.deliveryAddresses?this.props.deliveryAddresses:this.state.deliveryAddresses  
         this.props.onUpdateCustomer(userName,firstName,lastName,email,contactNumber,lastReportedLocation,deliveryAddresses)
+        this.reset()
+    }
+
+    updateImage = () => {
+        this.setState(prevState => {
+            return {
+                updateAvatarVisible: prevState.updateAvatarVisible ? false: true
+            }
+        })
+        this.imagePicker.reset()
+        if(this.state.image){
+            this.props.onUpdateAvatar(this.state.image)
+            alert('image updating')
+            this.reset()
+        }
+        else{
+            alert('Insert an image')
+        }
     }
     
+    async componentDidMount() {
+        let savedAddresses = null
+        if(this.props.deliveryAddresses){
+            var addressComponent
+            savedAddresses = await this.props.deliveryAddresses.map((data) => {
+                Geocoder.from(data.position[0], data.position[1])
+                .then(json => {
+                    //console.log("JSON", json)
+                    addressComponent = json.results[0].formatted_address;
+                    console.log(addressComponent);
+                    return addressComponent
+                })
+                .catch(error => {console.warn(error)
+                    return "N/A"
+                });
+                
+            })
+        }
+        await this.setState({
+            savedAddresses: savedAddresses
+        }) 
+
+        console.log(this.state.savedAddresses)
+    }
 
     render(){
+        console.log('addresses', this.props.savedDeliveryAddresses)
         //console.log(this.state)
+        // let savedAddresses = null
+        // if(this.props.deliveryAddresses){
+        //     var addressComponent
+        //     savedAddresses = this.props.deliveryAddresses.map(data => {
+        //         Geocoder.from(data.position[0], data.position[1])
+        //         .then(json => {
+        //             //console.log("JSON", json)
+        //             addressComponent = json.results[0].formatted_address;
+        //             console.log(addressComponent);
+        //             return addressComponent
+        //         })
+        //         .catch(error => {console.warn(error)
+        //             return "N/A"
+        //         });
+                
+        //     })
+        // }
+
+        let renderAdresses = <Text style={styles.address}>Start recording your address </Text>
+        // if(this.state.savedAddresses != []){
+        //     renderAdresses = this.state.savedAddresses.map(data =>{ 
+        //         console.log(data)
+        //         return <Text style={styles.address}>{data}</Text>}
+                
+        //     )
+        // }
+        const updateAvatar =  <Modal 
+                    isVisible={this.state.updateAvatarVisible} 
+                    style={styles.imageModal} 
+                    backdropOpacity={0.8}
+                    animationIn="zoomInDown"
+                    animationOut="zoomOutUp"
+                    animationInTiming={600}
+                    animationOutTiming={600}
+                    backdropTransitionInTiming={600}
+                    backdropTransitionOutTiming={600}
+                    swipeDirection={['up', 'left', 'right', 'down']}
+                    >
+                    <PickImage onImagePick={this.imagePickedHandler} ref={ref => this.imagePicker = ref}/>
+                    <DefaultButton  
+                    color='black' 
+                    onPress={this.avatarModalVisibleHandler}
+                    >
+                        close
+                    </DefaultButton>
+                    <DefaultButton  
+                    color='red' 
+                    onPress={this.updateImage}
+                    >
+                        update
+                    </DefaultButton>
+                </Modal>
         const modal = <Modal 
                         isVisible={this.state.modalVisible} 
                         style={styles.modal} 
@@ -120,6 +254,7 @@ class CustomerProfile extends Component{
                         animationOutTiming={600}
                         backdropTransitionInTiming={600}
                         backdropTransitionOutTiming={600}
+                        swipeDirection={['up', 'left', 'right', 'down']}
                         >
                         <Header style={styles.header} androidStatusBarColor='black' backgroundColor='#E0B743'>
                         <Left>
@@ -166,6 +301,7 @@ class CustomerProfile extends Component{
                             value={this.state.contactNumber}
                             //style={styles.inputField}
                         /> */}
+                        
                         <DefaultButton  
                         color='black' 
                         onPress={this.modalVisibleHandler}
@@ -182,11 +318,14 @@ class CustomerProfile extends Component{
         return(
             <ScrollView keyboardShouldPersistTaps='always'>
                 {modal}
+                {updateAvatar}
             <View style={styles.headerContainer}>
                 <View style={styles.shadow}>
                 <View>
                 <Thumbnail large={true} style={{width: 120, height: 120, borderRadius: 150}} source={user}/>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress= {this.avatarModalVisibleHandler}
+                >
                 <View style={styles.cameraBtn}>
                     <Icon name='camera' size={20} color='black'/>  
                 </View>
@@ -223,16 +362,14 @@ class CustomerProfile extends Component{
                 <Icon name='map' size={20}/>  
                 <Text style={styles.label}>{'\t\t'}saved deliver address: </Text>
             </View>
-            <TouchableOpacity>
+            <View>
+            {renderAdresses}
+            </View>
+            {/* <TouchableOpacity>
                 <View style={styles.addressContainer}>
-                <Text style={styles.address}>0779115739 </Text>
-                <TouchableOpacity>
-                    <View style={styles.deleteBtn}>
-                    <Icon name='times-circle' size={20}/>  
-                    </View>
-                </TouchableOpacity>
+                {renderAdresses}
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             </View>    
             </ScrollView>
         );
@@ -271,12 +408,13 @@ const styles = StyleSheet.create({
     fullName:{
         fontSize:25,
         fontWeight:'bold',
-        
+        color: 'white'
     },
     userName:{
         fontSize:15,
         //fontWeight:'bold',
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        color: 'white'
     },
     content:{
         //marginTop:50,
@@ -295,13 +433,16 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         padding: 5,
         marginHorizontal:'5%',
-        backgroundColor: '#E0B743'
+        backgroundColor: 'black'
     },
     bodyContainer:{
         marginTop:10,
         marginBottom: 10,
         padding: 5,
         marginHorizontal:'5%',
+        borderRadius: 2,
+        borderWidth: 2,
+        borderColor: 'black'
     },
     label:{
         //fontVariant: 'small-caps',
@@ -327,16 +468,29 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     address:{
-        fontSize: 16,
-        fontWeight: 'bold'
+        fontSize: 11,
+        fontWeight: 'bold',
+        color: 'black'
     },
     deleteBtn:{
 
     },
     modal: {
         backgroundColor: 'rgba(255,255,255,0.8)',
-        flex: 1,
-        padding: 10
+        //flex: 1,
+        padding: 10,
+        //height: 200,
+        justifyContent: 'flex-start',
+        margin: 0,
+    },
+    imageModal: {
+        backgroundColor: 'rgba(255,255,255,0.8)',
+        //flex: 1,
+        padding: 10,
+        //height: 200,
+        justifyContent: 'flex-start',
+        margin: 0,
+        alignItems: 'center'
     },
     updateBtn:{
         flexDirection: 'row',
@@ -378,6 +532,7 @@ const mapStateToProps = state => {
         contactNumber: state.customers.loggedCustomerContactNumber,
         lastReportedLocation: state.customers.loggedCustomerLastReportedLocation,
         deliveryAddresses: state.customers.loggedCustomerDeliveryAddresses,
+        
     }
 }
 
@@ -387,7 +542,8 @@ const mapDispatchToProps = dispatch => {
         // onStartAddBill: () => dispatch(startAddBill()),
         // onLoadBills: () => dispatch(getBills()),
         // onLoadUserBills: (email) => dispatch(getUserBills(email))
-        onUpdateCustomer: (userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses) => dispatch (updateLoggedCustomer(userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses))
+        onUpdateCustomer: (userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses) => dispatch (updateLoggedCustomer(userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses)),
+        onUpdateAvatar: (image) => dispatch (updateAvatar(image))
     }
 }
 
