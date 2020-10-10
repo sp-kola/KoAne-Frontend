@@ -6,7 +6,9 @@ export const login = (authData,nav) => {
     return dispatch => {
         dispatch(uiStartLoading());
         console.log('in login',authData)
-        let url = 'http://192.168.1.3:3300/user/login'
+
+        let url = 'http://192.168.1.100:3300/user/login'
+
         fetch(url,{
             method: "POST",
             body: JSON.stringify({
@@ -48,7 +50,7 @@ export const login = (authData,nav) => {
                     })
                 }
                 else {
-                    await nav.navigation.push('CustomerSideScreen',{
+                  await nav.navigation.push('CustomerSideScreen',{
                         user: prasedRes
                     })
                 }
