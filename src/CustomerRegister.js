@@ -18,7 +18,7 @@ import validate from './utils/validation';
 import DefaultInput from './components/UI/DefaultInput/DefaultInput';
 import {signup} from './store/actions/index'
 //import {TextInput} from 'react-native-gesture-handler';s
-
+import io from 'socket.io-client'
 class CustomerRegister extends React.Component {
 
 
@@ -132,13 +132,19 @@ submitHandler = () => {
     contactNo: this.state.controls.contactNo.value,
     }
     if(this.state.controls.email.valid === true && this.state.controls.password.valid === true && this.state.controls.firstName.valid === true && this.state.controls.lastName.valid === true && this.state.controls.contactNo.valid === true && this.state.controls.userName.valid === true){
-      alert(`Pass`)
+      alert(`Pass`);
+      this.socket.emit('submit',this.state.controls.email);
       this.props.onSignup(signUpData,this.props)
   }
   else{ 
       alert(`Validation error`)
     }
 }
+
+  componentDidMount() {
+    this.socket = io("http://192.168.1.100:3300");
+  }
+
   render() {
     return (
         <ImageBackground

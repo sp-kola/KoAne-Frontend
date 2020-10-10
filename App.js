@@ -21,10 +21,13 @@ import VendorSideDrawer from './src/screens/SideDrawer/VendorSideDrawer'
 import CustomerSideDrawer from './src/screens/SideDrawer/CustomerSideDrawer'
 import Test from './src/screens/CustomerMaps/Flag';
 import Notifications from './src/screens/Customer/Notifications';
+import io from 'socket.io-client'
 
 const RootStack = createStackNavigator();
+//global.socket = io("http://192.168.1.100:3300");
 
 function App() {
+
   return (
 
     <NavigationContainer>     

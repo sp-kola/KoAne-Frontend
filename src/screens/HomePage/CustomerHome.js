@@ -2,6 +2,7 @@ import React, {Component}  from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 import { Container, Header, Left, Body, Right, Title, Subtitle , Button, Tab, Tabs, ScrollableTab } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import io from 'socket.io-client'
 
 import Home from '../Customer/CustomerHome'
 
@@ -10,6 +11,14 @@ import Home from '../Customer/CustomerHome'
 
 
 class CustomerHome extends Component {
+
+  /**componentDidMount() {
+
+    socket.on("welcome", () => {
+      console.log('welcome');
+    });
+  }
+*/
     render(){
         return(
             <Container>
