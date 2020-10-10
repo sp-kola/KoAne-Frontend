@@ -23,4 +23,3 @@ export const vendorSignup = (signupData,nav) => {
         })
     }  
 }
-
