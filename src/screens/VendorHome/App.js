@@ -34,7 +34,33 @@ export default function VendorHome(props) {
   //console.log(props.route.params)
   return (
     <ScrollView>
-      <View style={{ flex: 1, width: '100%' }}>
+      <View style={{flex: 1, width: '100%'}}>
+        <Header noLeft style={styles.header} hasTabs>
+          <Body>
+            <View style={styles.headerView}>
+              <Left>
+                <Text style={styles.headerText}>
+                  {props.route.params.user.userName}
+                </Text>
+              </Left>
+              <Title>VENDOR</Title>
+
+              <Right>
+                <Button
+                  transparent
+                  onPress={() => props.navigation.push('CustomerMap')}>
+                  <Icon
+                    name="map"
+                    size={20}
+                    color="#fff"
+                    style={styles.iconStyle}
+                  />
+                  <Text style={styles.headerText}>Map</Text>
+                </Button>
+              </Right>
+            </View>
+          </Body>
+        </Header>
         <View>
           <ImageBackground
             source={require('./cover.jpg')}

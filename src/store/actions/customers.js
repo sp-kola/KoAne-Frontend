@@ -4,10 +4,13 @@ import {  DELETE_CUSTOMER, SET_CUSTOMERS, REMOVE_CUSTOMER, CUSTOMER_ADDED, START
 import { Form } from 'native-base'
 import RNFetchBlob from 'rn-fetch-blob'
 
+
 export const signup = (signupData,nav) => {
     return dispatch => {
         //console.log(locationData);
-        fetch('http://192.168.1.3:3300/customer/signup',{
+
+        fetch('http://192.168.1.100:3300/customer/signup',{
+
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -23,7 +26,7 @@ export const signup = (signupData,nav) => {
         })
         .then(parsedRes => {
             console.log(parsedRes)
-            nav.navigation.push('CustomerHome',{
+            nav.navigation.push('CustomerSideScreen',{
                 user: parsedRes
             })
         })
@@ -31,52 +34,52 @@ export const signup = (signupData,nav) => {
 }
 
 export const getLoggedCustomer = () => {
-    console.log('in getting logged customer')
-    return (dispatch) =>{
+  console.log('in getting logged customer');
+  return dispatch => {
     dispatch(authGetToken())
     .catch(() =>{
         alert('No valid token found')
     })
     .then(token =>{
         console.log('token from auth get',token)
-        let url = 'http://192.168.1.3:3300/customer/me'
+
+        let url = 'http://192.168.1.100:3300/customer/me'
         return fetch(url, {
-            method: "GET",
-            headers: {
-            "Authorization" : "Bearer "+token
-            },
-        })
-    })
-    .then(res =>  {
-      if(res.ok){
-        console.log('res',res)
-        return res.json()
-      }
-      else{
-        throw (new Error())
-      }
-    })
-    .then(parsedRes => {
-        console.log('returned data',parsedRes)
-        let customer = {
-            _id : parsedRes._id,
-            userName: parsedRes.userName,
-            firstName: parsedRes.firstName,
-            lastName: parsedRes.lastName,
-            email: parsedRes.email,
-            contactNo: parsedRes.contactNo,
-            lastReportedLocation: parsedRes.lastReportedLocation,
-            deliveryAddresses: parsedRes.deliveryAddresses
+          method: 'GET',
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        });
+      })
+      .then(res => {
+        if (res.ok) {
+          console.log('res', res);
+          return res.json();
+        } else {
+          throw new Error();
         }
-        console.log('loding data')
-        dispatch(customerLogIn(customer))
-    })
-    .catch(err => {
-        alert('Something went wrong, sorry :/')
-        console.log(err)
-    })
-  }
-  }
+      })
+      .then(parsedRes => {
+        console.log('returned data', parsedRes);
+        let customer = {
+          _id: parsedRes._id,
+          userName: parsedRes.userName,
+          firstName: parsedRes.firstName,
+          lastName: parsedRes.lastName,
+          email: parsedRes.email,
+          contactNo: parsedRes.contactNo,
+          lastReportedLocation: parsedRes.lastReportedLocation,
+          deliveryAddresses: parsedRes.deliveryAddresses,
+        };
+        console.log('loding data');
+        dispatch(customerLogIn(customer));
+      })
+      .catch(err => {
+        alert('Something went wrong, sorry :/');
+        console.log(err);
+      });
+  };
+};
 
   export const updateLoggedCustomer = (userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses) => {
     const updateData = {
@@ -128,17 +131,30 @@ export const getLoggedCustomer = () => {
             //lastReportedLocation: parsedRes.lastReportedLocation,
             deliveryAddresses: parsedRes.deliveryAddresses
         }
-        console.log('loding data')
-        dispatch(customerLogIn(customer))
-    })
-    .catch(err => {
-        alert('Something went wrong, sorry :/')
-        console.log(err)
-    })
-  }
-  }
+      })
+      .then(parsedRes => {
+        console.log('returned data', parsedRes);
+        let customer = {
+          _id: parsedRes._id,
+          userName: parsedRes.userName,
+          firstName: parsedRes.firstName,
+          lastName: parsedRes.lastName,
+          email: parsedRes.email,
+          contactNo: parsedRes.contactNo,
+          lastReportedLocation: parsedRes.lastReportedLocation,
+          deliveryAddresses: parsedRes.deliveryAddresses,
+        };
+        console.log('loding data');
+        dispatch(customerLogIn(customer));
+      })
+      .catch(err => {
+        alert('Something went wrong, sorry :/');
+        console.log(err);
+      });
+  };
+};
 
-  export const updateAvatar = (image) => {
+export const updateAvatar = (image) => {
     console.log('in update avatar customer')
     return (dispatch) =>{
     dispatch(authGetToken())

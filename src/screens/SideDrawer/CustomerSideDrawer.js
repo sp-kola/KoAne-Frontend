@@ -21,8 +21,13 @@ import CustomerHome from '../HomePage/CustomerHome'
 import VendorSearch from '../VenderSearch'
 import Maps from '../CustomerMaps/MapContainer'
 import Profile from '../Customer/CustomerProfileContainer'
+
+import MessagesHome from '../Messages/MessageContainer'
+import AdminContact from '../AdminContact/ChatPage'
+
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
 import DefaultButton from '../../components/UI/DefaultButton/DefaultButton'
+
 
 function CustomDrawerContent({ progress, ...rest }) {
   //console.log(rest)
@@ -243,7 +248,139 @@ class MyDrawer extends Component {
           },
           inactiveTintColor: 'white',
 
+
+    
+  }}
+    >
+      <Drawer.Screen
+        name="Profile"
+        component={Profile}
+        options={{ 
+            drawerLabel:  'Profile', 
+            activeTintColor:'black',
+            drawerIcon: () => <Icon color='white' size={20} name='user' />,
+            color: 'white',
+            contentOptions:{
+              labelStyle:{
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+            }  
+        }}
+      />
+      <Drawer.Screen
+        name="Home"
+        component={CustomerHome}
+        options={{ 
+            drawerLabel:  'Home', 
+            activeTintColor:'black',
+            drawerIcon: () => <Icon color='white' size={20} name='home' />,
+            color: 'white',
+            contentOptions:{
+              labelStyle:{
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+            }  
+        }}
+      />
+      <Drawer.Screen
+        name="Search"
+        component={VendorSearch}
+        options={{ 
+            drawerLabel:  'Search', 
+            activeTintColor:'black',
+            drawerIcon: () => <Icon color='white' size={20} name='search' />,
+            color: 'white',
+            contentOptions:{
+              labelStyle:{
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+            }  
+        }}
+      />
+      <Drawer.Screen
+        name="Maps"
+        component={Maps}
+        options={{ 
+            drawerLabel:  'Maps', 
+            activeTintColor:'black',
+            drawerIcon: () => <Icon color='white' size={20} name='street-view' />,
+            color: 'white',
+            contentOptions:{
+              labelStyle:{
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+            }  
+        }}
+      />
+      <Drawer.Screen
+        name="Messages"
+        component={MessagesHome}
+        options={{
+          drawerLabel: 'Messages',
+          activeTintColor: 'black',
+          drawerIcon: () => <Icon color='white' size={20} name='envelope' />,
+          color: 'white',
+          contentOptions: {
+            labelStyle: {
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+          }
+        }}
+      />
+      <Drawer.Screen
+        name="AdminContact"
+        component={AdminContact}
+        options={{
+          drawerLabel: 'Contact Admin',
+          activeTintColor: 'black',
+          drawerIcon: () => <Icon color='white' size={20} name='user-lock' />,
+          color: 'white',
+          contentOptions: {
+            labelStyle: {
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+          }
+        }}
+      />
+      {/* <Drawer.Screen
+        name="ShoppingList"
+        component={ShoppingList}
+        options={{ 
+          drawerLabel: 'Shopping List',
+          drawerIcon: () => <Icon color='black' size={20} name='file' />
+       }}
+      />
+      <Drawer.Screen
+        name="UtilityBills"
+        component={UtilityBills}
+        options={{ 
+          drawerLabel: 'Utility Bills',
+          drawerIcon: () => <Icon color='black' size={20} name='money-bill-alt' />
+       }}
+      />
+      <Drawer.Screen
+        name="Shops"
+        component={Shops}
+        options={{ 
+          drawerLabel: 'Shops' ,
+          drawerIcon: () => <Icon color='black' size={20} name='shopping-cart' />
+        }}
+      /> */}
+      {/* <Drawer.Screen
+        name="Products"
+        //component={Products}
+        options={{ 
+          drawerLabel: 'Products',
+          drawerIcon: () => <Icon color='white' size={20} name='shopping-basket' /> 
+
           
+
         }}
           >
             {/* <Drawer.Screen

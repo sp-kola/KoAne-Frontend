@@ -6,7 +6,9 @@ export const login = (authData,nav) => {
     return dispatch => {
         dispatch(uiStartLoading());
         console.log('in login',authData)
-        let url = 'http://192.168.1.3:3300/user/login'
+
+        let url = 'http://192.168.1.100:3300/user/login'
+
         fetch(url,{
             method: "POST",
             body: JSON.stringify({
@@ -49,7 +51,7 @@ export const login = (authData,nav) => {
                     })
                 }
                 else {
-                    await nav.navigation.push('CustomerSideScreen',{
+                  await nav.navigation.push('CustomerSideScreen',{
                         user: prasedRes
                     })
                 }
@@ -64,9 +66,8 @@ export const login = (authData,nav) => {
     }
 }
 
-export const authStoreToken = (id,token,userType,email,userName) => {
-
-    return async(dispatch) => {
+export const authStoreToken = (id, token, userType, email, userName) => {
+  return async dispatch => {
     //   const now = new Date();
     //   const expiryDate = now.getTime() + expiresIn * 1000;
       await dispatch(authSetToken(id,token,userType,email,userName));
@@ -93,81 +94,79 @@ export const authStoreToken = (id,token,userType,email,userName) => {
       // }
     };
   };
-  
-  export const authSetToken = (id,token,userType,email,userName ) => {
-    console.log('in setting token')
-    return {
-      type: AUTH_SET_TOKEN,
-      token: token,
-      //expiryDate: expiryDate,
-      email: email,
-      userName: userName,
-      id: id,
-      userType: userType,
-    };
+
+export const authSetToken = (id, token, userType, email, userName) => {
+  console.log('in setting token');
+  return {
+    type: AUTH_SET_TOKEN,
+    token: token,
+    //expiryDate: expiryDate,
+    email: email,
+    userName: userName,
+    id: id,
+    userType: userType,
   };
-  
+};
+
 export const authGetToken = () => {
-    return async(dispatch, getState) => {
-      console.log('getting token')
-      try{
-        const token = await getState().auth.token
-        console.log(token)
-        if(!token){
-          let fetchedToken;
-          const tokenFromStorage = await AsyncStorage.getItem('koane:auth:token')
-          if(tokenFromStorage){
-            fetchedToken = tokenFromStorage
-            token = fetchedToken
-            console.log('returning token',token)
-            return token
-          }
+  return async (dispatch, getState) => {
+    console.log('getting token');
+    try {
+      const token = await getState().auth.token;
+      console.log(token);
+      if (!token) {
+        let fetchedToken;
+        const tokenFromStorage = await AsyncStorage.getItem('koane:auth:token');
+        if (tokenFromStorage) {
+          fetchedToken = tokenFromStorage;
+          token = fetchedToken;
+          console.log('returning token', token);
+          return token;
         }
-        else{
-          console.log('returning token',token)
-          return token
-        }
+      } else {
+        console.log('returning token', token);
+        return token;
       }
-      catch(e){
-        console.log(e)
-        alert('something went wrong')
-      }
-        // const promise = new Promise((resolve, reject) => {
-        //     const token = getState().auth.token;
-        //     console.log('getting token');
-        //     if(!token){
-        //         let fetchedToken;
-        //         AsyncStorage.getItem('koane:auth:token')
-        //         .catch((err) => reject())
-        //         .then((tokenFromStorage) => {
-        //             fetchedToken = tokenFromStorage
-        //             if(!tokenFromStorage){
-        //                 reject();
-        //                 return;
-        //             }
-        //             else{
-        //                 resolve(token);
-        //             }
-        //         })                
-        //     }
-        //     else{
-        //       console.log(token)
-        //       resolve(token);
-        //       return token;
-        //     }
-        // })
-        // .then((token) => {
-        //   if (!token) {
-        //     throw new Error();
-        //   } else {
-        //     return token;
-        //   }
-        // });
-        // return promise
-        // .catch(error => alert('something went wrong'))
+    } catch (e) {
+      console.log(e);
+      alert('something went wrong');
     }
-}
-  
+    // const promise = new Promise((resolve, reject) => {
+    //     const token = getState().auth.token;
+    //     console.log('getting token');
+    //     if(!token){
+    //         let fetchedToken;
+    //         AsyncStorage.getItem('koane:auth:token')
+    //         .catch((err) => reject())
+    //         .then((tokenFromStorage) => {
+    //             fetchedToken = tokenFromStorage
+    //             if(!tokenFromStorage){
+    //                 reject();
+    //                 return;
+    //             }
+    //             else{
+    //                 resolve(token);
+    //             }
+    //         })
+    //     }
+    //     else{
+    //       console.log(token)
+    //       resolve(token);
+    //       return token;
+    //     }
+    // })
+    // .then((token) => {
+    //   if (!token) {
+    //     throw new Error();
+    //   } else {
+    //     return token;
+    //   }
+    // });
+    // return promise
+    // .catch(error => alert('something went wrong'))
+  };
+};
+
 export const authAutoSignIn = (nav) => {
     return (dispatch) => {
       dispatch(authGetToken())
@@ -201,73 +200,70 @@ export const authAutoSignIn = (nav) => {
     )};
     }
 
-  export const authClearStorage = () => {
-    return (dispatch) => {
-      //AsyncStorage.removeItem('koane:auth:expiryDate');
-      AsyncStorage.removeItem('koane:auth:token');
-      AsyncStorage.removeItem('koane:auth:email');
-      AsyncStorage.removeItem('koane:auth:userName');
-      AsyncStorage.removeItem('koane:auth:id');
-      return AsyncStorage.removeItem('koane:auth:userType');
-    };
+export const authClearStorage = () => {
+  return dispatch => {
+    //AsyncStorage.removeItem('koane:auth:expiryDate');
+    AsyncStorage.removeItem('koane:auth:token');
+    AsyncStorage.removeItem('koane:auth:email');
+    AsyncStorage.removeItem('koane:auth:userName');
+    AsyncStorage.removeItem('koane:auth:id');
+    return AsyncStorage.removeItem('koane:auth:userType');
   };
-  
-  export const authLogout = (nav) => {
-    return async(dispatch) => {
-      await dispatch(initiateLogOut());
-      await dispatch(authClearStorage()).then(() => {
-        nav.navigation.push('Login');
-      });
-      await dispatch(authRemoveToken());
-    //   dispatch(userLogOut());
-    };
-  };
-  
-  export const authRemoveToken = () => {
-    return {
-      type: AUTH_REMOVE_TOKEN,
-    };
-  };
+};
 
-  export const initiateLogOut = () => {
-      return (dispatch) => {
-          dispatch(authGetToken())
-          .catch(() =>{
-              alert('No valid token found')
-          })
-          .then( token => {
-              //dispatch(removeProduct(key))
-              console.log('pass1')
-              let url = 'http://192.168.1.3:3300/user/logout'
-              return fetch(url, {
-                  method: "PATCH",
-                  headers: {
-                    "Authorization" : "Bearer "+token
-                    },
-              })
-          })
-          .then(res => {
-            if(res.ok){
-  
-              return res.json()
-            }
-            else{
-              throw (new Error())
-            }
-          })
-          .then(parsedRes => {
-              console.log("Done!");
-            //   dispatch(uiStopLoading());
-            //   dispatch(getUserProducts(owner));
-            //   dispatch(stopUpdateProduct());
-          })
-          .catch(err => {
-              alert("Something went wrong, sorry :/");
-              console.log(err);
-            //   dispatch(uiStopLoading());
-            //   dispatch(getUserProducts(owner));
-            //   dispatch(stopUpdateProduct());
-          })        
-          
-      }
-  }
+export const authLogout = nav => {
+  return async dispatch => {
+    await dispatch(initiateLogOut());
+    await dispatch(authClearStorage()).then(() => {
+      nav.navigation.push('Login');
+    });
+    await dispatch(authRemoveToken());
+    //   dispatch(userLogOut());
+  };
+};
+
+export const authRemoveToken = () => {
+  return {
+    type: AUTH_REMOVE_TOKEN,
+  };
+};
+
+export const initiateLogOut = () => {
+  return dispatch => {
+    dispatch(authGetToken())
+      .catch(() => {
+        alert('No valid token found');
+      })
+      .then(token => {
+        //dispatch(removeProduct(key))
+        console.log('pass1');
+        let url = 'http://192.168.8.101:3300/user/logout';
+        return fetch(url, {
+          method: 'PATCH',
+          headers: {
+            Authorization: 'Bearer ' + token,
+          },
+        });
+      })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error();
+        }
+      })
+      .then(parsedRes => {
+        console.log('Done!');
+        //   dispatch(uiStopLoading());
+        //   dispatch(getUserProducts(owner));
+        //   dispatch(stopUpdateProduct());
+      })
+      .catch(err => {
+        alert('Something went wrong, sorry :/');
+        console.log(err);
+        //   dispatch(uiStopLoading());
+        //   dispatch(getUserProducts(owner));
+        //   dispatch(stopUpdateProduct());
+      });
+  };
+};
