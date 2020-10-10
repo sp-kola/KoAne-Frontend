@@ -23,12 +23,19 @@ const { width } = Dimensions.get('window');
 class CustomerHome extends Component
 {
     state = {
-        locationLatitude: '',
-        locationLongitude: '',
+        locationLatitude: this.props.location?this.props.location[0]:'',
+        locationLongitude: this.props.location?this.props.location[1]:'',
         address: '',
         modalVisible: false           
     }
 
+    toggleModal = () => {
+        this.setState(prevState => {
+            return {
+            modalVisible: prevState.modalVisible ? false: true
+            }
+        })
+    }
 
     addressChangedHandler = (val) => {
         console.log(val)
@@ -141,6 +148,12 @@ class CustomerHome extends Component
                             },
                         }}/>
                         <DefaultButton  
+                        color='black' 
+                        onPress={this.toggleModal}
+                        >
+                            Close
+                        </DefaultButton>
+                        <DefaultButton  
                         color='green' 
                         onPress={this.modalVisibleHandler}
                         >
@@ -148,11 +161,12 @@ class CustomerHome extends Component
                         </DefaultButton>
                     </Modal>
 
-        //console.log('address',this.state.address)                
+        //console.log('address',this.state.address)               
+        console.log('location in home', this.state.locationLatitude) 
         return(
             <View>
                 {modal}
-                <TouchableOpacity onPress={this.modalVisibleHandler}>
+                <TouchableOpacity onPress={this.toggleModal}>
                 <View style={{flexDirection:'row',borderWidth:1,justifyContent:'center',
                             alignItems:'center',width:'90%',height:50,margin:'5%',borderRadius:118}}> 
                 {/* <TextInput style={{borderWidth:1, borderColor:'black',margin:10, borderRadius:18,flex:1,flexDirection:'row'}}> */}
@@ -310,4 +324,12 @@ return{
 }
 }
 
-export default connect(null, mapDispatchToProps) (CustomerHome);
+const mapStateToProps = state => {
+    return {
+        isLoading: state.ui.isLoading,
+        location: state.location.currentLocationOfUser
+        
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (CustomerHome);

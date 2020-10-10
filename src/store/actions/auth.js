@@ -1,5 +1,5 @@
 import {TRY_AUTH, AUTH_SET_TOKEN} from './actionType'
-import { uiStartLoading,uiStopLoading, getLoggedCustomer } from './index'
+import { uiStartLoading,uiStopLoading, getLoggedCustomer, getCustomerLastSavedLocation } from './index'
 import AsyncStorage from '@react-native-community/async-storage';
 
 export const login = (authData,nav) => {
@@ -35,6 +35,7 @@ export const login = (authData,nav) => {
                     ))
                 //if(parsedRes.type == 'Customer'){
                   await dispatch(getLoggedCustomer())
+                  await dispatch(getCustomerLastSavedLocation())
                 //}
                 const type = prasedRes.type
                 if(type === 'Admin'){

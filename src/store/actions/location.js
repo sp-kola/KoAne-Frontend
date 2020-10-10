@@ -44,10 +44,8 @@ export const shareLocation = (lat,lon) => {
         })
         .then(parsedRes => {
             console.log("returned data", parsedRes)
-            let location = {
-                
-            }
-            //dispatch(setCurrentLocation(location))
+            let location = parsedRes.position
+            dispatch(setCurrentLocation(location))
         })
         .catch(err => {
             alert('Something went wrong, sorry :/')
@@ -143,7 +141,7 @@ export const getCustomerLastSavedLocation = () =>{
             alert('No valid token found')
         })
         .then(token => {
-            let url = ''
+            let url = 'http://192.168.1.3:3300/location/user/'
             return fetch(url,{
                 method: "GET",
                 headers:{
@@ -161,10 +159,9 @@ export const getCustomerLastSavedLocation = () =>{
             }
         })
         .then(parsedRes => {
-            console.log("returned data", parsedRes)
-            let location = {
-                
-            }
+            console.log("returned data", parsedRes[0])
+            let location = parsedRes[0].position
+            console.log('location', location)
             dispatch(setCurrentLocation(location))
         })
         .catch(err => {
