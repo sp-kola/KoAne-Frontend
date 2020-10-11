@@ -10,12 +10,13 @@ class Customers extends Component {
                 <View style={styles.container}>
                     <View style={styles.centerComponent}>
                         <Text style={styles.title}>Best Rated Customers</Text>
-                        <View style={styles.starList}>
+                        <Icon name="certificate" size={120} color="red" style={{ alignSelf:'center' }} />
+                        {/*<View style={styles.starList}>
                             <Icon name="star" size={25} color="green" style={{ margin: '5%' }} />
                             <Icon name="star" size={25} color="green" style={{ margin: '5%' }} />
                             <Icon name="star" size={25} color="green" style={{ margin: '5%' }} />
                             <Icon name="star-half" size={25} color="green" style={{margin:'5%'}} />
-                        </View>
+                        </View>*/}
                         <View style={styles.renderComponent} > 
                             <Text style={styles.testHeader} > Cutomer 1</Text>
                             <View style={styles.starComponent}>
@@ -55,13 +56,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignSelf: 'center',
-        width: '100%'
+        alignItems: 'center',
+        backgroundColor: '#eee',
     },
     centerComponent: {
         padding: 20,
         margin: 5,
-        backgroundColor: '#fff',
+        backgroundColor: '#eee',
         height: '95%',
         width: '100%',
 
@@ -70,9 +71,10 @@ const styles = StyleSheet.create({
         color: 'black',
         textTransform: 'uppercase',
         textAlign: 'center',
-        padding: 1,
+        padding: 5,
         fontWeight: 'bold',
-        fontSize: 20
+        fontSize: 20,
+        marginBottom: 10
     },
     text: {
         color: 'black',
@@ -95,7 +97,8 @@ const styles = StyleSheet.create({
         borderWidth: 5,
         borderColor: 'green',
         flexDirection:'row',
-        padding: '1%'
+        padding: '1%',
+        backgroundColor: '#fff'
     },
     starComponent:{
         flexDirection:'row-reverse',
