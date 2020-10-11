@@ -2,7 +2,6 @@ import { uiStartLoading, uiStopLoading, authGetToken } from './index'
 import Geocoder from 'react-native-geocoding';
 import {  DELETE_CUSTOMER, SET_CUSTOMERS, REMOVE_CUSTOMER, CUSTOMER_ADDED, START_ADD_CUSTOMER,SEARCH_CUSTOMER,STOP_SEARCH_CUSTOMER, LOGIN_CUSTOMER, LOGOUT_CUSTOMER, SELECT_CUSTOMERS, CLEAR_SELECT_CUSTOMERS } from './actionType'
 import { Form } from 'native-base'
-import RNFetchBlob from 'rn-fetch-blob'
 
 
 export const signup = (signupData,nav) => {

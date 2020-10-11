@@ -28,6 +28,9 @@ import ViewProducts from '../../components/Product/viewProduct';
 import {authLogout, getLoggedUser, updateLoggedCustomer, getLoggedVendor} from '../../store/actions/index';
 import Modal from 'react-native-modal';
 import {connect} from 'react-redux';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import DefaultButton from '../../components/UI/DefaultButton/DefaultButton'
+import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
 
 class VendorHome extends Component {
 
@@ -42,8 +45,111 @@ class VendorHome extends Component {
     nic: '',
     businessName: '',
     businessAddress: '',
+    timeModal: false,
+    temp: new Date(),
+    startTime: "",
+    endTime: "",
+    mode: 'date',
+    show: false,
+    startTimePicker: false,
+    endTimePicker: false
+  }
+
+  toggleTimeModal = () => {
+    this.setState(prevState => {
+      return{
+        timeModal: !prevState.timeModal
+      }
+    })
+  }
+
+  setTime = () => {
+    this.setState(prevState => {
+      return{
+        timeModal: !prevState.timeModal,
+
+      } 
+    })
   }
   
+  showDatepicker = () => {
+    this.setState(prevState => {
+        return{
+            ...prevState,
+            mode: 'date',
+            show: true
+        }
+    })
+}
+  showStartTimepicker = () => {
+    this.setState(prevState => {
+        return{
+            ...prevState,
+            mode: 'time',
+            startTimePicker: !prevState.startTimePicker
+        }
+    })
+  }
+
+  showEndTimepicker = () => {
+    this.setState(prevState => {
+        return{
+            ...prevState,
+            mode: 'time',
+            endTimePicker: !prevState.endTimePicker
+        }
+    })
+  }
+
+  hideDatepicker = () => {
+    this.setState(prevState => {
+        return{
+            ...prevState,
+            show: true
+        }
+    })
+}
+  
+  hideStartTimepicker = () => {
+    this.setState(prevState => {
+        return{
+            ...prevState,
+            startTimePicker: true
+        }
+    })
+  }
+
+  hideEndTimepicker = () => {
+    this.setState(prevState => {
+        return{
+            ...prevState,
+            endTimePicker: true
+        }
+    })
+  }
+
+  onChangeStartTime = (val) => {
+    var hours = val.getHours()
+    var min = val.getMinutes()
+    var time = hours.toString()+":"+min.toString()
+    this.setState({
+      startTime : time,
+      startTimePicker: false
+    })
+    
+    console.log(this.state.startTime)
+  }
+
+  onChangeEndTime = (val) => {
+    var hours = val.getHours()
+    var min = val.getMinutes()
+    var time = hours.toString()+":"+min.toString()
+    this.setState({
+      endTime : time,
+      endTimePicker: false
+    })
+  }
+
   toggleSwitch = () => {
     this.setState(prevState => {
        return {
@@ -53,8 +159,85 @@ class VendorHome extends Component {
   };
   //console.log(props.route.params)
   render(){
+    var timeModal = <Modal 
+                      isVisible={this.state.timeModal} 
+                      style={styles.modal} 
+                      backdropOpacity={0.8}
+                      animationIn="zoomInDown"
+                      animationOut="zoomOutUp"
+                      animationInTiming={600}
+                      animationOutTiming={600}
+                      backdropTransitionInTiming={600}
+                      backdropTransitionOutTiming={600}
+                      swipeDirection={['up', 'left', 'right', 'down']}
+                      >
+                      <Header style={styles.header} androidStatusBarColor='black' backgroundColor='#E0B743'>
+                      <Left>
+                          {/* <Button transparent>
+                          <Icon name="map" size={30} color="white" />
+                          </Button> */}
+                      </Left>
+                      <Body>
+                          <Title>Updating Time</Title>
+                      </Body>
+                      </Header>
+                      <DateTimePickerModal
+                        isVisible={this.state.startTimePicker}
+                        mode="time"
+                        date= {new Date()}
+                        onConfirm={this.onChangeStartTime}
+                        onCancel={this.hideStartTimepicker}
+                      />
+                      <DateTimePickerModal
+                        isVisible={this.state.endTimePicker}
+                        mode="time"
+                        date= {new Date()}
+                        onConfirm={this.onChangeEndTime}
+                        onCancel={this.hideEndTimepicker}
+                      />
+                      <Text style={styles.label}>start time: </Text>
+                      <View style={{flexDirection: 'row', width: 350 ,justifyContent: 'space-between', alignContent: 'center', alignItems: 'center'}}>
+                      <DefaultInput
+                          placeholder= 'start time'
+                          onChangeText= {this.onChangeStartTime} 
+                          value={this.state.startTime}
+                          //style={styles.inputField}
+                          editable={false}
+                      />
+                      <TouchableOpacity onPress={this.showStartTimepicker}>
+                        <Icon name="clock-o" size={29} color="black" />
+                      </TouchableOpacity>
+                      </View>
+                      <Text style={styles.label}>end time: </Text>
+                      <View style={{flexDirection: 'row', width: 350 ,justifyContent: 'space-between', alignContent: 'center', alignItems: 'center'}}>
+                      <DefaultInput
+                          placeholder= 'end time'
+                          onChangeText= {this.onChangeEndTime} 
+                          value={this.state.endTime}
+                          //style={styles.inputField}
+                          editable={false}
+                      />
+                      <TouchableOpacity onPress={this.showEndTimepicker}>
+                        <Icon name="clock-o" size={29} color="black" />
+                      </TouchableOpacity>
+                      </View>
+                      <DefaultButton  
+                      color='black' 
+                      onPress={this.toggleTimeModal}
+                      >
+                          close
+                      </DefaultButton>
+                      <DefaultButton  
+                      color='red' 
+                      onPress={this.setTime}
+                      >
+                          set time
+                      </DefaultButton>
+                  </Modal>
+                  //console.log('time modal', this.state.timeModal)
     return (
       <ScrollView>
+        {timeModal}
         <View style={{flex: 1, width: '100%'}}>
           <View style={styles.wall}>
             <ImageBackground
@@ -128,12 +311,12 @@ class VendorHome extends Component {
           </View>
           <View style={styles.deliveryDetailsView}>
             <View style={styles.deliveryHoursView}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.toggleTimeModal}>
                 <Icon name="clock-o" size={29} color="black" />
               </TouchableOpacity>
               <Text style={styles.deliveryHours}>
                 <Text> Normal delivery hours </Text>
-                <Text style={styles.deliveryDetails}> 6am - 9am </Text>
+                <Text style={styles.deliveryDetails}> {this.state.startTime? this.state.startTime: "N/A"} - {this.state.endTime? this.state.endTime: "N/A"} </Text>
               </Text>
             </View>
             <View style={styles.deliveryHoursView}>
@@ -382,6 +565,21 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: 'white',
+  },
+  modal: {
+    backgroundColor: 'rgba(255,255,255,0.8)',
+    //flex: 1,
+    padding: 10,
+    //height: 200,
+    justifyContent: 'flex-start',
+    margin: 0,
+  },
+  label:{
+    //fontVariant: 'small-caps',
+    textTransform: 'uppercase',
+    fontStyle: 'italic',
+    fontSize: 16,
+    marginTop: 5,
   },
 });
 
