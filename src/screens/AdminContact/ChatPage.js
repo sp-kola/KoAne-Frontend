@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { Container, Header, Left, Body, Right, Title, Subtitle, Button, Tab, Tabs, ScrollableTab } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-
+import {connect} from 'react-redux';
 import io from "socket.io-client";
 
 class ChatPage extends Component {
@@ -16,7 +16,7 @@ class ChatPage extends Component {
     }
 
     componentDidMount() {
-        this.socket = io("http://192.168.1.100:3300");
+        this.socket = io("http://192.168.1.101:3300");
         this.socket.on("chat message", msg => {
             this.setState({
                 chatMessages: [...this.state.chatMessages, msg]
@@ -82,4 +82,15 @@ const styles = StyleSheet.create({
     },
 })
 
-export default ChatPage;
+const mapStateToProps = state => {
+    return{
+        // email: state.users.loggedUserEmail,
+        // userName: state.users.loggedUserName,
+        // contactNumber: state.users.loggedUserContactNumber,
+        email: state.auth.email,
+        userName: state.auth.userName,
+        id : state.auth.id
+    }
+  }
+
+export default connect(mapStateToProps, null)(ChatPage);

@@ -18,6 +18,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import user from '../../assets/user.jpg'
 
 import AdminHome from '../HomePage/AdminHomeNav'
+import Statistics from '../Admin/Statistics';
+import Ratings from '../Admin/Ratings'
+import Find from '../Admin/Find';
 
 function CustomDrawerContent({ progress, ...rest }) {
   
@@ -132,8 +135,51 @@ function MyDrawer(data) {
             }
             
         }}
-        
+      />
+      <Drawer.Screen
+        name="Statistics"
+        component={Statistics}
+        options={{
+          drawerLabel: 'Statistics',
+          activeTintColor: 'black',
+          drawerIcon: () => <Icon color='white' size={20} name='chart-line' />,
+          color: 'white',
+          contentOptions: {
+            labelStyle: {
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+          }
 
+        }}
+      />
+      <Drawer.Screen
+        name="Ratings"
+        component={Ratings}
+        options={{
+          drawerLabel: 'Ratings',
+          activeTintColor: 'black',
+          drawerIcon: () => 
+          <Icon color='white' size={20} name='poll-h' />,
+            color: 'white',
+            contentOptions: { 
+              labelStyle: { fontColor: 'white',fontWeight: 'bold' }
+            }
+        }}
+      />
+      <Drawer.Screen
+        name="Find"
+        component={Find}
+        options={{
+          drawerLabel: 'Find',
+          activeTintColor: 'black',
+          drawerIcon: () =>
+            <Icon color='white' size={20} name='search' />,
+          color: 'white',
+          contentOptions: {
+            labelStyle: { fontColor: 'white', fontWeight: 'bold' }
+          }
+        }}
       />
     </Drawer.Navigator>
   );

@@ -1,13 +1,14 @@
-import {TRY_AUTH, AUTH_SET_TOKEN} from './actionType';
-import {uiStartLoading, uiStopLoading, getLoggedCustomer} from './index';
+import {TRY_AUTH, AUTH_SET_TOKEN} from './actionType'
+import { uiStartLoading,uiStopLoading, getLoggedCustomer, getCustomerLastSavedLocation } from './index'
 import AsyncStorage from '@react-native-community/async-storage';
+import { getLoggedVendor } from './vendor';
 
 export const login = (authData,nav) => {
     return dispatch => {
         dispatch(uiStartLoading());
         console.log('in login',authData)
 
-        let url = 'http://192.168.1.100:3300/user/login'
+        let url = 'http://192.168.1.3:3300/user/login'
 
         fetch(url,{
             method: "POST",
@@ -35,9 +36,14 @@ export const login = (authData,nav) => {
                         prasedRes.email,
                         prasedRes.userName,
                     ))
-                //if(parsedRes.type == 'Customer'){
+                if(prasedRes.type == 'Customer'){
                   await dispatch(getLoggedCustomer())
-                //}
+                  await dispatch(getCustomerLastSavedLocation())
+                }
+                else if(prasedRes.type == 'Vendor'){
+                  console.log('vendor is login in')
+                  await dispatch(getLoggedVendor())
+                }
                 const type = prasedRes.type
                 if(type === 'Admin'){
                     await nav.navigation.push('AdminSideScreen',{
@@ -93,7 +99,6 @@ export const authStoreToken = (id, token, userType, email, userName) => {
       // }
     };
   };
-};
 
 export const authSetToken = (id, token, userType, email, userName) => {
   console.log('in setting token');
@@ -237,7 +242,7 @@ export const initiateLogOut = () => {
       .then(token => {
         //dispatch(removeProduct(key))
         console.log('pass1');
-        let url = 'http://192.168.8.101:3300/user/logout';
+        let url = 'http://192.168.1.3:3300/user/logout';
         return fetch(url, {
           method: 'PATCH',
           headers: {

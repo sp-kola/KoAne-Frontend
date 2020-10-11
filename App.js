@@ -19,13 +19,11 @@ import Home from './src/screens/HomePage/Home';
 //import viewProduct from './src/components/Product/viewProduct';
 import VendorSideDrawer from './src/screens/SideDrawer/VendorSideDrawer'
 import CustomerSideDrawer from './src/screens/SideDrawer/CustomerSideDrawer'
-
-import Test from './src/screens/CustomerMaps/Flag';
 import Notifications from './src/screens/Customer/Notifications';
-import io from 'socket.i
+import io from 'socket.io-client'
 
 import AdminSideDrawer from './src/screens/SideDrawer/AdminSideDrawer'
-import Test from './src/screens/CustomerMaps/Flag'
+//import Test from './src/screens/CustomerMaps/Flag'
 import AdminHome from './src/screens/AdminHome';
 import viewProduct from './src/components/Product/viewProduct';
 import OrderConfirmRecipt from './src/components/Order_UI/OrderConfirmRecipt';
@@ -33,18 +31,16 @@ import SplashScreen from './src/SplashScreen';
 import viewVendorProducts from './src/components/Product/viewVendorProducts';
 
 const RootStack = createStackNavigator();
-//global.socket = io("http://192.168.1.100:3300");
 
 function App() {
-
   return (
     <NavigationContainer>
       <RootStack.Navigator headerMode="none">
         <RootStack.Screen name="SplashScreen" component={SplashScreen} />
+
       {/* <RootStack.Screen name="Test" component={Test} /> */}
       <RootStack.Screen name="VendorSideScreen" component={VendorSideDrawer} />
       <RootStack.Screen name="CustomerSideScreen" component={CustomerSideDrawer} />
-
       <RootStack.Screen name="AdminSideScreen" component={AdminSideDrawer} />
         <RootStack.Screen name="Map" component={TrackMe} />
         <RootStack.Screen name="LoginRegister" component={LoginRegister} />
@@ -69,7 +65,6 @@ function App() {
           name="viewVendorProduct"
           component={viewVendorProducts}
         />
-
         <RootStack.Screen
           name="orderConfirmRecipt"
           component={OrderConfirmRecipt}
