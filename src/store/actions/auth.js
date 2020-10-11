@@ -1,6 +1,7 @@
 import {TRY_AUTH, AUTH_SET_TOKEN} from './actionType'
 import { uiStartLoading,uiStopLoading, getLoggedCustomer, getCustomerLastSavedLocation } from './index'
 import AsyncStorage from '@react-native-community/async-storage';
+import { getLoggedVendor } from './vendor';
 
 export const login = (authData,nav) => {
     return dispatch => {
@@ -35,10 +36,14 @@ export const login = (authData,nav) => {
                         prasedRes.email,
                         prasedRes.userName,
                     ))
-                //if(parsedRes.type == 'Customer'){
+                if(prasedRes.type == 'Customer'){
                   await dispatch(getLoggedCustomer())
                   await dispatch(getCustomerLastSavedLocation())
-                //}
+                }
+                else if(prasedRes.type == 'Vendor'){
+                  console.log('vendor is login in')
+                  await dispatch(getLoggedVendor())
+                }
                 const type = prasedRes.type
                 if(type === 'Admin'){
                     await nav.navigation.push('AdminSideScreen',{
