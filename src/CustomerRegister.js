@@ -168,7 +168,7 @@ class CustomerRegister extends React.Component {
 
 
   componentDidMount() {
-    this.socket = io("http://192.168.1.100:3300");
+    this.socket = io("http://192.168.1.101:3300");
   }
 
   render() {

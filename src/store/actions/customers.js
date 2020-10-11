@@ -9,7 +9,7 @@ export const signup = (signupData,nav) => {
     return dispatch => {
         //console.log(locationData);
 
-        fetch('http://192.168.1.3:3300/customer/signup',{
+        fetch('http://192.168.1.101:3300/customer/signup',{
 
             method: 'POST',
             headers: {
@@ -43,7 +43,7 @@ export const getLoggedCustomer = () => {
     .then(token =>{
         console.log('token from auth get',token)
 
-        let url = 'http://192.168.1.3:3300/customer/me'
+        let url = 'http://192.168.1.101:3300/customer/me'
         return fetch(url, {
           method: 'GET',
           headers: {
@@ -99,7 +99,7 @@ export const getLoggedCustomer = () => {
     })
     .then(token =>{
         console.log('token from auth get',token)
-        let url = 'http://192.168.1.3:3300/customer'
+        let url = 'http://192.168.1.101:3300/customer'
         return fetch(url, {
             method: "PATCH",
             headers: {
@@ -163,7 +163,7 @@ export const updateAvatar = (image) => {
     })
     .then(token =>{
         console.log('token from auth get',token)
-        let url = 'http://192.168.1.3:3300/customer/upload'
+        let url = 'http://192.168.1.101:3300/customer/upload'
         const data = new FormData();
         data.append('name', 'avatar');
         data.append('fileData', {
