@@ -2,9 +2,9 @@ import { Right, Left, Button } from 'native-base';
 import React, { Component } from 'react';
 import { View, Text, TextInput, ScrollView, Dimensions, StyleSheet, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-class UnRead extends Component {
+class Read extends Component {
     constructor() {
         super()
         this.state = {
@@ -13,13 +13,31 @@ class UnRead extends Component {
     }
 
     renderItem = ({ item }) => {
+        deletemessage = (msgId) => {
+            Alert
+            const url = 'http://192.168.1.101:3300/message/' + msgId
+
+            fetch(url, {
+                method: "DELETE"
+            })
+                .then(res => {
+                    return res.json()
+                })
+
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
         return (
             <View style={styles.flatComponent}>
+
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text style={styles.textHeader}>{item.sender}</Text>
-                    <Button transparent >
+
+                    <Button transparent onPress>
                         <Icon name="closecircleo" style={styles.closeIcon} />
                     </Button>
+
                 </View>
 
                 <Text style={styles.textContent}>{item.message}</Text>
@@ -28,7 +46,9 @@ class UnRead extends Component {
     }
 
     componentDidMount() {
-        const url = 'http://192.168.1.100:3300/message'
+        const userId = this.props.id
+        const url = 'http://192.168.1.101:3300/message/' + userId
+
         fetch(url, {
             method: "GET"
         })
@@ -54,6 +74,7 @@ class UnRead extends Component {
                 console.log(error)
             })
     }
+
     render() {
 
         return (
@@ -73,7 +94,7 @@ const styles = StyleSheet.create({
     },
     flatComponent: {
         borderWidth: 3,
-        borderColor: 'blue',
+        borderColor: 'green',
         justifyContent: 'center',
         //alignItems: 'center', 
         width: 380,
@@ -86,7 +107,7 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         marginHorizontal: '5%',
         marginTop: '3%',
-        fontWeight: 'bold',
+        fontWeight: 'bold'
     },
     textContent: {
         fontSize: 16,
@@ -103,16 +124,16 @@ const styles = StyleSheet.create({
         marginTop: '1%'
     }
 });
-       
+
 const mapStateToProps = state => {
-    return{
+    return {
         // email: state.users.loggedUserEmail,
         // userName: state.users.loggedUserName,
         // contactNumber: state.users.loggedUserContactNumber,
         email: state.auth.email,
         userName: state.auth.userName,
-        id : state.auth.id
+        id: state.auth.id
     }
-  }
+}
 
-export default connect(mapStateToProps, null) (UnRead);
+export default connect(mapStateToProps, null)(Read);
