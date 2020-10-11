@@ -22,10 +22,10 @@ import CustomerSideDrawer from './src/screens/SideDrawer/CustomerSideDrawer'
 
 import Test from './src/screens/CustomerMaps/Flag';
 import Notifications from './src/screens/Customer/Notifications';
-import io from 'socket.i
+
 
 import AdminSideDrawer from './src/screens/SideDrawer/AdminSideDrawer'
-import Test from './src/screens/CustomerMaps/Flag'
+//import Test from './src/screens/CustomerMaps/Flag'
 import AdminHome from './src/screens/AdminHome';
 import viewProduct from './src/components/Product/viewProduct';
 import OrderConfirmRecipt from './src/components/Order_UI/OrderConfirmRecipt';
@@ -33,7 +33,6 @@ import SplashScreen from './src/SplashScreen';
 import viewVendorProducts from './src/components/Product/viewVendorProducts';
 
 const RootStack = createStackNavigator();
-//global.socket = io("http://192.168.1.100:3300");
 
 function App() {
 
