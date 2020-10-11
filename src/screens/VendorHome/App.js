@@ -9,6 +9,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Switch,
+  Dimensions
 } from 'react-native';
 import {
   Container,
@@ -32,6 +33,14 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import DefaultButton from '../../components/UI/DefaultButton/DefaultButton'
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import Geocoder from 'react-native-geocoding';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+
+const GOOGLE_PLACES_API_KEY = 'AIzaSyBcs4ko-dTv7DhkZWp0BbcTs0z2nodA4y8'; 
+
+Geocoder.init(GOOGLE_PLACES_API_KEY);
+
+const { width } = Dimensions.get('window');
 
 class VendorHome extends Component {
 
@@ -54,7 +63,41 @@ class VendorHome extends Component {
     show: false,
     startTimePicker: false,
     endTimePicker: false,
-    calandarModal: false
+    calandarModal: false,
+    markedDates: [],
+    visitingMarkedDates: [],
+    locationModalShow: false,
+    mapModalShow: false,
+    markedPlaces: [],
+    placeToAdd: ''
+  }
+
+  placeToAddTextHandler = (val) => {
+    this.setState({
+      placeToAdd: val
+    })
+  }
+
+  addToMarkDates = (day) => {
+    var temp = this.state.markedDates
+    var dateToAdd = day.dateString
+    // var dateObject = {
+    //   dateToAdd :
+    // }
+    var flag = temp.find(data => data == dateToAdd)
+    if(flag){
+      temp = temp.filter(date => date != dateToAdd)
+      this.setState({
+        markedDates : temp
+      })
+    }
+    else{
+      temp.push(dateToAdd)
+      this.setState({
+        markedDates : temp
+      })
+    }
+    console.log('dates ', this.state.markedDates)
   }
 
   toggleTimeModal = () => {
@@ -63,6 +106,44 @@ class VendorHome extends Component {
         timeModal: !prevState.timeModal
       }
     })
+  }
+
+  toggleLocationModal = () => {
+    this.setState(prevState => {
+      return{
+        locationModalShow: !prevState.locationModalShow
+      }
+    })
+  }
+
+  toggleMapModal = () => {
+    this.setState(prevState => {
+      return{
+        mapModalShow: !prevState.mapModalShow
+      }
+    })
+  }
+
+  addToMarkPlaces = (day) => {
+    var temp = this.state.markedDates
+    var dateToAdd = day.dateString
+    // var dateObject = {
+    //   dateToAdd :
+    // }
+    var flag = temp.find(data => data == dateToAdd)
+    if(flag){
+      temp = temp.filter(date => date != dateToAdd)
+      this.setState({
+        markedDates : temp
+      })
+    }
+    else{
+      temp.push(dateToAdd)
+      this.setState({
+        markedDates : temp
+      })
+    }
+    console.log('dates ', this.state.markedDates)
   }
 
   toggleCalendarModal = () => {
@@ -167,6 +248,32 @@ class VendorHome extends Component {
       }
     })
   };
+
+  clearStops = () => {
+    this.setState({
+      markedPlaces: []
+    })
+  }
+
+  addressChangedHandler = (val) => {
+    //console.log(val)
+    var temp = this.state.markedPlaces
+    var flag = temp.find(data => data == val)
+    if(flag){
+      temp = temp.filter(data => data != val)
+      this.setState({
+        markedPlaces : temp
+      })
+    }
+    else{
+      temp.push(val)
+      this.setState({
+        markedPlaces : temp
+      })
+    }
+    console.log('dates ', this.state.markedPlaces)
+    
+}
   //console.log(props.route.params)
   render(){
     var timeModal = <Modal 
@@ -244,6 +351,18 @@ class VendorHome extends Component {
                           set time
                       </DefaultButton>
                   </Modal>
+    var selectedDates = null
+    if(this.state.markedDates){
+      selectedDates = this.state.markedDates.map(
+        date => <Text style={styles.selectedDate}>{date}</Text>
+      )
+    }
+    var seletedPlaces = null
+    if(this.state.markedPlaces){
+      seletedPlaces = this.state.markedPlaces.map(
+        data => <Text style={styles.selectedDate}>{data}</Text>
+      )
+    }
     var dataModal = <Modal 
                       isVisible={this.state.calandarModal} 
                       style={styles.modal} 
@@ -266,10 +385,22 @@ class VendorHome extends Component {
                           <Title>Updating Time</Title>
                       </Body>
                       </Header>
-                      <Calendar/>
+                      <Calendar
+                        minDate = {new Date()}
+                        onDayLongPress={(day) => {this.addToMarkDates(day)}}
+                        onDayPress={(day) => {this.addToMarkDates(day)}}
+                        markedDates = {this.state.markedDates}
+                      />
+                      <View>
+                        <Text style={styles.selectedDateHeader}>Selected dates: </Text>
+                        <View style={{  alignContent: 'center'}}>
+                          {selectedDates!= null ? selectedDates :<Text>Add some dates</Text>}
+                        </View>
+                      </View>  
                       <DefaultButton  
                       color='black' 
-                      onPress={this.calandarModal}
+                      onPress={this.toggleCalendarModal}
+                      
                       >
                           close
                       </DefaultButton>
@@ -277,14 +408,159 @@ class VendorHome extends Component {
                       color='green' 
                       onPress={this.setTime}
                       >
-                          set time
+                          update dates
                       </DefaultButton>
                   </Modal>
+    var mapModal = <Modal 
+                    isVisible={this.state.mapModalShow} 
+                    style={styles.modal} 
+                    backdropOpacity={0.8}
+                    animationIn="zoomInDown"
+                    animationOut="zoomOutUp"
+                    avoidKeyboard = {true}
+                    animationInTiming={600}
+                    animationOutTiming={600}
+                    backdropTransitionInTiming={600}
+                    backdropTransitionOutTiming={600}
+                    >
+                    <Header style={styles.header} androidStatusBarColor='black' backgroundColor='#E0B743'>
+                    <Left>
+                        <Button transparent>
+                        <Icon name="map" size={30} color="white" />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Title>Filter your address</Title>
+                    </Body>
+                    </Header>
+                    <GooglePlacesAutocomplete
+                    //onChangeText= {this.shopNameChangedHandler} 
+                    //value={this.state.controls.shopName.value}
+                    query={{
+                        key: GOOGLE_PLACES_API_KEY,
+                        language: 'en', // language of the results
+                        components: 'country:lk',
+                    }}
+                    onPress={( data,details = null) => {
+                        console.log(data, details)
+                        this.addressChangedHandler(data.description)
+                    }}
+                    //onPress={console.log(query)}
+                    listViewDisplayed={false}  
+                    
+                    onFail={error => console.error(error)}
+                    requestUrl={{
+                        url:
+                        'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api',
+                        useOnPlatform: 'web',
+                    }} // this in only required for use on the web. See https://git.io/JflFv more for details.
+                    styles={{
+                        textInputContainer: {
+                        backgroundColor: 'rgba(0,0,0,0)',
+                        borderTopWidth: 0,
+                        borderBottomWidth: 0,
+                        },
+                        textInput: {
+                        marginLeft: 0,
+                        marginRight: 0,
+                        height: 38,
+                        color: '#5d5d5d',
+                        fontSize: 16,
+                        },
+                        predefinedPlacesDescription: {
+                        color: '#1faadb',
+                        },
+                    }}/>
+                    <DefaultButton  
+                    color='black' 
+                    onPress={this.toggleMapModal}
+                    >
+                        Close
+                    </DefaultButton>
+                    <DefaultButton  
+                    color='green' 
+                    onPress={this.toggleMapModal}
+                    >
+                        Set Location
+                    </DefaultButton>
+                </Modal>
+    var locationModal = <Modal 
+                          isVisible={this.state.locationModalShow} 
+                          style={styles.modal} 
+                          backdropOpacity={0.8}
+                          animationIn="zoomInDown"
+                          animationOut="zoomOutUp"
+                          animationInTiming={600}
+                          animationOutTiming={600}
+                          backdropTransitionInTiming={600}
+                          backdropTransitionOutTiming={600}
+                          swipeDirection={['up', 'left', 'right', 'down']}
+                          avoidKeyboard = {true}
+                          >
+                          <Header style={styles.header} androidStatusBarColor='black' backgroundColor='#E0B743'>
+                          <Left>
+                              {/* <Button transparent>
+                              <Icon name="map" size={30} color="white" />
+                              </Button> */}
+                          </Left>
+                          <Body>
+                              <Title>Updating Stops</Title>
+                          </Body>
+                          </Header>
+                          {mapModal}
+                          <DefaultInput
+                          placeholder= 'add a stop'
+                          onChangeText= {this.placeToAddTextHandler} 
+                          value = {this.state.placeToAdd}
+                          //style={styles.inputField}
+                          />
+                          <DefaultButton  
+                          color='#3285a8' 
+                          onPress={() => this.addressChangedHandler(this.state.placeToAdd)}
+                          
+                          >
+                              Add stop
+                          </DefaultButton>
+                          <DefaultButton  
+                          color='#ba422d' 
+                          onPress={this.clearStops}
+                          
+                          >
+                              Clear all stops
+                          </DefaultButton>
+                          <View>
+                            <Text style={styles.selectedDateHeader}>Selected stops: </Text>
+                            <View style={{  alignContent: 'center'}}>
+                              {seletedPlaces!= null ? seletedPlaces :<Text>Add some places</Text>}
+                            </View>
+                          </View>  
+                          <DefaultButton  
+                          color='#3285a8' 
+                          onPress={this.toggleMapModal}
+                          
+                          >
+                              search for a location 
+                          </DefaultButton>
+                          <DefaultButton  
+                          color='black' 
+                          onPress={this.toggleLocationModal}
+                          
+                          >
+                              close
+                          </DefaultButton>
+                          <DefaultButton  
+                          color='green' 
+                          onPress={this.setTime}
+                          >
+                              update stops
+                          </DefaultButton>
+                      </Modal>
                   //console.log('time modal', this.state.timeModal)
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps= "always">
         {timeModal}
         {dataModal}
+        {locationModal}
         <View style={{flex: 1, width: '100%'}}>
           <View style={styles.wall}>
             <ImageBackground
@@ -370,19 +646,19 @@ class VendorHome extends Component {
               <TouchableOpacity onPress={this.toggleCalendarModal}>
                 <Icon name="calendar" size={25} color="black" />
               </TouchableOpacity>
-              <Text style={styles.deliveryHours}>
+              <Text style={[styles.deliveryHours], {alignItems: 'center', alignContent: 'space-between', paddingRight: 10}}>
                 <Text> Next visiting date </Text>
-            <Text style={styles.deliveryDetails}>{this.props.visitingDates != '' ? this.props.visitingDates[0]: 'add your delivery dates'}</Text>
+            <Text style={styles.deliveryDetails}>{this.state.markedDates[0]!= undefined ? this.state.markedDates[0]: 'add your delivery dates'}</Text>
               </Text>
             </View>
-            <View style={styles.deliveryHoursView}>
-              <TouchableOpacity>
+            <View style={[styles.deliveryHoursView]}>
+              <TouchableOpacity onPress={this.toggleLocationModal}>
                 <Icon name="map" size={24} color="black" />
               </TouchableOpacity>
               <Text style={styles.deliveryHours}> Routes </Text>
-              <View style={styles.deliveryHours}>
+              <View style={[styles.deliveryHours], {alignItems: 'center', alignContent: 'space-between', paddingRight: 10}}>
                 <Text style={styles.deliveryDetails}>
-                {this.props.visitingDates[0]!= undefined ? this.props.visitingDates.map(data => data + " ,"): 'add your stops'}
+                {this.state.markedPlaces[0]!= undefined ? this.state.markedPlaces.map(data => data + " ,"): 'add your stops'}
                 </Text>
               </View>
             </View>
@@ -451,6 +727,15 @@ class VendorHome extends Component {
 }
 
 const styles = StyleSheet.create({
+  selectedDateHeader : {
+    fontWeight: 'bold',
+    marginTop: 5
+  },
+  selectedDates: {
+    marginLeft: 10,
+    marginTop: 5,
+    paddingLeft: 15
+  },
   header: {
     backgroundColor: 'black',
   },
