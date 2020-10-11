@@ -7,7 +7,7 @@ export const login = (authData,nav) => {
         dispatch(uiStartLoading());
         console.log('in login',authData)
 
-        let url = 'http://192.168.1.100:3300/user/login'
+        let url = 'http://192.168.1.3:3300/user/login'
 
         fetch(url,{
             method: "POST",
@@ -237,7 +237,7 @@ export const initiateLogOut = () => {
       .then(token => {
         //dispatch(removeProduct(key))
         console.log('pass1');
-        let url = 'http://192.168.8.101:3300/user/logout';
+        let url = 'http://192.168.1.3:3300/user/logout';
         return fetch(url, {
           method: 'PATCH',
           headers: {

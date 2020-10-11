@@ -40,7 +40,7 @@ export default function VendorHome(props) {
             <View style={styles.headerView}>
               <Left>
                 <Text style={styles.headerText}>
-                  {props.route.params.user.userName}
+                  {/* {props.route.params.user.userName} */}
                 </Text>
               </Left>
               <Title>VENDOR</Title>
