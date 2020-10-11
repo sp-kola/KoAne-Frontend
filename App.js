@@ -19,10 +19,8 @@ import Home from './src/screens/HomePage/Home';
 //import viewProduct from './src/components/Product/viewProduct';
 import VendorSideDrawer from './src/screens/SideDrawer/VendorSideDrawer'
 import CustomerSideDrawer from './src/screens/SideDrawer/CustomerSideDrawer'
-
-import Test from './src/screens/CustomerMaps/Flag';
 import Notifications from './src/screens/Customer/Notifications';
-
+import io from 'socket.io-client'
 
 import AdminSideDrawer from './src/screens/SideDrawer/AdminSideDrawer'
 //import Test from './src/screens/CustomerMaps/Flag'
@@ -43,7 +41,6 @@ function App() {
       {/* <RootStack.Screen name="Test" component={Test} /> */}
       <RootStack.Screen name="VendorSideScreen" component={VendorSideDrawer} />
       <RootStack.Screen name="CustomerSideScreen" component={CustomerSideDrawer} />
-
       <RootStack.Screen name="AdminSideScreen" component={AdminSideDrawer} />
         <RootStack.Screen name="Map" component={TrackMe} />
         <RootStack.Screen name="LoginRegister" component={LoginRegister} />

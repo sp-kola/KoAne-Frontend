@@ -26,6 +26,7 @@ const reducer = (state = initialState, action) => {
                 savedLocations: action.locations
             }
         case GET_SAVED_LAST_LOCATION:
+            console.log('saving location', action.location)
             return{
                 ...state,
                 currentLocationOfUser: action.location

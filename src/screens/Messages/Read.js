@@ -2,9 +2,9 @@ import { Right, Left, Button } from 'native-base';
 import React, { Component } from 'react';
 import { View, Text, TextInput, ScrollView, Dimensions, StyleSheet, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {connect} from 'react-redux';
 
-
-export default class UnRead extends Component {
+class UnRead extends Component {
     constructor() {
         super()
         this.state = {
@@ -104,3 +104,15 @@ const styles = StyleSheet.create({
     }
 });
        
+const mapStateToProps = state => {
+    return{
+        // email: state.users.loggedUserEmail,
+        // userName: state.users.loggedUserName,
+        // contactNumber: state.users.loggedUserContactNumber,
+        email: state.auth.email,
+        userName: state.auth.userName,
+        id : state.auth.id
+    }
+  }
+
+export default connect(mapStateToProps, null) (UnRead);
