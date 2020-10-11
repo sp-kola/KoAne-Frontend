@@ -30,7 +30,8 @@ import Modal from 'react-native-modal';
 import {connect} from 'react-redux';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import DefaultButton from '../../components/UI/DefaultButton/DefaultButton'
-import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
+import DefaultInput from '../../components/UI/DefaultInput/DefaultInput';
+import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
 class VendorHome extends Component {
 
@@ -52,13 +53,22 @@ class VendorHome extends Component {
     mode: 'date',
     show: false,
     startTimePicker: false,
-    endTimePicker: false
+    endTimePicker: false,
+    calandarModal: false
   }
 
   toggleTimeModal = () => {
     this.setState(prevState => {
       return{
         timeModal: !prevState.timeModal
+      }
+    })
+  }
+
+  toggleCalendarModal = () => {
+    this.setState(prevState => {
+      return{
+        calandarModal: !prevState.calandarModal
       }
     })
   }
@@ -228,7 +238,43 @@ class VendorHome extends Component {
                           close
                       </DefaultButton>
                       <DefaultButton  
-                      color='red' 
+                      color='green' 
+                      onPress={this.setTime}
+                      >
+                          set time
+                      </DefaultButton>
+                  </Modal>
+    var dataModal = <Modal 
+                      isVisible={this.state.calandarModal} 
+                      style={styles.modal} 
+                      backdropOpacity={0.8}
+                      animationIn="zoomInDown"
+                      animationOut="zoomOutUp"
+                      animationInTiming={600}
+                      animationOutTiming={600}
+                      backdropTransitionInTiming={600}
+                      backdropTransitionOutTiming={600}
+                      swipeDirection={['up', 'left', 'right', 'down']}
+                      >
+                      <Header style={styles.header} androidStatusBarColor='black' backgroundColor='#E0B743'>
+                      <Left>
+                          {/* <Button transparent>
+                          <Icon name="map" size={30} color="white" />
+                          </Button> */}
+                      </Left>
+                      <Body>
+                          <Title>Updating Time</Title>
+                      </Body>
+                      </Header>
+                      <Calendar/>
+                      <DefaultButton  
+                      color='black' 
+                      onPress={this.calandarModal}
+                      >
+                          close
+                      </DefaultButton>
+                      <DefaultButton  
+                      color='green' 
                       onPress={this.setTime}
                       >
                           set time
@@ -238,6 +284,7 @@ class VendorHome extends Component {
     return (
       <ScrollView>
         {timeModal}
+        {dataModal}
         <View style={{flex: 1, width: '100%'}}>
           <View style={styles.wall}>
             <ImageBackground
@@ -320,7 +367,7 @@ class VendorHome extends Component {
               </Text>
             </View>
             <View style={styles.deliveryHoursView}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this.toggleCalendarModal}>
                 <Icon name="calendar" size={25} color="black" />
               </TouchableOpacity>
               <Text style={styles.deliveryHours}>
