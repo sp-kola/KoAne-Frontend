@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, ScrollView, Dimensions, StyleSheet, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {connect} from 'react-redux';
+import io from "socket.io-client";
 
 class UnRead extends Component {
     constructor(){
@@ -13,28 +14,38 @@ class UnRead extends Component {
     }
 
     renderItem = ({ item }) => {
+
         return(
             <View style={styles.flatComponent}>
 
                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Text style={styles.textHeader}>{item.sender}</Text>
 
-                    <Button transparent onPress={deletemessage()}>
+                    <Button transparent onPress = { () => deletemessage(item._id) }>
                         <Icon name="closecircleo" style={styles.closeIcon} />
                     </Button>
 
                 </View>
+                <Text style={styles.textContent}>{item.message}</Text>
 
-                    <Text style={styles.textContent}>{item.message}</Text>
+                <Button transparent onPress={() => this.updatemessage(item._id)} style={styles.button}>
+                    <Text style={styles.buttonText}>Ok </Text>
+                </Button>
             </View>
         )   
     }
-    deletemessage = () => {
-
-    }
+    
 
     componentDidMount() {
-        const url = 'http://192.168.1.100:3300/message'
+
+        this.socket = io("http://192.168.1.101:3300");
+        this.socket.on("custome message", msg => {
+            
+        });
+    
+        const userId = this.props.id
+        const url = 'http://192.168.1.101:3300/message/'+ userId
+
         fetch(url, {
             method: "GET"
         })
@@ -51,7 +62,7 @@ class UnRead extends Component {
                     key:_id
                 })
             }
-            const newarr = messages.filter(obj => obj.read===false)
+            const newarr = messages.filter(obj => (obj.read===false && obj.state===0))
             this.setState({
                 dataSource: newarr
             })
@@ -71,6 +82,23 @@ class UnRead extends Component {
                     />
             </View>
         );
+    }
+    deletemessage = (msgId) => {
+        const url = 'http://192.168.1.101:3300/message/' + msgId
+
+        fetch(url, {
+            method: "DELETE"
+        })
+            .then(res => { return res.json() })
+            .catch((error) => { console.log(error) })
+    }
+    updatemessage = (msgId) => {
+        const url = 'http://192.168.1.101:3300/message/' + msgId
+        fetch(url, {
+            method: "PUT"
+        })
+        .then(res => { return res.json() })
+        .catch((error) => { console.log(error) })
     }
 }
 
@@ -108,7 +136,25 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign:'right',
         marginTop: '1%'
-    }
+    },
+    buttonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#ffffff',
+        textAlign: 'right',
+        fontFamily: 'sans-serif-medium',
+    },
+
+    button: {
+        backgroundColor: '#242424',
+        width: '20%',
+        borderRadius: 25,
+        marginVertical: 5,
+        paddingVertical: 20,
+        paddingHorizontal: 25,
+        alignSelf:'flex-end',
+        marginHorizontal: '5%',
+    },
 });
 
 const mapStateToProps = state => {
