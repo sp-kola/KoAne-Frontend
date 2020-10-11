@@ -71,7 +71,10 @@ export const getLoggedVendor = () => {
             businessName: parsedRes.businessName,
             businessAddress: parsedRes.businessAddress,
             vehicleNo: parsedRes.vehicleNo,
-            delivering: parsedRes.delivering
+            delivering: parsedRes.delivering,
+            startTime: parsedRes.startTime,
+            endTime: parsedRes.endTime,
+            bio: parsedRes.bio
           };
           console.log('loding data');
           dispatch(vendorLogIn(vendor));

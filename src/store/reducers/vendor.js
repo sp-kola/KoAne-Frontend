@@ -15,7 +15,10 @@ const initialState = {
     loggedVendorBusinessName: '',
     loggedVendorBusinessAddress: '',
     loggedVendorVehicleNo: '',
-    loggedVendorDeliveringStatus: false
+    loggedVendorDeliveringStatus: false,
+    loggedVendorStartTime: '',
+    loggedVendorEndTime: '',
+    loggedVendorBio: ''
 }
 
 const reducer = (state = initialState, action) => {
@@ -58,7 +61,10 @@ const reducer = (state = initialState, action) => {
                 loggedVendorBusinessName: action.vendor.businessName,
                 loggedVendorBusinessAddress: action.vendor.businessAddress,
                 loggedVendorVehicleNo: action.vendor.vehicleNo,
-                loggedVendorDeliveringStatus: action.vendor.delivering
+                loggedVendorDeliveringStatus: action.vendor.delivering,
+                loggedVendorStartTime: action.vendor.startTime,
+                loggedVendorEndTime: action.vendor.endTime,
+                loggedVendorBio: action.vendor.bio
             }
         }
 
@@ -78,7 +84,10 @@ const reducer = (state = initialState, action) => {
                 loggedVendorBusinessName: '',
                 loggedVendorBusinessAddress: '',
                 loggedVendorVehicleNo: '',
-                loggedVendorDeliveringStatus: false
+                loggedVendorDeliveringStatus: false,
+                loggedVendorStartTime: '',
+                loggedVendorEndTime: '',
+                loggedVendorBio: ''
             }
         }
 

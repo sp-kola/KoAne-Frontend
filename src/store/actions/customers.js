@@ -80,7 +80,7 @@ export const getLoggedCustomer = () => {
   };
 };
 
-  export const updateLoggedCustomer = (userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses) => {
+export const updateLoggedCustomer = (userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses) => {
     const updateData = {
         userName:userName,
         firstName:firstName,
@@ -118,19 +118,6 @@ export const getLoggedCustomer = () => {
         throw (new Error())
       }
     })
-    .then(parsedRes => {
-        console.log('returned data',parsedRes)
-        let customer = {
-            _id : parsedRes._id,
-            userName: parsedRes.userName,
-            firstName: parsedRes.firstName,
-            lastName: parsedRes.lastName,
-            email: parsedRes.email,
-            contactNo: parsedRes.contactNo,
-            //lastReportedLocation: parsedRes.lastReportedLocation,
-            deliveryAddresses: parsedRes.deliveryAddresses
-        }
-      })
       .then(parsedRes => {
         console.log('returned data', parsedRes);
         let customer = {

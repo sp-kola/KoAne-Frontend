@@ -589,6 +589,14 @@ class VendorHome extends Component {
               </Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.buttonPublicView}>
+              <Text style={[styles.text, styles.publicView]}>
+                {' '}
+                UPDATE <Icon name="edit" size={15} color="white" />
+              </Text>
+            </View>
+          </TouchableOpacity>
           <View>
             <Text style={[styles.text, styles.profileName]}>{this.props.businessName? this.props.businessName: 'N/A'}</Text>
             <Text style={[styles.text, styles.profileDetails]}>{this.props.firstName ? this.props.firstName+" "+ this.props.lastName: 'N/A'}</Text>
