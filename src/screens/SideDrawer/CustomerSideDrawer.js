@@ -21,7 +21,6 @@ import CustomerHome from '../HomePage/CustomerHome'
 import VendorSearch from '../VenderSearch'
 import Maps from '../CustomerMaps/MapContainer'
 import Profile from '../Customer/CustomerProfileContainer'
-
 import MessagesHome from '../Messages/MessageContainer'
 import AdminContact from '../AdminContact/ChatPage'
 
@@ -348,17 +347,6 @@ class MyDrawer extends Component {
           }
         }}
       />
-            {/* <Drawer.Screen
-              name="Products"
-              //component={Products}
-              options={{ 
-                drawerLabel: 'Products',
-                drawerIcon: () => <Icon color='white' size={20} name='shopping-basket' /> 
-              }}
-              
-            >
-              {props => <Product {...props} />}
-              </Drawer.Screen> */}
           </Drawer.Navigator>
         );
       }
