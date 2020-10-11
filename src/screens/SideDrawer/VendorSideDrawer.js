@@ -17,7 +17,7 @@ import Animated from 'react-native-reanimated';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import user from '../../assets/user.jpg'
 
-import VendorHome from '../HomePage/VendorHome'
+import VendorHome from '../HomePage/VendorHomeNav'
 import Product from '../ViewProduct/Product'
 import Maps from '../VendorMaps/MapContainer'
 

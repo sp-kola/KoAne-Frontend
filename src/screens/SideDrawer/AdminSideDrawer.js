@@ -17,8 +17,10 @@ import Animated from 'react-native-reanimated';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import user from '../../assets/user.jpg'
 
-import VendorHome from '../HomePage/VendorHome'
-import Product from '../ViewProduct/Product'
+import AdminHome from '../HomePage/AdminHomeNav'
+import Statistics from '../Admin/Statistics';
+import Ratings from '../Admin/Ratings'
+import Find from '../Admin/Find';
 
 function CustomDrawerContent({ progress, ...rest }) {
   
@@ -40,7 +42,7 @@ function CustomDrawerContent({ progress, ...rest }) {
           <View style={{flexDirection:'row'}}>
           <Thumbnail large source={user} />
             
-            <Text style={styles.profileText}>Hello user123</Text>
+            <Text style={styles.profileText}>Hello Admin</Text>
           </View>
         </TouchableOpacity>
         <Modal isVisible={isModalVisible}>
@@ -119,7 +121,7 @@ function MyDrawer(data) {
     >
       <Drawer.Screen
         name="Home"
-        component={VendorHome}
+        component={AdminHome}
         options={{ 
             drawerLabel:  'Home', 
             activeTintColor:'black',
@@ -133,44 +135,52 @@ function MyDrawer(data) {
             }
             
         }}
-        
+      />
+      <Drawer.Screen
+        name="Statistics"
+        component={Statistics}
+        options={{
+          drawerLabel: 'Statistics',
+          activeTintColor: 'black',
+          drawerIcon: () => <Icon color='white' size={20} name='chart-line' />,
+          color: 'white',
+          contentOptions: {
+            labelStyle: {
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+          }
 
-      />
-      {/* <Drawer.Screen
-        name="ShoppingList"
-        component={ShoppingList}
-        options={{ 
-          drawerLabel: 'Shopping List',
-          drawerIcon: () => <Icon color='black' size={20} name='file' />
-       }}
-      />
-      <Drawer.Screen
-        name="UtilityBills"
-        component={UtilityBills}
-        options={{ 
-          drawerLabel: 'Utility Bills',
-          drawerIcon: () => <Icon color='black' size={20} name='money-bill-alt' />
-       }}
-      />
-      <Drawer.Screen
-        name="Shops"
-        component={Shops}
-        options={{ 
-          drawerLabel: 'Shops' ,
-          drawerIcon: () => <Icon color='black' size={20} name='shopping-cart' />
         }}
-      /> */}
+      />
       <Drawer.Screen
-        name="Products"
-        //component={Products}
-        options={{ 
-          drawerLabel: 'Products',
-          drawerIcon: () => <Icon color='white' size={20} name='shopping-basket' /> 
+        name="Ratings"
+        component={Ratings}
+        options={{
+          drawerLabel: 'Ratings',
+          activeTintColor: 'black',
+          drawerIcon: () => 
+          <Icon color='white' size={20} name='poll-h' />,
+            color: 'white',
+            contentOptions: { 
+              labelStyle: { fontColor: 'white',fontWeight: 'bold' }
+            }
         }}
-        
-      >
-        {props => <Product {...props} />}
-        </Drawer.Screen>
+      />
+      <Drawer.Screen
+        name="Find"
+        component={Find}
+        options={{
+          drawerLabel: 'Find',
+          activeTintColor: 'black',
+          drawerIcon: () =>
+            <Icon color='white' size={20} name='search' />,
+          color: 'white',
+          contentOptions: {
+            labelStyle: { fontColor: 'white', fontWeight: 'bold' }
+          }
+        }}
+      />
     </Drawer.Navigator>
   );
 }

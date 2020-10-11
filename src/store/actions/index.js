@@ -1,5 +1,5 @@
-export {shareLocation, getCustomerOrders} from './location'
+export {shareLocation, getCustomerOrders, getCustomerLastSavedLocation} from './location'
 export { login,authAutoSignIn,authClearStorage,authGetToken,authLogout,authRemoveToken,authSetToken,authStoreToken } from './auth'
 export { uiStartLoading, uiStopLoading } from './ui'
-export { signup, getLoggedCustomer,customerLogIn } from './customers'
-export { vendorSignup } from './vendor'
+export { signup, getLoggedCustomer,customerLogIn, updateLoggedCustomer, updateAvatar } from './customers'
+export { vendorSignup, getLoggedVendor } from './vendor'
