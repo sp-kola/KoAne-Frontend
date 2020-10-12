@@ -20,6 +20,7 @@ import Home from './src/screens/HomePage/Home';
 import VendorSideDrawer from './src/screens/SideDrawer/VendorSideDrawer'
 import CustomerSideDrawer from './src/screens/SideDrawer/CustomerSideDrawer'
 import Notifications from './src/screens/Customer/Notifications';
+import DisplayCustomer from './src/screens/Admin/Find/DisplayCustomer'
 import io from 'socket.io-client'
 
 import AdminSideDrawer from './src/screens/SideDrawer/AdminSideDrawer'
@@ -60,6 +61,7 @@ function App() {
 
 
         <RootStack.Screen name="Notifications" component={Notifications} />
+        <RootStack.Screen name="DisplayCustomer" component={DisplayCustomer} />
 
         <RootStack.Screen
           name="viewVendorProduct"

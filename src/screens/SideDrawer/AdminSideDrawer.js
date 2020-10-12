@@ -15,12 +15,13 @@ import {
   } from '@react-navigation/drawer';
 import Animated from 'react-native-reanimated';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import user from '../../assets/user.jpg'
+import user from '../../assets/admin.jpg'
 
 import AdminHome from '../HomePage/AdminHomeNav'
 import Statistics from '../Admin/Statistics';
 import Ratings from '../Admin/Ratings'
 import Find from '../Admin/Find';
+import Access from '../Admin/Access';
 
 function CustomDrawerContent({ progress, ...rest }) {
   
@@ -53,14 +54,14 @@ function CustomDrawerContent({ progress, ...rest }) {
             {/* #E0B743 */}
             <Left/>
             <Body>
-              <Title>Hi user123 </Title>
+              <Title>Admin </Title>
             </Body>
             <Right />
           </Header>
           {/* <ImageBackground source={hi} style={styles.backgroundImg}> */}
           <View style={styles.content}>
           <Text style={styles.introText}>Your registered email: </Text>
-          <Text style={styles.detailText}>user123@gmail.com</Text>
+          <Text style={styles.detailText}>admin123@gmail.com</Text>
           <Text style={styles.introText}>Your registered contact number: </Text>
           <Text style={styles.detailText}>0771234567</Text>
           
@@ -71,6 +72,7 @@ function CustomDrawerContent({ progress, ...rest }) {
             
           </View>
         </Modal>
+        
           <DrawerItem 
           label="LogOut" 
           // onPress={() =>{rest.children[0](rest)}} 
@@ -175,6 +177,20 @@ function MyDrawer(data) {
           activeTintColor: 'black',
           drawerIcon: () =>
             <Icon color='white' size={20} name='search' />,
+          color: 'white',
+          contentOptions: {
+            labelStyle: { fontColor: 'white', fontWeight: 'bold' }
+          }
+        }}
+      />
+      <Drawer.Screen
+        name="Access"
+        component={Access}
+        options={{
+          drawerLabel: 'Access Control',
+          activeTintColor: 'black',
+          drawerIcon: () =>
+            <Icon color='white' size={20} name='user-slash' />,
           color: 'white',
           contentOptions: {
             labelStyle: { fontColor: 'white', fontWeight: 'bold' }

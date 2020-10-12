@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { Container, Header, Left, Body, Right, Title, Subtitle, Button, Tab, Tabs, ScrollableTab } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import Customers from './Ratings/Customers';
-import Vendors from './Ratings/Vendors';
+import Customer from './Access/Customer'
+import Vendor from './Access/Vendor'
 
-class Ratings extends Component { 
+class Access extends Component {
 
     render() {
         return (
@@ -18,26 +18,22 @@ class Ratings extends Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Ratings</Title>
+                        <Title>Access Control</Title>
                     </Body>
                     <Right>
                         <Button transparent>
-                            <Icon name="poll-h" size={30} color="white" />
+                            <Icon name="user-slash" size={30} color="white" />
                         </Button>
                     </Right>
                 </Header>
-                <Vendors/>
-                {/*
-                    <Tabs style={styles.header} backgroundColor='black' renderTabBar={() => <ScrollableTab style={styles.header} tabsContainerStyle={{ shadowColor: 'black', borderColor: 'black', backgroundColor: 'black' }} />}>
-                        <Tab heading="Customers" tabStyle={{ backgroundColor: 'black' }} textStyle={{ color: '#fff' }} activeTabStyle={{ backgroundColor: 'black' }} activeTextStyle={{ color: '#fff', fontWeight: 'bold' }}>
-                            <Customers />
-                        </Tab>
-                        <Tab heading="Vendors" tabStyle={{ backgroundColor: 'black' }} textStyle={{ color: '#fff' }} activeTabStyle={{ backgroundColor: 'black' }} activeTextStyle={{ color: '#fff', fontWeight: 'bold' }}>
-                            <Vendors />
-                        </Tab>
-                    </Tabs>
-                */}
-
+                <Tabs style={styles.header} backgroundColor='black' renderTabBar={() => <ScrollableTab style={styles.header} tabsContainerStyle={{ shadowColor: 'black', borderColor: 'black', backgroundColor: 'black' }} />}>
+                    <Tab heading="Customers" tabStyle={{ backgroundColor: 'black' }} textStyle={{ color: '#fff' }} activeTabStyle={{ backgroundColor: 'black' }} activeTextStyle={{ color: '#fff', fontWeight: 'bold' }}>
+                        <Customer />
+                    </Tab>
+                    <Tab heading="Vendors" tabStyle={{ backgroundColor: 'black' }} textStyle={{ color: '#fff' }} activeTabStyle={{ backgroundColor: 'black' }} activeTextStyle={{ color: '#fff', fontWeight: 'bold' }}>
+                        <Vendor />
+                    </Tab>
+                </Tabs>
             </Container>
         )
     }
@@ -80,4 +76,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Ratings;
+export default Access;
