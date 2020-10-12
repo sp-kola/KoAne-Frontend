@@ -8,6 +8,8 @@ import FontAweseomeIcon from 'react-native-vector-icons/FontAwesome5';
 import Modal from 'react-native-modal';
 import Geocoder from 'react-native-geocoding';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import {connect} from 'react-redux';
+import {shareLocation} from '../../store/actions/index'
 
 import DefaultButton from '../../components/UI/DefaultButton/DefaultButton'
 
@@ -18,15 +20,22 @@ Geocoder.init(GOOGLE_PLACES_API_KEY);
 
 const { width } = Dimensions.get('window');
 
-export default class CustomerHome extends Component
+class CustomerHome extends Component
 {
     state = {
-        locationLatitude: '',
-        locationLongitude: '',
+        locationLatitude: this.props.location?this.props.location[0]:'',
+        locationLongitude: this.props.location?this.props.location[1]:'',
         address: '',
         modalVisible: false           
     }
 
+    toggleModal = () => {
+        this.setState(prevState => {
+            return {
+            modalVisible: prevState.modalVisible ? false: true
+            }
+        })
+    }
 
     addressChangedHandler = (val) => {
         console.log(val)
@@ -54,6 +63,10 @@ export default class CustomerHome extends Component
             modalVisible: prevState.modalVisible ? false: true
             }
         })
+        console.log("lat ",this.state.locationLatitude)
+        if(this.state.address && this.state.locationLongitude && this.state.locationLatitude){
+            this.props.onShareLocation(this.state.locationLatitude,this.state.locationLongitude)
+        }
     }
 
     ShowSearch=()=>
@@ -135,6 +148,12 @@ export default class CustomerHome extends Component
                             },
                         }}/>
                         <DefaultButton  
+                        color='black' 
+                        onPress={this.toggleModal}
+                        >
+                            Close
+                        </DefaultButton>
+                        <DefaultButton  
                         color='green' 
                         onPress={this.modalVisibleHandler}
                         >
@@ -142,11 +161,12 @@ export default class CustomerHome extends Component
                         </DefaultButton>
                     </Modal>
 
-        //console.log('address',this.state.address)                
+        //console.log('address',this.state.address)               
+        console.log('location in home', this.state.locationLatitude) 
         return(
             <View>
                 {modal}
-                <TouchableOpacity onPress={this.modalVisibleHandler}>
+                <TouchableOpacity onPress={this.toggleModal}>
                 <View style={{flexDirection:'row',borderWidth:1,justifyContent:'center',
                             alignItems:'center',width:'90%',height:50,margin:'5%',borderRadius:118}}> 
                 {/* <TextInput style={{borderWidth:1, borderColor:'black',margin:10, borderRadius:18,flex:1,flexDirection:'row'}}> */}
@@ -297,3 +317,19 @@ const styles = StyleSheet.create({
         padding: 10
     },
   });
+
+const mapDispatchToProps = dispatch => {
+return{
+    onShareLocation : (lat,lon) => dispatch(shareLocation(lat,lon)),
+}
+}
+
+const mapStateToProps = state => {
+    return {
+        isLoading: state.ui.isLoading,
+        location: state.location.currentLocationOfUser
+        
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (CustomerHome);
