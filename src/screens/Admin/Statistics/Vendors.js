@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 class Vendors extends Component {
     render() {
         return (
-            <Container>
+            <Container >
                 <View style={styles.container}>
                     <View style={styles.centerComponent}>
                         <Text style={styles.title}>total vendors count</Text>
@@ -23,7 +23,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignSelf: 'center'
+        alignItems: 'center',
+        backgroundColor: '#eee',
+       
     },
     centerComponent: {
         padding: 20,
