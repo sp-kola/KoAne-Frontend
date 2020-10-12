@@ -26,7 +26,7 @@ import {
 } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ViewProducts from '../../components/Product/viewProduct';
-import {authLogout, getLoggedUser, updateLoggedCustomer, getLoggedVendor} from '../../store/actions/index';
+import {authLogout, getLoggedUser, updateLoggedCustomer, getLoggedVendor, updateLoggedVendor} from '../../store/actions/index';
 import Modal from 'react-native-modal';
 import {connect} from 'react-redux';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -45,7 +45,7 @@ const { width } = Dimensions.get('window');
 class VendorHome extends Component {
 
   state= {
-    isEnabled: false,
+    isEnabled: this.props.delivering,
     email: '',
     firstName: '',
     lastName: '',
@@ -53,23 +53,38 @@ class VendorHome extends Component {
     visitingDates: [],
     vistingPlaces: [],
     nic: '',
+    bio: '',
     businessName: '',
     businessAddress: '',
     timeModal: false,
     temp: new Date(),
-    startTime: "",
-    endTime: "",
+    vehicleNo: '',
+    startTime: this.props.startTime!= undefined ? this.props.startTime: "",
+    endTime: this.props.endTime!= undefined ? this.props.endTime: "",
     mode: 'date',
     show: false,
     startTimePicker: false,
     endTimePicker: false,
     calandarModal: false,
-    markedDates: [],
+    markedDates: this.props.visitingDates != undefined ? this.props.visitingDates: [],
     visitingMarkedDates: [],
     locationModalShow: false,
     mapModalShow: false,
-    markedPlaces: [],
-    placeToAdd: ''
+    markedPlaces: this.props.visitingPlaces!= undefined ? this.props.visitingPlaces: [],
+    placeToAdd: '',
+    isUpdateModalVisible: false
+  }
+
+  async componentDidMount(){
+    await this.props.onLogIn()
+  }
+
+  toggleUpdateModal = () => {
+    this.setState(prevState => {
+      return{
+        isUpdateModalVisible: !prevState.isUpdateModalVisible
+      }
+    })
   }
 
   placeToAddTextHandler = (val) => {
@@ -161,6 +176,7 @@ class VendorHome extends Component {
 
       } 
     })
+    this.handleUpdate()
   }
   
   showDatepicker = () => {
@@ -241,12 +257,13 @@ class VendorHome extends Component {
     })
   }
 
-  toggleSwitch = () => {
+  toggleSwitch = async() => {
     this.setState(prevState => {
        return {
          isEnabled: !prevState.isEnabled
       }
     })
+    await this.handleUpdate()
   };
 
   clearStops = () => {
@@ -274,8 +291,200 @@ class VendorHome extends Component {
     console.log('dates ', this.state.markedPlaces)
     
 }
-  //console.log(props.route.params)
+
+handleFirstName = (val) => {
+  this.setState({
+    firstName: val
+  })
+}
+
+handleEmail = (val) => {
+  this.setState({
+    email: val
+  })
+}
+
+handleLastName = (val) => {
+  this.setState({
+    lastName: val
+  })
+}
+
+handleContactNo = (val) => {
+  this.setState({
+    contactNo: val
+  })
+}
+
+handleNIC = (val) => {
+  this.setState({
+    nic: val
+  })
+}
+
+handleBusinessName = (val) => {
+  this.setState({
+    businessName : val
+  })
+}
+
+handleBusinessAddress = (val) => {
+  this.setState({
+    businessAddress: val
+  })
+}
+
+handleVehicleNo = (val) => {
+  this.setState({
+    vehicleNo: val
+  })
+}
+
+handleBio = (val) => {
+  this.setState({
+    bio: val
+  })
+}
+
+handleUpdate = () => {
+//(email,firstName,lastName,contactNo,visitingDates, visitingPlaces,nic,businessName, businessAddress,vehicleNo,delivering, startTime, endTime, bio)
+const email = this.state.email ? this.state.email : this.props.email
+const firstName = this.state.firstName ? this.state.firstName : this.props.firstName
+const lastName = this.state.lastName ? this.state.lastName : this.props.lastName
+const contactNo = this.state.contactNo ? this.state.contactNo : this.props.contactNo
+const visitingDates = this.state.markedDates ? this.state.markedDates : this.props.visitingDates
+const visitingPlaces = this.state.markedPlaces != [] ? this.state.markedPlaces : this.props.visitingPlaces
+const nic = this.state.nic ? this.state.nic : this.props.nic
+const businessName = this.state.businessName ? this.state.businessName : this.props.businessName
+const businessAddress = this.state.businessAddress ? this.state.businessAddress : this.props.businessAddress
+const startTime = this.state.startTime ? this.state.startTime : this.props.startTime
+const endTime = this.state.endTime ? this.state.endTime : this.props.endTime
+const delivering = this.state.isEnabled ? this.state.isEnabled : this.props.delivering 
+const vehicleNo = this.state.vehicleNo ? this.state.vehicleNo : this.props.vehicleNo
+const bio = this.state.bio ? this.state.bio : this.props.bio
+
+if(email && firstName && lastName && contactNo && nic && businessAddress && businessName){
+  this.props.onUpdateVendor(email,firstName,lastName,contactNo,visitingDates, visitingPlaces,nic,businessName, businessAddress,vehicleNo,delivering, startTime, endTime, bio)
+}
+else{
+  alert('Validation error')
+}
+
+this.setState({
+  startTimePicker: false,
+  endTimePicker: false,
+  calandarModal: false,
+  locationModalShow: false,
+  mapModalShow: false,
+  isUpdateModalVisible: false
+})
+
+}
+  
   render(){
+    // console.log('hello ', this.props.visitingDates, this.props.visitingPlaces, this.props.startTime, this.props.endTime)
+    var updateModal = <Modal 
+                        isVisible={this.state.isUpdateModalVisible} 
+                        style={styles.modal} 
+                        backdropOpacity={0.8}
+                        animationIn="zoomInDown"
+                        animationOut="zoomOutUp"
+                        animationInTiming={600}
+                        animationOutTiming={600}
+                        backdropTransitionInTiming={600}
+                        backdropTransitionOutTiming={600}
+                        swipeDirection={['up', 'left', 'right', 'down']}
+                        >
+                        <ScrollView>  
+                        <Header style={styles.header} androidStatusBarColor='black' backgroundColor='#E0B743'>
+                        <Left>
+                            {/* <Button transparent>
+                            <Icon name="map" size={30} color="white" />
+                            </Button> */}
+                        </Left>
+                        <Body>
+                            <Title>Updating profile</Title>
+                        </Body>
+                        </Header>
+                        
+                        <Text style={styles.label}>first name: </Text>
+                        <DefaultInput
+                            placeholder= {this.props.firstName}
+                            onChangeText= {this.handleFirstName} 
+                            value={this.state.firstName}
+                            //style={styles.inputField}
+                        />
+                        <Text style={styles.label}>last Name: </Text>
+                        <DefaultInput
+                            placeholder= {this.props.lastName}
+                            onChangeText= {this.handleLastName} 
+                            value={this.state.lastName}
+                            //style={styles.inputField}
+                        /> 
+                        <Text style={styles.label}>email: </Text>
+                        <DefaultInput
+                            placeholder= {this.props.email}
+                            onChangeText= {this.handleEmail} 
+                            value={this.state.email}
+                            //style={styles.inputField}
+                        />
+                        <Text style={styles.label}>nic: </Text>
+                        <DefaultInput
+                            placeholder= {this.props.nic}
+                            onChangeText= {this.handleNIC} 
+                            value={this.state.nic}
+                            //style={styles.inputField}
+                        />
+                        <Text style={styles.label}>Business Name: </Text>
+                        <DefaultInput
+                            placeholder= {this.props.businessName}
+                            onChangeText= {this.handleBusinessName} 
+                            value={this.state.businessName}
+                            //style={styles.inputField}
+                        />
+                        <Text style={styles.label}>Business Address: </Text>
+                        <DefaultInput
+                            placeholder= {this.props.businessAddress}
+                            onChangeText= {this.handleBusinessAddress} 
+                            value={this.state.businessAddress}
+                            //style={styles.inputField}
+                        />
+                        <Text style={styles.label}>Vehicle No: </Text>
+                        <DefaultInput
+                            placeholder= {this.props.vehicleNo}
+                            onChangeText= {this.handleVehicleNo} 
+                            value={this.state.vehicleNo}
+                            //style={styles.inputField}
+                        />
+                        <Text style={styles.label}>Bio: </Text>
+                        <DefaultInput
+                            placeholder= {this.props.bio}
+                            onChangeText= {this.handleBio} 
+                            value={this.state.bio}
+                            //style={styles.inputField}
+                        />
+                        <Text style={styles.label}>contact number: </Text>
+                        <DefaultInput
+                            placeholder= 'contact number'
+                            onChangeText= {this.handleContactNumber} 
+                            value={this.state.contactNumber}
+                            //style={styles.inputField}
+                        />
+                        
+                        <DefaultButton  
+                        color='black' 
+                        onPress={this.toggleUpdateModal}
+                        >
+                            close
+                        </DefaultButton>
+                        <DefaultButton  
+                        color='#2ba685' 
+                        onPress={this.handleUpdate}
+                        >
+                            update
+                        </DefaultButton>
+                        </ScrollView>
+                    </Modal>
     var timeModal = <Modal 
                       isVisible={this.state.timeModal} 
                       style={styles.modal} 
@@ -389,7 +598,6 @@ class VendorHome extends Component {
                         minDate = {new Date()}
                         onDayLongPress={(day) => {this.addToMarkDates(day)}}
                         onDayPress={(day) => {this.addToMarkDates(day)}}
-                        markedDates = {this.state.markedDates}
                       />
                       <View>
                         <Text style={styles.selectedDateHeader}>Selected dates: </Text>
@@ -406,7 +614,7 @@ class VendorHome extends Component {
                       </DefaultButton>
                       <DefaultButton  
                       color='green' 
-                      onPress={this.setTime}
+                      onPress={this.handleUpdate}
                       >
                           update dates
                       </DefaultButton>
@@ -550,7 +758,7 @@ class VendorHome extends Component {
                           </DefaultButton>
                           <DefaultButton  
                           color='green' 
-                          onPress={this.setTime}
+                          onPress={this.handleUpdate}
                           >
                               update stops
                           </DefaultButton>
@@ -561,6 +769,7 @@ class VendorHome extends Component {
         {timeModal}
         {dataModal}
         {locationModal}
+        {updateModal}
         <View style={{flex: 1, width: '100%'}}>
           <View style={styles.wall}>
             <ImageBackground
@@ -589,7 +798,7 @@ class VendorHome extends Component {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.toggleUpdateModal}>
             <View style={styles.buttonPublicView}>
               <Text style={[styles.text, styles.publicView]}>
                 {' '}
@@ -601,6 +810,7 @@ class VendorHome extends Component {
             <Text style={[styles.text, styles.profileName]}>{this.props.businessName? this.props.businessName: 'N/A'}</Text>
             <Text style={[styles.text, styles.profileDetails]}>{this.props.firstName ? this.props.firstName+" "+ this.props.lastName: 'N/A'}</Text>
             <Text style={[styles.text, styles.profileDetails]}>{this.props.email ? this.props.email: 'N/A'}</Text>
+            <Text style={[styles.text, styles.profileBioDetails]}>{this.props.bio ? this.props.bio: 'add your bio'}</Text>
           </View>
           <View style={styles.statusView}>
             <Switch
@@ -666,7 +876,7 @@ class VendorHome extends Component {
               <Text style={styles.deliveryHours}> Routes </Text>
               <View style={[styles.deliveryHours], {alignItems: 'center', alignContent: 'space-between', paddingRight: 10}}>
                 <Text style={styles.deliveryDetails}>
-                {this.state.markedPlaces[0]!= undefined ? this.state.markedPlaces.map(data => data + " ,"): 'add your stops'}
+                {this.props.visitingPlaces != undefined ? this.props.visitingPlaces.map(data => data + "  "): 'add your stops'}
                 </Text>
               </View>
             </View>
@@ -826,6 +1036,14 @@ const styles = StyleSheet.create({
     left: '5%',
     top: 3,
   },
+  profileBioDetails: {
+    fontSize: 18,
+    fontWeight: '600',
+    fontStyle: 'italic',
+    alignSelf: 'flex-start',
+    left: '5%',
+    top: 3,
+  },
   statusView: {
     flexDirection: 'row',
     height: 70,
@@ -935,22 +1153,26 @@ const mapStateToProps = state => {
       lastName: state.vendor.loggedVendorLastName,
       contactNo: state.vendor.loggedVendorContactNo,
       visitingDates: state.vendor.loggedVendorVisitingDates,
-      vistingPlaces: state.vendor.loggedVendorVisitingPlaces,
+      visitingPlaces: state.vendor.loggedVendorVisitingPlaces,
       nic: state.vendor.loaggedVendorNIC,
       businessName: state.vendor.loggedVendorBusinessName,
       businessAddress: state.vendor.loggedVendorBusinessAddress,
       delivering: state.vendor.loggedVendorDeliveringStatus,
       selectedVendor: state.vendor.selectedVendor,
-      vehicleNo: state.vendor.loggedVendorVehicleNo
+      vehicleNo: state.vendor.loggedVendorVehicleNo,
+      bio: state.vendor.loggedVendorBio,
+      startTime: state.vendor.loggedVendorStartTime,
+      endTime: state.vendor.loggedVendorEndTime,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
       // onLogOut: (nav) => dispatch(authLogout(nav)),
-      // onLogIn: (email) => dispatch(getLoggedUser(email))
+      onLogIn: () => dispatch(getLoggedVendor()),
       // onUpdateCustomer: (userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses) => dispatch (updateLoggedCustomer(userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses)),
-      //onUpdateAvatar: (image) => dispatch (updateAvatar(image))
+      //onUpdateAvatar: (image) => dispatch (updateAvatar(image)),
+      onUpdateVendor: (email,firstName,lastName,contactNo,visitingDates, visitingPlaces,nic,businessName, businessAddress,vehicleNo,delivering, startTime, endTime, bio) => dispatch(updateLoggedVendor(email,firstName,lastName,contactNo,visitingDates, visitingPlaces,nic,businessName, businessAddress,vehicleNo,delivering, startTime, endTime, bio)),
   }
 }
 
