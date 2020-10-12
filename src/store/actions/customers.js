@@ -2,14 +2,13 @@ import { uiStartLoading, uiStopLoading, authGetToken } from './index'
 import Geocoder from 'react-native-geocoding';
 import {  DELETE_CUSTOMER, SET_CUSTOMERS, REMOVE_CUSTOMER, CUSTOMER_ADDED, START_ADD_CUSTOMER,SEARCH_CUSTOMER,STOP_SEARCH_CUSTOMER, LOGIN_CUSTOMER, LOGOUT_CUSTOMER, SELECT_CUSTOMERS, CLEAR_SELECT_CUSTOMERS } from './actionType'
 import { Form } from 'native-base'
-import RNFetchBlob from 'rn-fetch-blob'
 
 
 export const signup = (signupData,nav) => {
     return dispatch => {
         //console.log(locationData);
 
-        fetch('http://192.168.1.101:3300/customer/signup',{
+        fetch('http://192.168.1.3:3300/customer/signup',{
 
             method: 'POST',
             headers: {
@@ -43,7 +42,7 @@ export const getLoggedCustomer = () => {
     .then(token =>{
         console.log('token from auth get',token)
 
-        let url = 'http://192.168.1.101:3300/customer/me'
+        let url = 'http://192.168.1.3:3300/customer/me'
         return fetch(url, {
           method: 'GET',
           headers: {
@@ -81,7 +80,7 @@ export const getLoggedCustomer = () => {
   };
 };
 
-  export const updateLoggedCustomer = (userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses) => {
+export const updateLoggedCustomer = (userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses) => {
     const updateData = {
         userName:userName,
         firstName:firstName,
@@ -99,7 +98,7 @@ export const getLoggedCustomer = () => {
     })
     .then(token =>{
         console.log('token from auth get',token)
-        let url = 'http://192.168.1.101:3300/customer'
+        let url = 'http://192.168.1.3:3300/customer'
         return fetch(url, {
             method: "PATCH",
             headers: {
@@ -119,19 +118,6 @@ export const getLoggedCustomer = () => {
         throw (new Error())
       }
     })
-    .then(parsedRes => {
-        console.log('returned data',parsedRes)
-        let customer = {
-            _id : parsedRes._id,
-            userName: parsedRes.userName,
-            firstName: parsedRes.firstName,
-            lastName: parsedRes.lastName,
-            email: parsedRes.email,
-            contactNo: parsedRes.contactNo,
-            //lastReportedLocation: parsedRes.lastReportedLocation,
-            deliveryAddresses: parsedRes.deliveryAddresses
-        }
-      })
       .then(parsedRes => {
         console.log('returned data', parsedRes);
         let customer = {
@@ -163,7 +149,7 @@ export const updateAvatar = (image) => {
     })
     .then(token =>{
         console.log('token from auth get',token)
-        let url = 'http://192.168.1.101:3300/customer/upload'
+        let url = 'http://192.168.1.3:3300/customer/upload'
         const data = new FormData();
         data.append('name', 'avatar');
         data.append('fileData', {
