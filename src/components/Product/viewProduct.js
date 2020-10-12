@@ -111,5 +111,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 30,
   },
-  loading: {flex: 1, alignContent: 'center'},
+  loading: {
+    flex: 1,
+    alignContent: 'center',
+  },
 });

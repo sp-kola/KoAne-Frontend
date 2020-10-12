@@ -17,35 +17,32 @@ import Testing from './src/screens/Testing';
 import Home from './src/screens/HomePage/Home';
 //import AdminHome from './src/screens/AdminHome';
 //import viewProduct from './src/components/Product/viewProduct';
-import VendorSideDrawer from './src/screens/SideDrawer/VendorSideDrawer'
-import CustomerSideDrawer from './src/screens/SideDrawer/CustomerSideDrawer'
-import Test from './src/screens/CustomerMaps/Flag'
+import VendorSideDrawer from './src/screens/SideDrawer/VendorSideDrawer';
+import CustomerSideDrawer from './src/screens/SideDrawer/CustomerSideDrawer';
+import Test from './src/screens/CustomerMaps/Flag';
 
 const RootStack = createStackNavigator();
 
 function App() {
   return (
-    <NavigationContainer>     
-      <RootStack.Navigator headerMode='none' initialRouteName="LoginRegister" >
-      {/* <RootStack.Screen name="Test" component={Test} /> */}
-      <RootStack.Screen name="VendorSideScreen" component={VendorSideDrawer} />
-      <RootStack.Screen name="CustomerSideScreen" component={CustomerSideDrawer} />
-      
-      <RootStack.Screen
-          name="LoginRegister"
-          component={LoginRegister}
-        /> 
-        <RootStack.Screen name="Map" component={TrackMe} />
+    <NavigationContainer>
+      <RootStack.Navigator headerMode="none" initialRouteName="LoginRegister">
+        {/* <RootStack.Screen name="Test" component={Test} /> */}
         <RootStack.Screen
-          name="Select_option"
-          component={Select_option}
+          name="VendorSideScreen"
+          component={VendorSideDrawer}
         />
         <RootStack.Screen
-          name="Login"
-          component={Login}
+          name="CustomerSideScreen"
+          component={CustomerSideDrawer}
         />
 
-    {/* <NavigationContainer>
+        <RootStack.Screen name="LoginRegister" component={LoginRegister} />
+        <RootStack.Screen name="Map" component={TrackMe} />
+        <RootStack.Screen name="Select_option" component={Select_option} />
+        <RootStack.Screen name="Login" component={Login} />
+
+        {/* <NavigationContainer>
       <RootStack.Navigator headerMode="none">
         <RootStack.Screen name="Addnewproduct" component={addProduct} />
         <RootStack.Screen name="viewProduct" component={viewProduct} />
@@ -64,7 +61,7 @@ function App() {
         />
         <RootStack.Screen name="VendorRegister" component={VendorRegister} />
         <RootStack.Screen name="CustomerMap" component={CustomerMap} />
-        
+
         <RootStack.Screen name="Home" component={Home} />
       </RootStack.Navigator>
     </NavigationContainer>
