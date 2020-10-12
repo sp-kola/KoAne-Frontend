@@ -4,18 +4,13 @@
 
 // import {Card, CardItem, Left, Body, Content} from 'native-base';
 import React, {Component} from 'react';
-import {
-  StyleSheet,
-  View,
-  ActivityIndicator,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
-import {Content, Button, Icon} from 'native-base';
+import {StyleSheet, View, TouchableOpacity, ScrollView} from 'react-native';
+import {Content, Button, Right} from 'native-base';
 import Product from './Product';
 import Search from './SearchBar';
 import DefaultActivityIndicator from '../UI/DefaultActivityIndicator/DefaultActivityIndicator';
-import {FlatList} from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+// import {FlatList} from 'react-native-gesture-handler';
 // import img from '../../../assets/login1.jpg';
 // import Fishbun from '../../../assets/fishbun.jpg';
 // import Sausagebun from '../../../assets/sausagebun.jpg';
@@ -33,6 +28,20 @@ export default class adminViewProduct extends Component {
     };
   }
 
+  updateProduct = () => {
+    // return fetch('http://192.168.1.101:3300/product/create', {
+    //     method: 'PATCH',
+    //     headers: {
+    //       Accept: 'application/json',
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       categoryName: this.state.text,
+    //     }),
+    //   });
+  };
+
+  deleteProduct = () => {};
 
   componentDidMount() {
     // cmd ipconfig ipv4
@@ -64,7 +73,6 @@ export default class adminViewProduct extends Component {
         </View>
       );
     } else {
-
       // return (
       //   <View style={styles.background}>
       //     <FlatList
@@ -97,17 +105,24 @@ export default class adminViewProduct extends Component {
               desc={val.details}
               isAdmin={true}
             />
+            {/* <View> */}
+              {/* <Right> */}
+                <TouchableOpacity>
+                  <Button transparent>
+                    <Icon name="create" style={styles.inputIcon} />
+                  </Button>
+                </TouchableOpacity>
+              {/* </Right> */}
+            {/* </View> */}
           </View>
         );
       });
 
       return (
-        <View style={styles.background}>
-          {/* <Search /> */}
+        <ScrollView style={styles.background}>
           <View>{products}</View>
-        </View>
+        </ScrollView>
       );
-
     }
   }
 }
@@ -116,7 +131,7 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     resizeMode: 'cover',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     backgroundColor: '#eee',
   },
   card: {

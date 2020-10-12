@@ -14,18 +14,18 @@ export default class addCategory extends Component {
     this.props.navigation.navigate('Category Manage');
   };
 
-  saveCategory = () => {
+  updateCategory = () => {
     try {
-      return fetch('http://192.168.1.101:3300/category/add', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          categoryName: this.state.text,
-        }),
-      });
+    //   return fetch('http://192.168.1.101:3300/category/update/'+this.state, {
+    //     method: 'POST',
+    //     headers: {
+    //       Accept: 'application/json',
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       categoryName: this.state.text,
+    //     }),
+    //   });
     } catch (error) {
       console.log(error);
     }
@@ -36,7 +36,7 @@ export default class addCategory extends Component {
       <View style={styles.background}>
         <Form>
           <Item>
-            <Text style={{padding: 10,marginLeft: 30,}}>Add Category</Text>
+            <Text style={{padding: 10,marginLeft: 30,}}>Update Category</Text>
           </Item>
           <Item>
             <Input
@@ -57,7 +57,7 @@ export default class addCategory extends Component {
             <Left>
               <Button
                 transparent
-                onPress={this.saveCategory}
+                onPress={this.updateCategory}
                 style={styles.button}>
                 <Text>Save</Text>
               </Button>

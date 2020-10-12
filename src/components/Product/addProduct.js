@@ -30,7 +30,7 @@ export default class addProduct extends Component {
       price: '',
       details: '',
     };
-  };
+  }
 
   selectImage = () => {
     ImagePicker.showImagePicker(options, response => {
@@ -60,6 +60,7 @@ export default class addProduct extends Component {
       return fetch('http://192.168.1.101:3300/product/create', {
         method: 'POST',
         headers: {
+          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -67,7 +68,11 @@ export default class addProduct extends Component {
           price: this.state.price,
           details: this.state.details,
         }),
-      });
+      })
+        .then(res => res.json())
+        .then(resJson => {
+          console.log(resJson);
+        });
     } catch (error) {
       console.log(error);
     }
@@ -143,9 +148,9 @@ export default class addProduct extends Component {
           </Item>
           <Item>{img}</Item> */}
           <TouchableOpacity>
-            <DefaultButton color="black" onPress={() => this.addProduct}>
-              Add Product
-            </DefaultButton>
+            <Button color="black" onPress={() => this.addProduct}>
+              <Text>Add Product</Text>
+            </Button>
           </TouchableOpacity>
         </Form>
         {/* </ScrollView> */}
@@ -153,7 +158,7 @@ export default class addProduct extends Component {
     );
     // }
   }
-};
+}
 
 const styles = StyleSheet.create({
   background: {

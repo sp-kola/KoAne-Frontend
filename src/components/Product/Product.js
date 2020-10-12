@@ -34,7 +34,7 @@ export default class Product extends Component {
             </CardItem> */}
             <CardItem footer>
               <Text style={styles.subtext}>Rs. {this.props.price} /=</Text>
-              {this.props.isAdmin === true && (
+              {/* {this.props.isAdmin === true && (
                 <View>
                   <Right>
                     <TouchableOpacity>
@@ -44,7 +44,7 @@ export default class Product extends Component {
                     </TouchableOpacity>
                   </Right>
                 </View>
-              )}
+              )} */}
             </CardItem>
           </Card>
         </View>

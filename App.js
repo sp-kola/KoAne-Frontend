@@ -33,6 +33,7 @@ import AdminCategoryManage from './src/components/Category/categoryManage';
 import adminViewProduct from './src/components/Product/adminViewProduct';
 import SearchBar from './src/components/Product/SearchBar';
 import addCategory from './src/components/Category/addCategory';
+import adminViewProducts from './src/components/Product/adminViewProduct';
 
 const RootStack = createStackNavigator();
 
@@ -40,7 +41,7 @@ function App() {
   return (
     <NavigationContainer>
       <RootStack.Navigator headerMode="none">
-        {/* <RootStack.Screen name="SplashScreen" component={SplashScreen} /> */}
+        <RootStack.Screen name="SplashScreen" component={SplashScreen} />
         <RootStack.Screen
           name="Category Manage"
           component={AdminCategoryManage}
@@ -50,8 +51,12 @@ function App() {
           name="VendorViewProduct"
           component={adminViewProduct}
         />
-        
+
         <RootStack.Screen name="Addnewproduct" component={addProduct} />
+        <RootStack.Screen
+          name="adminViewProduct"
+          component={adminViewProducts}
+        />
         <RootStack.Screen name="viewProduct" component={viewProduct} />
         {/* <RootStack.Screen name="Test" component={Test} /> */}
         <RootStack.Screen
