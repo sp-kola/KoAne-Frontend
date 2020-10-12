@@ -13,7 +13,7 @@ import React, {Component} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Category from './category';
+import Category from './Category';
 // import { FlatList } from 'react-native-gesture-handler';
 
 export default class categoryManage extends Component {
@@ -22,6 +22,27 @@ export default class categoryManage extends Component {
     this.state = {
       dataCategory: [{categoryName: 'cat1'}, {categoryName: 'cat'}],
     };
+  }
+
+  componentDidMount() {
+    // cmd ipconfig ipv4
+    return fetch('http://192.168.1.101:3300/categories/')
+      .then(res => res.json())
+      .then(resJson => {
+        this.setState({
+          // isLoading: false,
+          dataCategory: resJson,
+        });
+        // const objects = this.state.dataSource;
+        // for (var i = 0; i < objects.length; i++) {
+        //   console.log('Item Name: ' + objects[i].productName);
+        //   console.log('Item Name: ' + objects[i].details);
+        //   console.log('Item Name: ' + objects[i].price);
+        // }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   addCategory = () => {
@@ -37,7 +58,25 @@ export default class categoryManage extends Component {
       console.log(val);
       return (
         <View key={key}>
-          <Category name={val.categoryName} />
+          <List>
+            <ListItem>
+              <Category name={val.categoryName} />
+              <View>
+                <TouchableOpacity>
+                  <Button transparent onPress={this.updateCategory}>
+                    <Icon name="create" style={styles.inputIcon} />
+                  </Button>
+                </TouchableOpacity>
+              </View>
+              <View>
+                <TouchableOpacity>
+                  <Button transparent onPress={this.deleteCategory}>
+                    <Icon name="delete" style={styles.inputIcon} />
+                  </Button>
+                </TouchableOpacity>
+              </View>
+            </ListItem>
+          </List>
         </View>
       );
     });
@@ -58,7 +97,7 @@ export default class categoryManage extends Component {
             </Left>
           </ListItem>
         </View>
-        <View style={styles.category} />
+        <View style={styles.category}>{categories}</View>
       </View>
     );
   }

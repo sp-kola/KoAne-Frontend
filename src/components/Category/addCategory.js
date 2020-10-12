@@ -11,8 +11,8 @@ export default class addCategory extends Component {
   }
 
   back = () => {
-      this.props.navigation.navigate('Category Manage');
-  }
+    this.props.navigation.navigate('Category Manage');
+  };
 
   render() {
     return (
@@ -25,7 +25,7 @@ export default class addCategory extends Component {
             })
           }
         />
-        <Button transparent onPress={this.back} >
+        <Button transparent onPress={this.back}>
           <Text>Back</Text>
         </Button>
       </View>
@@ -36,8 +36,8 @@ export default class addCategory extends Component {
 const styles = StyleSheet.create({
   input: {
     fontSize: 30,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     padding: 20,
-    color: '#000'
+    color: '#000',
   },
 });
