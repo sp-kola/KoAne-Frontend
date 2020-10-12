@@ -86,6 +86,64 @@ export const getLoggedVendor = () => {
     };
   };
 
+  export const searchVendor = (id) => {
+    console.log('in searching vendor', id);
+    return dispatch => {
+      dispatch(authGetToken())
+      .catch(() =>{
+          alert('No valid token found')
+      })
+      .then(token =>{
+          console.log('token from auth get',token)
+  
+          let url = 'http://192.168.1.3:3300/vendor/search/'+id
+          return fetch(url, {
+            method: 'GET',
+            headers: {
+              Authorization: 'Bearer ' + token,
+              // Accept: 'application/json',
+              // 'Content-Type': 'application/json'
+            },
+          //body: JSON.stringify(id)
+          });
+        })
+        .then(res => {
+          if (res.ok) {
+            console.log('res', res);
+            return res.json();
+          } else {
+            throw new Error();
+          }
+        })
+        .then(async(parsedRes) => {
+          console.log('returned data', parsedRes);
+          let vendor = {
+            id: parsedRes._id,
+            email: parsedRes.email,
+            firstName: parsedRes.firstName,
+            lastName: parsedRes.lastName,
+            contactNo: parsedRes.contactNo,
+            visitingDates: parsedRes.visitingDates,
+            visitingPlaces: parsedRes.visitingPlaces,
+            nic: parsedRes.nic,
+            businessName: parsedRes.businessName,
+            businessAddress: parsedRes.businessAddress,
+            vehicleNo: parsedRes.vehicleNo,
+            delivering: parsedRes.delivering,
+            startTime: parsedRes.startTime,
+            endTime: parsedRes.endTime,
+            bio: parsedRes.bio
+          };
+          console.log('loding data');
+          await dispatch(selectVendor(vendor))
+        })
+        .catch(err => {
+          alert('Something went wrong, sorry :/');
+          console.log(err);
+        });
+    };
+  };
+
   export const updateLoggedVendor = (email,firstName,lastName,contactNo,visitingDates, visitingPlaces,nic,businessName, businessAddress,vehicleNo,delivering, startTime, endTime, bio) => {
     const updateData = {
         firstName:firstName,
@@ -165,5 +223,13 @@ export const getLoggedVendor = () => {
     return{
         type: LOGIN_VENDOR,
         vendor: vendor
+    }
+  }
+
+  export const selectVendor = (vendor) => {
+    console.log('selected vendor ', vendor.firstName)
+    return{
+      type: SELECT_VENDORS,
+      vendor: vendor
     }
   }

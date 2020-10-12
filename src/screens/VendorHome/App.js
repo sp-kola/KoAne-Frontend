@@ -26,7 +26,7 @@ import {
 } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ViewProducts from '../../components/Product/viewProduct';
-import {authLogout, getLoggedUser, updateLoggedCustomer, getLoggedVendor, updateLoggedVendor} from '../../store/actions/index';
+import {authLogout, getLoggedUser, updateLoggedCustomer, getLoggedVendor, updateLoggedVendor, searchVendor} from '../../store/actions/index';
 import Modal from 'react-native-modal';
 import {connect} from 'react-redux';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -35,6 +35,7 @@ import DefaultInput from '../../components/UI/DefaultInput/DefaultInput';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import Geocoder from 'react-native-geocoding';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { selectVendor } from '../../store/actions/vendor';
 
 const GOOGLE_PLACES_API_KEY = 'AIzaSyBcs4ko-dTv7DhkZWp0BbcTs0z2nodA4y8'; 
 
@@ -77,6 +78,7 @@ class VendorHome extends Component {
 
   async componentDidMount(){
     await this.props.onLogIn()
+    await this.props.onSearch(this.props.id)
   }
 
   toggleUpdateModal = () => {
@@ -381,6 +383,18 @@ this.setState({
 
 }
   
+handlePublicView = async() => {
+
+  await this.props.onSearch(this.props.id)
+  if(this.props.selectedVendor){
+    console.log('moving to public view')
+    await this.props.nav.navigate('VendorPublicView')
+  }
+  
+
+}
+
+
   render(){
     // console.log('hello ', this.props.visitingDates, this.props.visitingPlaces, this.props.startTime, this.props.endTime)
     var updateModal = <Modal 
@@ -790,7 +804,7 @@ this.setState({
               <Icon name="camera" size={17} color="black" />
             </TouchableOpacity>
           </View> */}
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() =>  this.props.nav.navigate('VendorPublicView')}>
             <View style={styles.buttonPublicView}>
               <Text style={[styles.text, styles.publicView]}>
                 {' '}
@@ -1173,6 +1187,7 @@ const mapDispatchToProps = dispatch => {
       // onUpdateCustomer: (userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses) => dispatch (updateLoggedCustomer(userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses)),
       //onUpdateAvatar: (image) => dispatch (updateAvatar(image)),
       onUpdateVendor: (email,firstName,lastName,contactNo,visitingDates, visitingPlaces,nic,businessName, businessAddress,vehicleNo,delivering, startTime, endTime, bio) => dispatch(updateLoggedVendor(email,firstName,lastName,contactNo,visitingDates, visitingPlaces,nic,businessName, businessAddress,vehicleNo,delivering, startTime, endTime, bio)),
+      onSearch: (id) => dispatch(searchVendor(id))
   }
 }
 
