@@ -41,7 +41,7 @@ function App() {
     <NavigationContainer>
       <RootStack.Navigator headerMode="none">
         {/* <RootStack.Screen name="SplashScreen" component={SplashScreen} /> */}
-        {/* <RootStack.Screen
+        <RootStack.Screen
           name="Category Manage"
           component={AdminCategoryManage}
         />
@@ -49,7 +49,7 @@ function App() {
         <RootStack.Screen
           name="VendorViewProduct"
           component={adminViewProduct}
-        /> */}
+        />
         
         <RootStack.Screen name="Addnewproduct" component={addProduct} />
         <RootStack.Screen name="viewProduct" component={viewProduct} />

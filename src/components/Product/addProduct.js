@@ -132,7 +132,7 @@ export default class addProduct extends Component {
               </Button>
             </TouchableOpacity>
           </Item> */}
-          <Item>
+          {/* <Item>
             <TouchableOpacity>
               <Button transparent>
                 <Icon name="camera-alt" style={styles.inputIcon} />
@@ -142,7 +142,7 @@ export default class addProduct extends Component {
               </Button>
             </TouchableOpacity>
           </Item>
-          <Item>{img}</Item>
+          <Item>{img}</Item> */}
           <TouchableOpacity>
             <DefaultButton color="black" onPress={() => this.addProduct}>
               Add Product
