@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-community/async-storage": "github:react-native-community/async-storage",
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/datetimepicker": "^3.0.3",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.10",
@@ -55,7 +55,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "save": "^2.4.0",
-    "socket.io-client": "^2.1.1"
+    "socket.io-client": "^2.3.1"
   },
   "devDependencies": {
     "@babel/core": "7.10.3",

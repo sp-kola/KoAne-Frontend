@@ -68,6 +68,12 @@ export default class addProduct extends Component {
       dataSource: null,
       isUploading: false,
       imgSource: null,
+      item: {
+        name: '',
+        price: '',
+        details: ''
+      }
+      
     };
   }
 
@@ -115,7 +121,7 @@ export default class addProduct extends Component {
     // } else {
     let img;
     if (this.state.imgSource) {
-    img = (
+      img = (
         <Image
           source={this.state.imgSource}
           style={{width: 200, height: 200, margin: 10}}
