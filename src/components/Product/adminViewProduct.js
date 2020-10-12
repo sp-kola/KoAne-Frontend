@@ -4,11 +4,18 @@
 
 // import {Card, CardItem, Left, Body, Content} from 'native-base';
 import React, {Component} from 'react';
-import {StyleSheet, View, ActivityIndicator, Text} from 'react-native';
-import {Content} from 'native-base';
+import {
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import {Content, Button, Icon} from 'native-base';
 import Product from './Product';
 import Search from './SearchBar';
 import DefaultActivityIndicator from '../UI/DefaultActivityIndicator/DefaultActivityIndicator';
+import {FlatList} from 'react-native-gesture-handler';
 // import img from '../../../assets/login1.jpg';
 // import Fishbun from '../../../assets/fishbun.jpg';
 // import Sausagebun from '../../../assets/sausagebun.jpg';
@@ -16,7 +23,7 @@ import DefaultActivityIndicator from '../UI/DefaultActivityIndicator/DefaultActi
 // import pastry from '../../../assets/fishPastry.jpg';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 
-export default class viewProduct extends Component {
+export default class adminViewProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,20 +33,6 @@ export default class viewProduct extends Component {
     };
   }
 
-  // products() {
-  //   this.state.dataSource.map((val, key) => {
-  //     return (
-  //       <View key={key}>
-  //         <Product
-  //           id={val._id}
-  //           Name={val.productName}
-  //           price={val.price}
-  //           desc={val.details}
-  //         />
-  //       </View>
-  //     );
-  //   });
-  // }
 
   componentDidMount() {
     // cmd ipconfig ipv4
@@ -56,6 +49,7 @@ export default class viewProduct extends Component {
         //   console.log('Item Name: ' + objects[i].details);
         //   console.log('Item Name: ' + objects[i].price);
         // }
+        // console.log(this.state.dataSource);
       })
       .catch(err => {
         console.log(err);
@@ -70,6 +64,29 @@ export default class viewProduct extends Component {
         </View>
       );
     } else {
+
+      // return (
+      //   <View style={styles.background}>
+      //     <FlatList
+      //       data={this.state.dataSource}
+      //       renderItem={() =>
+      //         this.state.dataSource.map((val, key) => {
+      //           return (
+      //             <View key={key}>
+      //               <Product
+      //                 id={val._id}
+      //                 Name={val.productName}
+      //                 price={val.price}
+      //                 desc={val.details}
+      //                 isAdmin={true}
+      //               />
+      //             </View>
+      //           );
+      //         })
+      //       }
+      //     />
+      //   </View>
+      // );
       let products = this.state.dataSource.map((val, key) => {
         return (
           <View key={key}>
@@ -78,6 +95,7 @@ export default class viewProduct extends Component {
               Name={val.productName}
               price={val.price}
               desc={val.details}
+              isAdmin={true}
             />
           </View>
         );
@@ -89,6 +107,7 @@ export default class viewProduct extends Component {
           <View>{products}</View>
         </View>
       );
+
     }
   }
 }
@@ -129,5 +148,11 @@ const styles = StyleSheet.create({
   loading: {
     flex: 1,
     alignContent: 'center',
+  },
+  inputIcon: {
+    padding: 10,
+    // marginLeft: 25,
+    fontSize: 30,
+    // backgroundColor: '#fff',
   },
 });
