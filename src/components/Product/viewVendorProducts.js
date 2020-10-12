@@ -161,11 +161,12 @@ export default class viewVendorProducts extends Component {
   };
   componentDidMount() {
     const url =
-      'http://192.168.1.6:3300/product/VendorProducts/5f19db2e7d4ebe27e8c8282b';
+      'http://192.168.1.3:3300/product/VendorProducts/5f83a169e3596f0d4081f4c9';
 
     fetch(url)
       .then(response => response.json())
       .then(responseJson => {
+        console.log('fetched data ',responseJson)
         this.setState({
           dataSource: responseJson,
         });

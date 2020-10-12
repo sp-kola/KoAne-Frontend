@@ -144,6 +144,51 @@ export const getLoggedVendor = () => {
     };
   };
 
+  export const getAllVendors = () => {
+    console.log('in getting all vendors');
+    return dispatch => {
+      dispatch(authGetToken())
+      .catch(() =>{
+          alert('No valid token found')
+      })
+      .then(token =>{
+          console.log('token from auth get',token)
+  
+          let url = 'http://192.168.1.3:3300/vendor/allVendors'
+          return fetch(url, {
+            method: 'GET',
+            headers: {
+              Authorization: 'Bearer ' + token,
+            },
+          });
+        })
+        .then(res => {
+          if (res.ok) {
+            console.log('res', res);
+            return res.json();
+          } else {
+            throw new Error();
+          }
+        })
+        .then(async(parsedRes) => {
+          console.log('returned data', parsedRes);
+          let vendors = [] 
+          for (let _id in parsedRes){
+              vendors.push({
+                  ...parsedRes[_id],
+                  key:_id
+              })
+          }
+          console.log('loding data');
+          await dispatch(setAllVendors(vendors))
+        })
+        .catch(err => {
+          alert('Something went wrong, sorry :/');
+          console.log(err);
+        });
+    };
+  };
+
   export const updateLoggedVendor = (email,firstName,lastName,contactNo,visitingDates, visitingPlaces,nic,businessName, businessAddress,vehicleNo,delivering, startTime, endTime, bio) => {
     const updateData = {
         firstName:firstName,
@@ -231,5 +276,13 @@ export const getLoggedVendor = () => {
     return{
       type: SELECT_VENDORS,
       vendor: vendor
+    }
+  }
+
+  export const setAllVendors = (vendors) => {
+    console.log('setting vendors')
+    return{
+      type: SET_VENDORS,
+      vendors: vendors
     }
   }

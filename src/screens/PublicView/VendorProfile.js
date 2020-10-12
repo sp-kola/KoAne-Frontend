@@ -190,23 +190,12 @@ class VendorProfile extends Component {
           <View style={styles.orderProductView}>
             <TouchableOpacity
               onPress={() => {
-                props.nav.push('viewVendorProduct');
+                this.props.nav.push('Order');
               }}>
               <View style={styles.buttonViewOrders}>
                 <Text style={[styles.text, styles.viewOrders]}>
                   {' '}
-                  VIEW ORDERS <Icon name="list-alt" size={16} color="white" />
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                props.nav.push('Test');
-              }}>
-              <View style={styles.buttonAddProduct}>
-                <Text style={[styles.text, styles.viewOrders]}>
-                  {' '}
-                  ADD PRODUCT <Icon name="plus-circle" size={16} color="white" />
+                  ORDER  <Icon name="list-alt" size={16} color="white" />
                 </Text>
               </View>
             </TouchableOpacity>
