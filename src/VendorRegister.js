@@ -95,6 +95,22 @@ class VendorRegister extends React.Component {
         },
         touched: false,
       },
+      businessAddress: {
+        value: '',
+        valid: true,
+        validationRules: {
+          notEmpty: true,
+        },
+        touched: false,
+      },
+      nic: {
+        value: '',
+        valid: true,
+        validationRules: {
+          notEmpty: true,
+        },
+        touched: false,
+      },
     },
   };
 
@@ -154,6 +170,9 @@ class VendorRegister extends React.Component {
       lastName: this.state.controls.lastName.value,
       userName: this.state.controls.userName.value,
       contactNo: this.state.controls.contactNo.value,
+      nic: this.state.controls.nic.value,
+      businessName: this.state.controls.businessName.value,
+      businessAddress: this.state.controls.businessAddress.value
     };
     if (
       this.state.controls.email.valid === true &&
@@ -163,7 +182,9 @@ class VendorRegister extends React.Component {
       this.state.controls.contactNo.valid === true &&
       this.state.controls.userName.valid === true &&
       this.state.controls.businessName.valid === true &&
-      this.state.controls.vehicleNo.valid === true
+      this.state.controls.vehicleNo.valid === true && 
+      this.state.controls.nic.valid === true && 
+      this.state.controls.businessName.valid === true
     ) {
       alert(`Pass`);
       this.props.onSignup(signUpData, this.props);
@@ -256,6 +277,26 @@ class VendorRegister extends React.Component {
                 onChangeText={val => this.updateInputState('contactNo', val)}
                 valid={this.state.controls.contactNo.valid}
                 touched={this.state.controls.contactNo.touched}
+              />
+              <DefaultInput
+                style={styles.textinput}
+                placeholder="NIC*"
+                placeholderTextColor="#000"
+                underlineColorAndroid={'transparent'}
+                value={this.state.controls.nic.value}
+                onChangeText={val => this.updateInputState('nic', val)}
+                valid={this.state.controls.nic.valid}
+                touched={this.state.controls.nic.touched}
+              />
+              <DefaultInput
+                style={styles.textinput}
+                placeholder="Business Address*"
+                placeholderTextColor="#000"
+                underlineColorAndroid={'transparent'}
+                value={this.state.controls.businessAddress.value}
+                onChangeText={val => this.updateInputState('businessAddress', val)}
+                valid={this.state.controls.businessAddress.valid}
+                touched={this.state.controls.businessAddress.touched}
               />
               <DefaultInput
                 style={styles.textinput}

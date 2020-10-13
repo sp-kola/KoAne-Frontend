@@ -126,15 +126,17 @@ handleConfirmOrder = async() => {
     const lattitude = this.state.locationLatitude
     const longitude = this.state.locationLongitude
     const date = this.state.date
-    
-    if(products && vendor && lattitude && longitude && date){
+    const price = this.props.price
+
+    if(products && vendor && lattitude && longitude && date && price){
         const orderData = {
             products,
             description,
             vendor,
             lattitude,
             longitude,
-            date
+            date, 
+            price
         }
         await this.props.onCreateOrder(orderData)
         await this.props.onClearCart()

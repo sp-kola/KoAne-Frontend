@@ -1,12 +1,21 @@
-import { SET_ORDER, CLEAR_ORDER }  from '../actions/actionType'
+import { SET_ORDER, CLEAR_ORDER, CUSTOMER_ORDERS }  from '../actions/actionType'
 
 const initialState = {
     cart : [],
-    price : 0
+    price : 0,
+    customerOrders: []
 }
 
 const reducer = (state = initialState, action) => {
     switch(action.type){
+
+        case CUSTOMER_ORDERS: {
+            console.log('setting orders')
+            return{
+                ...state,
+                customerOrders: action.orders
+            }
+        }
 
         case SET_ORDER: 
             console.log('setting cart', state.cart)

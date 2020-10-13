@@ -4,7 +4,7 @@ import { Container, Header, Left, Body, Right, Title, Subtitle , Button, Tab, Ta
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import io from 'socket.io-client'
 import {connect} from 'react-redux'
-import { searchVendor, getAllVendors } from '../../store/actions/index'
+import { searchVendor, getAllVendors, getCustomerOrderDetails } from '../../store/actions/index'
 
 import Home from '../Customer/CustomerHome'
 
@@ -23,6 +23,7 @@ class CustomerHome extends Component {
 */
   componentDidMount() {
     this.props.onLoadVendors()
+    this.props.onGetCustomerOrders()
   }
 
     render(){
@@ -72,6 +73,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
       onLoadVendors: () => dispatch(getAllVendors()),
+      onGetCustomerOrders: () => dispatch(getCustomerOrderDetails())
       //onSearchVendor: (id) => dispatch(searchVendor(id))
       // onSearchBill: (val) => dispatch(searchBill(val)),
       // onStopSearchBill: () => dispatch(stopSearchBill()),
