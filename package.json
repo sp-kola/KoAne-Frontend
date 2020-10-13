@@ -10,18 +10,18 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-community/async-storage": "github:react-native-community/async-storage",
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/datetimepicker": "^3.0.3",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/toolbar-android": "0.1.0-rc.2",
-    "@react-navigation/drawer": "^5.8.7",
+    "@react-navigation/drawer": "^5.9.3",
     "@react-navigation/native": "^5.6.1",
     "@react-navigation/stack": "^5.6.2",
-    "assert": "^2.0.0",
     "@types/googlemaps": "^3.39.11",
     "@types/markerclustererplus": "^2.1.33",
     "@types/react": "^16.9.44",
+    "assert": "^2.0.0",
     "hoist-non-react-statics": "^3.3.2",
     "link": "^0.1.5",
     "native-base": "^2.13.12",
@@ -40,10 +40,10 @@
     "react-native-keyboard-aware-view": "0.0.14",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-link": "^4.1.0",
-    "react-native-maps": "0.27.1",
+    "react-native-maps": "^0.27.1",
     "react-native-modal": "^11.5.6",
     "react-native-modal-datetime-picker": "^9.0.0",
-    "react-native-reanimated": "^1.9.0",
+    "react-native-reanimated": "^1.13.1",
     "react-native-safe-area-context": "^3.0.7",
     "react-native-screens": "^2.9.0",
     "react-native-vector-icons": "^6.7.0",
@@ -55,7 +55,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "save": "^2.4.0",
-    "socket.io-client": "^2.1.1"
+    "socket.io-client": "^2.3.1"
   },
   "devDependencies": {
     "@babel/core": "7.10.3",
