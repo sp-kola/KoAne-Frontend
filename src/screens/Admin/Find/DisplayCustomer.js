@@ -54,12 +54,13 @@ class  DisplayCustomer extends Component {
         )
     }
     render(){
+        console.log('email ', this.props)
         return (
-            <View style={styles.container}>
-                <FlatList
+             <View >
+                {/* <FlatList
                     data={this.state.dataSource}
                     renderItem={this.renderItem}
-                />
+                /> */}
             </View>
         );
     }

@@ -12,13 +12,14 @@ class Customer extends Component {
         this.setState({ email: text })
     }
     deletecustomer = () => {
-        const usermail = this.email
+        console.log(this.state.email)
+        const usermail = this.state.email
         const url = 'http://192.168.1.101:3300/customer/' + usermail
-        fetch(url, {
-            method: "DELETE"
-        })
-            .then(res => { return res.json() })
-            .catch((error) => { console.log(error) })
+        console.log(url)
+        return fetch('http://192.168.1.101:3300/customer/', {
+            method: 'DELETE',
+            body: usermail
+        }).then(response => response.json())
     }
     render() {
         const { counter } = this.state

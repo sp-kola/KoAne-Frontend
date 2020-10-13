@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { Container, Header, Left, Body, Right, Title, Subtitle, Button, Tab, Tabs, ScrollableTab } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import Customer from './Find/Customer';
+import Customer from './Find/FindNav';
 import Vendor from './Find/Vendor';
 
 class Find extends Component {
@@ -28,10 +28,10 @@ class Find extends Component {
                 </Header>
                 <Tabs style={styles.header} backgroundColor='black' renderTabBar={() => <ScrollableTab style={styles.header} tabsContainerStyle={{ shadowColor: 'black', borderColor: 'black', backgroundColor: 'black' }} />}>
                     <Tab heading="Customers" tabStyle={{ backgroundColor: 'black' }} textStyle={{ color: '#fff' }} activeTabStyle={{ backgroundColor: 'black' }} activeTextStyle={{ color: '#fff', fontWeight: 'bold' }}>
-                        <Customer />
+                        <Customer navigation= {this.props.navigation} />
                     </Tab>
                     <Tab heading="Vendors" tabStyle={{ backgroundColor: 'black' }} textStyle={{ color: '#fff' }} activeTabStyle={{ backgroundColor: 'black' }} activeTextStyle={{ color: '#fff', fontWeight: 'bold' }}>
-                        <Vendor />
+                        <Vendor navigation={this.props.navigation} />
                     </Tab>
                 </Tabs>
 

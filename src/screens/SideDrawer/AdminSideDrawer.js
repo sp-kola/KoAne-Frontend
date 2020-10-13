@@ -22,6 +22,7 @@ import Statistics from '../Admin/Statistics';
 import Ratings from '../Admin/Ratings'
 import Find from '../Admin/Find';
 import Access from '../Admin/Access';
+import Message from '../Admin/Message'
 
 function CustomDrawerContent({ progress, ...rest }) {
   
@@ -72,7 +73,7 @@ function CustomDrawerContent({ progress, ...rest }) {
             
           </View>
         </Modal>
-        
+
           <DrawerItem 
           label="LogOut" 
           // onPress={() =>{rest.children[0](rest)}} 
@@ -194,6 +195,22 @@ function MyDrawer(data) {
           color: 'white',
           contentOptions: {
             labelStyle: { fontColor: 'white', fontWeight: 'bold' }
+          }
+        }}
+      />
+      <Drawer.Screen
+        name="Messages"
+        component={Message}
+        options={{
+          drawerLabel: 'Messages',
+          activeTintColor: 'black',
+          drawerIcon: () => <Icon color='white' size={20} name='comments' />,
+          color: 'white',
+          contentOptions: {
+            labelStyle: {
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
           }
         }}
       />

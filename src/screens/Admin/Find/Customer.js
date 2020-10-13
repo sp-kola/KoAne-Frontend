@@ -19,6 +19,7 @@ class Customer extends Component {
     }
     
     render() {
+        //console.log('Props',this.props.navigation)
         return (
             <Container>
                 <View style={styles.container}>
@@ -33,9 +34,12 @@ class Customer extends Component {
                                 placeholder="Email"
                                 placeholderTextColor="black"
                                 autoCapitalize="none"
+                                value = {this.state.email}
                                 onChangeText={this.handleEmail} />
                             <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                                <Button title="SEARCH" onPress={() => { this.props.navigation.push('DisplayCutomer') }} />
+                                <Button title="SEARCH" onPress={() => { this.props.navigation.push('DisplayCustomer', {
+                                    email: this.state.email
+                                }) }} />
                                 <Button title="BACK" onPress={() => { this.toggleModal(!this.state.modalVisible) }} />
                             </View>
                             
