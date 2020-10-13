@@ -26,7 +26,7 @@ export default class categoryManage extends Component {
 
   componentDidMount() {
     // cmd ipconfig ipv4
-    return fetch('http://192.168.1.101:3300/categories/')
+    return fetch('http://192.168.1.3:3300/categories/')
       .then(res => res.json())
       .then(resJson => {
         this.setState({

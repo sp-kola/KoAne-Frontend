@@ -16,7 +16,7 @@ export default class addCategory extends Component {
 
   saveCategory = () => {
     try {
-      return fetch('http://192.168.1.101:3300/category/add', {
+      return fetch('http://192.168.1.3:3300/category/add', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

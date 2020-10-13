@@ -25,7 +25,7 @@ import {
   ScrollableTab,
 } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ViewProducts from '../../components/Product/viewProduct';
+//import ViewProducts from '../../components/Product/viewProduct';
 import {authLogout, getLoggedUser, updateLoggedCustomer, getLoggedVendor, updateLoggedVendor, searchVendor} from '../../store/actions/index';
 import Modal from 'react-native-modal';
 import {connect} from 'react-redux';
@@ -36,6 +36,9 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import Geocoder from 'react-native-geocoding';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { selectVendor } from '../../store/actions/vendor';
+
+import AddProduct from '../../components/Product/addProduct'
+import ViewProducts from '../../components/Product/adminViewProduct'
 
 const GOOGLE_PLACES_API_KEY = 'AIzaSyBcs4ko-dTv7DhkZWp0BbcTs0z2nodA4y8'; 
 
@@ -854,7 +857,7 @@ handlePublicView = async() => {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                props.nav.push('Test');
+                this.props.nav.push('AddProduct');
               }}>
               <View style={styles.buttonAddProduct}>
                 <Text style={[styles.text, styles.viewOrders]}>

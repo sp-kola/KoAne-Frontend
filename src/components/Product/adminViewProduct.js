@@ -45,7 +45,7 @@ export default class adminViewProduct extends Component {
 
   componentDidMount() {
     // cmd ipconfig ipv4
-    return fetch('http://192.168.1.101:3300/product/')
+    return fetch('http://192.168.1.3:3300/product/')
       .then(res => res.json())
       .then(resJson => {
         this.setState({
