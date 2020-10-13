@@ -23,6 +23,7 @@ import Maps from '../CustomerMaps/MapContainer'
 import Profile from '../Customer/CustomerProfileContainer'
 import MessagesHome from '../Messages/MessageContainer'
 import AdminContact from '../AdminContact/ChatPage'
+import SearchHome from '../Search/SearchNav'
 
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
 import DefaultButton from '../../components/UI/DefaultButton/DefaultButton'
@@ -285,7 +286,7 @@ class MyDrawer extends Component {
       />
       <Drawer.Screen
         name="Search"
-        component={VendorSearch}
+        component={SearchHome}
         options={{ 
             drawerLabel:  'Search', 
             activeTintColor:'black',
