@@ -26,14 +26,17 @@ class Ratings extends Component {
                         </Button>
                     </Right>
                 </Header>
-                <Tabs style={styles.header} backgroundColor='black' renderTabBar={() => <ScrollableTab style={styles.header} tabsContainerStyle={{ shadowColor: 'black', borderColor: 'black', backgroundColor: 'black' }} />}>
-                    <Tab heading="Customers" tabStyle={{ backgroundColor: 'black' }} textStyle={{ color: '#fff' }} activeTabStyle={{ backgroundColor: 'black' }} activeTextStyle={{ color: '#fff', fontWeight: 'bold' }}>
-                        <Customers />
-                    </Tab>
-                    <Tab heading="Vendors" tabStyle={{ backgroundColor: 'black' }} textStyle={{ color: '#fff' }} activeTabStyle={{ backgroundColor: 'black' }} activeTextStyle={{ color: '#fff', fontWeight: 'bold' }}>
-                        <Vendors />
-                    </Tab>
-                </Tabs>
+                <Vendors/>
+                {/*
+                    <Tabs style={styles.header} backgroundColor='black' renderTabBar={() => <ScrollableTab style={styles.header} tabsContainerStyle={{ shadowColor: 'black', borderColor: 'black', backgroundColor: 'black' }} />}>
+                        <Tab heading="Customers" tabStyle={{ backgroundColor: 'black' }} textStyle={{ color: '#fff' }} activeTabStyle={{ backgroundColor: 'black' }} activeTextStyle={{ color: '#fff', fontWeight: 'bold' }}>
+                            <Customers />
+                        </Tab>
+                        <Tab heading="Vendors" tabStyle={{ backgroundColor: 'black' }} textStyle={{ color: '#fff' }} activeTabStyle={{ backgroundColor: 'black' }} activeTextStyle={{ color: '#fff', fontWeight: 'bold' }}>
+                            <Vendors />
+                        </Tab>
+                    </Tabs>
+                */}
 
             </Container>
         )

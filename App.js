@@ -20,7 +20,8 @@ import Home from './src/screens/HomePage/Home';
 import VendorSideDrawer from './src/screens/SideDrawer/VendorSideDrawer';
 import CustomerSideDrawer from './src/screens/SideDrawer/CustomerSideDrawer';
 import Notifications from './src/screens/Customer/Notifications';
-import io from 'socket.io-client';
+import DisplayCustomer from './src/screens/Admin/Find/DisplayCustomer'
+import io from 'socket.io-client'
 
 import AdminSideDrawer from './src/screens/SideDrawer/AdminSideDrawer';
 //import Test from './src/screens/CustomerMaps/Flag'
@@ -88,6 +89,7 @@ function App() {
         <RootStack.Screen name="Home" component={Home} />
 
         <RootStack.Screen name="Notifications" component={Notifications} />
+        <RootStack.Screen name="DisplayCustomer" component={DisplayCustomer} />
 
         <RootStack.Screen
           name="viewVendorProduct"
