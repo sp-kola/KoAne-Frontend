@@ -3,58 +3,58 @@ import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { Container, Header, Left, Body, Right, Title, Subtitle, Button, Tab, Tabs, ScrollableTab } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-class Vendors extends Component {
+class Vendor extends Component {
+
     state = {
-        counter: 0
+        email: ''
     }
-
-    componentDidMount() {
-        const url = 'http://192.168.1.101:3300/vendor/count'
-
+    handleEmail = (text) => {
+        this.setState({ email: text })
+    }
+    deletevendor =() =>{
+        const usermail = this.email
+        const url = 'http://192.168.1.101:3300/vendor/' + usermail
         fetch(url, {
-            method: "GET"
+            method: "DELETE"
         })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson);
-                this.setState({
-                    counter: responseJson
-                })
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+            .then(res => { return res.json() })
+            .catch((error) => { console.log(error) })
     }
     render() {
         const { counter } = this.state
         return (
-            <Container >
+            <Container>
                 <View style={styles.container}>
                     <View style={styles.centerComponent}>
-                        <Text style={styles.title}>total vendors count</Text>
-                        <Icon name="bullseye" size={150} color="blue" style={styles.icon} />
-                        <Text style={styles.text}>{counter}</Text>
+                        <Text style={styles.title}>enter vendor user email</Text>
+                        <TextInput style={styles.input}
+                            underlineColorAndroid="transparent"
+                            placeholder="Email"
+                            placeholderTextColor="#9a73ef"
+                            autoCapitalize="none"
+                            onChangeText={this.handleEmail} />
+                        <Button style={{ marginLeft: '40%', marginTop: '10%' }} transparent onPress={() => this.deletecustomer()}>
+                            <Icon name="trash-alt" size={40} color="red" style={styles.icon} />
+                        </Button>
                     </View>
                 </View>
             </Container>
         )
     }
- }
-
+}
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#eee',
-       
     },
     centerComponent: {
         padding: 20,
         margin: 5,
         borderRadius: 18,
         borderWidth: 5,
-        borderColor: 'blue',
+        borderColor: 'green',
         backgroundColor: '#fff',
         height: '80%',
         width: '75%',
@@ -76,8 +76,14 @@ const styles = StyleSheet.create({
         fontSize: 50,
         fontWeight: 'bold',
     },
-    icon: {
-        margin: '20%'
-    }
+    input: {
+        marginTop: 25,
+        height: '20%',
+        borderColor: '#7a42f4',
+        borderWidth: 1
+    },
+    /*icon:{
+    margin:'15%'
+}*/
 })
-export default Vendors;
+export default Vendor;

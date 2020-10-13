@@ -5,36 +5,57 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { connect } from 'react-redux';
 
 class Read extends Component {
-    constructor() {
-        super()
-        this.state = {
+    
+        state = {
             dataSource: []
         }
-    }
-
+    
+    
     renderItem = ({ item }) => {
         deletemessage = (msgId) => {
-            Alert
             const url = 'http://192.168.1.101:3300/message/' + msgId
 
             fetch(url, {
                 method: "DELETE"
             })
+                .then(res => { return res.json() })
+                .catch((error) => { console.log(error) })
+
+            const userId = this.props.id
+            const uri = 'http://192.168.1.101:3300/message/' + userId
+
+            fetch(uri, {
+                method: "GET"
+            })
                 .then(res => {
                     return res.json()
                 })
-
+                .then((responseJson) => {
+                    let messages = []
+                    for (let _id in responseJson) {
+                        messages.push({
+                            ...responseJson[_id],
+                            key: _id
+                        })
+                    }
+                    var temp = this.state.dataSource
+                    temp = messages.filter(obj => (obj.read === false && obj.state === 0))
+                    this.setState({
+                        dataSource: temp
+                    })
+                })
                 .catch((error) => {
                     console.log(error)
                 })
         }
+        
         return (
             <View style={styles.flatComponent}>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text style={styles.textHeader}>{item.sender}</Text>
 
-                    <Button transparent onPress>
+                    <Button transparent onPress={() => deletemessage(item._id)}>
                         <Icon name="closecircleo" style={styles.closeIcon} />
                     </Button>
 
@@ -43,6 +64,8 @@ class Read extends Component {
                 <Text style={styles.textContent}>{item.message}</Text>
             </View>
         )
+
+        
     }
 
     componentDidMount() {

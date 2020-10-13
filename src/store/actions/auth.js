@@ -8,7 +8,7 @@ export const login = (authData,nav) => {
         dispatch(uiStartLoading());
         console.log('in login',authData)
 
-        let url = 'http://192.168.1.3:3300/user/login'
+        let url = 'http://192.168.1.101:3300/user/login'
 
         fetch(url,{
             method: "POST",

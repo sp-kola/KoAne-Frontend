@@ -149,7 +149,7 @@ export const updateAvatar = (image) => {
     })
     .then(token =>{
         console.log('token from auth get',token)
-        let url = 'http://192.168.1.3:3300/customer/upload'
+        let url = 'http://192.168.1.101:3300/customer/upload'
         const data = new FormData();
         data.append('name', 'avatar');
         data.append('fileData', {
