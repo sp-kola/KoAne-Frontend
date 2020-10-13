@@ -17,18 +17,23 @@ import Testing from './src/screens/Testing';
 import Home from './src/screens/HomePage/Home';
 //import AdminHome from './src/screens/AdminHome';
 //import viewProduct from './src/components/Product/viewProduct';
-import VendorSideDrawer from './src/screens/SideDrawer/VendorSideDrawer'
-import CustomerSideDrawer from './src/screens/SideDrawer/CustomerSideDrawer'
+import VendorSideDrawer from './src/screens/SideDrawer/VendorSideDrawer';
+import CustomerSideDrawer from './src/screens/SideDrawer/CustomerSideDrawer';
 import Notifications from './src/screens/Customer/Notifications';
-import io from 'socket.io-client'
+import io from 'socket.io-client';
 
-import AdminSideDrawer from './src/screens/SideDrawer/AdminSideDrawer'
+import AdminSideDrawer from './src/screens/SideDrawer/AdminSideDrawer';
 //import Test from './src/screens/CustomerMaps/Flag'
 import AdminHome from './src/screens/AdminHome';
 import viewProduct from './src/components/Product/viewProduct';
 import OrderConfirmRecipt from './src/components/Order_UI/OrderConfirmRecipt';
 import SplashScreen from './src/SplashScreen';
 import viewVendorProducts from './src/components/Product/viewVendorProducts';
+import AdminCategoryManage from './src/components/Category/categoryManage';
+import adminViewProduct from './src/components/Product/adminViewProduct';
+import SearchBar from './src/components/Product/SearchBar';
+import addCategory from './src/components/Category/addCategory';
+import adminViewProducts from './src/components/Product/adminViewProduct';
 
 const RootStack = createStackNavigator();
 
@@ -37,27 +42,50 @@ function App() {
     <NavigationContainer>
       <RootStack.Navigator headerMode="none">
         <RootStack.Screen name="SplashScreen" component={SplashScreen} />
+        <RootStack.Screen
+          name="Category Manage"
+          component={AdminCategoryManage}
+        />
+        <RootStack.Screen name="SearchBar" component={SearchBar} />
+        <RootStack.Screen
+          name="VendorViewProduct"
+          component={adminViewProduct}
+        />
 
-      {/* <RootStack.Screen name="Test" component={Test} /> */}
-      <RootStack.Screen name="VendorSideScreen" component={VendorSideDrawer} />
-      <RootStack.Screen name="CustomerSideScreen" component={CustomerSideDrawer} />
-      <RootStack.Screen name="AdminSideScreen" component={AdminSideDrawer} />
+        <RootStack.Screen name="Addnewproduct" component={addProduct} />
+        <RootStack.Screen
+          name="adminViewProduct"
+          component={adminViewProducts}
+        />
+        <RootStack.Screen name="viewProduct" component={viewProduct} />
+        {/* <RootStack.Screen name="Test" component={Test} /> */}
+        <RootStack.Screen
+          name="VendorSideScreen"
+          component={VendorSideDrawer}
+        />
+        <RootStack.Screen
+          name="CustomerSideScreen"
+          component={CustomerSideDrawer}
+        />
+        <RootStack.Screen name="AdminSideScreen" component={AdminSideDrawer} />
         <RootStack.Screen name="Map" component={TrackMe} />
         <RootStack.Screen name="LoginRegister" component={LoginRegister} />
-        <RootStack.Screen name="Addnewproduct" component={addProduct} />
+        <RootStack.Screen name="AddCategory" component={addCategory} />
         <RootStack.Screen name="VenderSearch" component={VenderSearch} />
         <RootStack.Screen name="CustomerHome" component={CustomerHome} />
         <RootStack.Screen name="VendorHome" component={VendorHome} />
         <RootStack.Screen name="AdminHome" component={AdminHome} />
         <RootStack.Screen name="Select_option" component={Select_option} />
         <RootStack.Screen name="Login" component={Login} />
-        
-    <RootStack.Screen name="CustomerRegister" component={CustomerRegister} />
-      <RootStack.Screen name="VendorRegister" component={VendorRegister} />
-        <RootStack.Screen name="CustomerMap" component={CustomerMap} />
-        
-        <RootStack.Screen name="Home" component={Home} />
 
+        <RootStack.Screen
+          name="CustomerRegister"
+          component={CustomerRegister}
+        />
+        <RootStack.Screen name="VendorRegister" component={VendorRegister} />
+        <RootStack.Screen name="CustomerMap" component={CustomerMap} />
+
+        <RootStack.Screen name="Home" component={Home} />
 
         <RootStack.Screen name="Notifications" component={Notifications} />
 
