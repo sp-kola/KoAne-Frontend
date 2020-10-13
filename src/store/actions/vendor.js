@@ -57,7 +57,7 @@ export const getLoggedVendor = () => {
             throw new Error();
           }
         })
-        .then(parsedRes => {
+        .then(async(parsedRes) => {
           console.log('returned data', parsedRes);
           let vendor = {
             id: parsedRes._id,
@@ -66,7 +66,7 @@ export const getLoggedVendor = () => {
             lastName: parsedRes.lastName,
             contactNo: parsedRes.contactNo,
             visitingDates: parsedRes.visitingDates,
-            vistingPlaces: parsedRes.vistingPlaces,
+            visitingPlaces: parsedRes.visitingPlaces,
             nic: parsedRes.nic,
             businessName: parsedRes.businessName,
             businessAddress: parsedRes.businessAddress,
@@ -77,7 +77,7 @@ export const getLoggedVendor = () => {
             bio: parsedRes.bio
           };
           console.log('loding data');
-          dispatch(vendorLogIn(vendor));
+          await dispatch(vendorLogIn(vendor));
         })
         .catch(err => {
           alert('Something went wrong, sorry :/');
@@ -86,10 +86,203 @@ export const getLoggedVendor = () => {
     };
   };
 
+  export const searchVendor = (id) => {
+    console.log('in searching vendor', id);
+    return dispatch => {
+      dispatch(authGetToken())
+      .catch(() =>{
+          alert('No valid token found')
+      })
+      .then(token =>{
+          console.log('token from auth get',token)
+  
+          let url = 'http://192.168.1.3:3300/vendor/search/'+id
+          return fetch(url, {
+            method: 'GET',
+            headers: {
+              Authorization: 'Bearer ' + token,
+              // Accept: 'application/json',
+              // 'Content-Type': 'application/json'
+            },
+          //body: JSON.stringify(id)
+          });
+        })
+        .then(res => {
+          if (res.ok) {
+            console.log('res', res);
+            return res.json();
+          } else {
+            throw new Error();
+          }
+        })
+        .then(async(parsedRes) => {
+          console.log('returned data', parsedRes);
+          let vendor = {
+            id: parsedRes._id,
+            email: parsedRes.email,
+            firstName: parsedRes.firstName,
+            lastName: parsedRes.lastName,
+            contactNo: parsedRes.contactNo,
+            visitingDates: parsedRes.visitingDates,
+            visitingPlaces: parsedRes.visitingPlaces,
+            nic: parsedRes.nic,
+            businessName: parsedRes.businessName,
+            businessAddress: parsedRes.businessAddress,
+            vehicleNo: parsedRes.vehicleNo,
+            delivering: parsedRes.delivering,
+            startTime: parsedRes.startTime,
+            endTime: parsedRes.endTime,
+            bio: parsedRes.bio
+          };
+          console.log('loding data');
+          await dispatch(selectVendor(vendor))
+        })
+        .catch(err => {
+          alert('Something went wrong, sorry :/');
+          console.log(err);
+        });
+    };
+  };
+
+  export const getAllVendors = () => {
+    console.log('in getting all vendors');
+    return dispatch => {
+      dispatch(authGetToken())
+      .catch(() =>{
+          alert('No valid token found')
+      })
+      .then(token =>{
+          console.log('token from auth get',token)
+  
+          let url = 'http://192.168.1.3:3300/vendor/allVendors'
+          return fetch(url, {
+            method: 'GET',
+            headers: {
+              Authorization: 'Bearer ' + token,
+            },
+          });
+        })
+        .then(res => {
+          if (res.ok) {
+            console.log('res', res);
+            return res.json();
+          } else {
+            throw new Error();
+          }
+        })
+        .then(async(parsedRes) => {
+          console.log('returned data', parsedRes);
+          let vendors = [] 
+          for (let _id in parsedRes){
+              vendors.push({
+                  ...parsedRes[_id],
+                  key:_id
+              })
+          }
+          console.log('loding data');
+          await dispatch(setAllVendors(vendors))
+        })
+        .catch(err => {
+          alert('Something went wrong, sorry :/');
+          console.log(err);
+        });
+    };
+  };
+
+  export const updateLoggedVendor = (email,firstName,lastName,contactNo,visitingDates, visitingPlaces,nic,businessName, businessAddress,vehicleNo,delivering, startTime, endTime, bio) => {
+    const updateData = {
+        firstName:firstName,
+        lastName:lastName,
+        email:email,
+        contactNo:contactNo,
+        visitingDates : visitingDates, 
+        visitingPlaces : visitingPlaces,
+        nic : nic,
+        businessName : businessName, 
+        businessAddress : businessAddress,
+        vehicleNo : vehicleNo,
+        delivering : delivering, 
+        startTime : startTime, 
+        endTime : endTime, 
+        bio : bio,
+    }
+    console.log('in update logged vendor')
+    return (dispatch) =>{
+    dispatch(authGetToken())
+    .catch(() =>{
+        alert('No valid token found')
+    })
+    .then(token =>{
+        console.log('token from auth get',token)
+        let url = 'http://192.168.1.3:3300/vendor'
+        return fetch(url, {
+            method: "PATCH",
+            headers: {
+            Authorization : "Bearer "+token,
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updateData)
+        })
+    })
+    .then(res =>  {
+      if(res.ok){
+        console.log('res',res)
+        return res.json()
+      }
+      else{
+        throw (new Error())
+      }
+    })
+      .then(parsedRes => {
+        console.log('returned data', parsedRes);
+        let vendor = {
+          id: parsedRes._id,
+          email: parsedRes.email,
+          firstName: parsedRes.firstName,
+          lastName: parsedRes.lastName,
+          contactNo: parsedRes.contactNo,
+          visitingDates: parsedRes.visitingDates,
+          visitingPlaces: parsedRes.visitingPlaces,
+          nic: parsedRes.nic,
+          businessName: parsedRes.businessName,
+          businessAddress: parsedRes.businessAddress,
+          vehicleNo: parsedRes.vehicleNo,
+          delivering: parsedRes.delivering,
+          startTime: parsedRes.startTime,
+          endTime: parsedRes.endTime,
+          bio: parsedRes.bio
+        };
+        console.log('loding data');
+        dispatch(vendorLogIn(vendor));
+      })
+      .catch(err => {
+        alert('Something went wrong, sorry :/');
+        console.log(err);
+      });
+  };
+};
+
   export const vendorLogIn = (vendor) => {
     console.log('in user login', vendor.email)
     return{
         type: LOGIN_VENDOR,
         vendor: vendor
+    }
+  }
+
+  export const selectVendor = (vendor) => {
+    console.log('selected vendor ', vendor.firstName)
+    return{
+      type: SELECT_VENDORS,
+      vendor: vendor
+    }
+  }
+
+  export const setAllVendors = (vendors) => {
+    console.log('setting vendors')
+    return{
+      type: SET_VENDORS,
+      vendors: vendors
     }
   }

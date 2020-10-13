@@ -9,6 +9,8 @@ import {
   StatusBar,
 } from 'react-native';
 import {ListItem, Body, Button, Text, Content, Row} from 'native-base';
+import {connect} from 'react-redux';
+import {authLogout, getLoggedUser, updateLoggedCustomer, setCart} from '../../store/actions/index'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
@@ -16,28 +18,15 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const cart = require('../../../assets/shopping.png');
 
-// const DATA = [
-//   {
-//     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-//     title: 'First Item',
-//   },
-//   {
-//     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-//     title: 'Second Item',
-//   },
-//   {
-//     id: '58694a0f-3da1-471f-bd96-145571e29d72',
-//     title: 'Third Item',
-//   },
-// ];
 
-export default class viewVendorProducts extends Component {
+class viewVendorProducts extends Component {
   constructor() {
     super();
     this.state = {
       dataSource: [],
       selectedData: [],
       count: 0,
+      price: 0
     };
   }
 
@@ -77,10 +66,11 @@ export default class viewVendorProducts extends Component {
       return {
         selectedData: temp,
         count: prevState.count + 1,
+        price: prevState.price + e.price
       };
     });
-
-    console.log('cart ', this.state.selectedData);
+    await this.props.onSetCart(this.state.selectedData, this.state.price)
+    console.log('cart ', this.state.selectedData, this.state.price);
   };
 
   removeFromCart = async e => {
@@ -122,14 +112,26 @@ export default class viewVendorProducts extends Component {
         return {
           selectedData: temp,
           count: prevState.count - 1,
+          price: prevState.price - e.price
         };
       });
-
-      console.log('cart ', this.state.selectedData);
+      await this.props.onSetCart(this.state.selectedData, this.state.price)
+      //console.log('cart ', this.state.selectedData, this.state.price);
     }
   };
 
+  
   renderItem = ({item}) => {
+    var temp;
+    temp = this.state.selectedData.findIndex(data => data.item == item)
+    var q
+    if(temp != -1){
+      q = this.state.selectedData[temp].quantity
+    }
+    else{
+      q = 0
+    }
+
     return (
       // <View style={styles.itembackground}>
       //   <View>
@@ -140,32 +142,33 @@ export default class viewVendorProducts extends Component {
       <View style={styles.background}>
         <View style={styles.background1}>
           <Text style={styles.text1}>{item.productName}</Text>
-          <Text>{item.price}</Text>
+          <Text>Rs. {item.price}</Text>
         </View>
+        <View style={{flexDirection: 'row'}}>
+        <Text>in cart : {q}{'\t'}</Text>
         <TouchableOpacity
-          // onPress={() =>
-          //   alert('Item has been added', item.productName, item.price)
-          // }
           onPress={() => this.removeFromCart(item)}>
-          <Icon name="minus-circle" color="red" size={30} />
+          <Icon name="minus-circle" style={{paddingRight: 5}} color="red" size={30} />
         </TouchableOpacity>
         <TouchableOpacity
           // onPress={() =>
           //   alert('Item has been added', item.productName, item.price)
           // }
           onPress={() => this.addToCart(item)}>
-          <Icon name="plus-circle" color="green" size={30} />
+          <Icon name="plus-circle" style={{paddingRight: 5}} color="green" size={30} />
         </TouchableOpacity>
+        </View>
       </View>
     );
   };
   componentDidMount() {
     const url =
-      'http://192.168.1.6:3300/product/VendorProducts/5f19db2e7d4ebe27e8c8282b';
+      'http://192.168.1.3:3300/product/VendorProducts/'+this.props.selectedVendor.id;
 
     fetch(url)
       .then(response => response.json())
       .then(responseJson => {
+        console.log('fetched data ',responseJson)
         this.setState({
           dataSource: responseJson,
         });
@@ -180,24 +183,21 @@ export default class viewVendorProducts extends Component {
       // <SafeAreaView style={styles.container}>
       <View>
         <View style={styles.topbackground}>
-          <Row>
-            <Image source={cart} style={styles.cartImage} />
-            <Text> {this.state.count} </Text>
+            <Icon name="shopping-cart" color="white" size={50} />
+            <Text style={{fontWeight: 'bold'}}> {this.state.count} </Text>
             <TouchableOpacity
               onPress={() =>
-                this.props.navigation.push('viewCustomerOrder', {
+                this.props.navigation.push('OrderConfirm', {
                   testing: 'Helloooooo',
-                  cart: this.state.selectedData,
                 })
               }>
               <Button style={styles.button}>
                 <Text style={styles.text2}>
                   VIEW YOUR ORDER
-                  <Icon name="eye" size={16} color="black" />
+                  <Icon name="eye" size={16} color="white" />
                 </Text>
               </Button>
             </TouchableOpacity>
-          </Row>
         </View>
 
         <FlatList
@@ -224,14 +224,15 @@ const styles = StyleSheet.create({
   //   marginHorizontal: 16,
   // },
   background: {
-    backgroundColor: 'rgba(255,255,255,0.9)',
+    backgroundColor: '#cfcfcf',
     //width: '100%',
     // height: '100%',
     padding: 5,
     marginTop: 15,
     height: 50,
-    marginLeft: 5,
-    marginRight: 5,
+    marginLeft: 20,
+    marginRight: 20,
+    borderRadius: 10,
     // borderRadius: 25,
     // padding: 10,
     // borderColor: 'rgb(7, 7, 7)',
@@ -244,13 +245,20 @@ const styles = StyleSheet.create({
     marginLeft: 25,
   },
   topbackground: {
-    backgroundColor: 'rgb(159, 195, 248)',
+    backgroundColor: '#e0b743',
     marginTop: 15,
     marginLeft: 10,
     marginRight: 10,
     borderRadius: 20,
     borderColor: 'rgb(15, 17, 20)',
     height: 90,
+    padding: 10,
+    paddingLeft: 40,
+    paddingRight: 40,
+    alignContent: 'space-between',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row'
   },
   text: {
     fontSize: 16,
@@ -268,14 +276,14 @@ const styles = StyleSheet.create({
   text2: {
     fontSize: 15,
     // fontWeight: 'bold',
-    color: 'black',
+    color: 'white',
     justifyContent: 'center',
   },
   button: {
     width: 150,
-    marginTop: 15,
-    marginLeft: 150,
-    marginBottom: 50,
+    // marginTop: 15,
+    // marginLeft: 150,
+    // marginBottom: 50,
     height: 60,
     borderRadius: 40,
     justifyContent: 'space-around',
@@ -285,7 +293,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // padding: 10,
     // borderRadius: 100,
-    backgroundColor: '#ffd571',
+    backgroundColor: '#000',
   },
 
   cartImage: {
@@ -300,4 +308,32 @@ const styles = StyleSheet.create({
   },
 });
 
-// export default viewVendorProducts;
+const mapStateToProps = state => {
+  return{
+      // email: state.users.loggedUserEmail,
+      // userName: state.users.loggedUserName,
+      // contactNumber: state.users.loggedUserContactNumber,
+      // isLoading: state.ui.isLoading,
+      // userName: state.customers.loggedCustomerUserName,
+      // id: state.customers.loggedCustomerCustomerId,
+      // firstName: state.customers.loggedCustomerFirstName,
+      // lastName: state.customers.loggedCustomerLastName,
+      // email: state.customers.loggedCustomerEmail,
+      // contactNumber: state.customers.loggedCustomerContactNumber,
+      // lastReportedLocation: state.customers.loggedCustomerLastReportedLocation,
+      // deliveryAddresses: state.customers.loggedCustomerDeliveryAddresses,
+      selectedVendor: state.vendor.selectedVendor
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+      // onLogOut: (nav) => dispatch(authLogout(nav)),
+      // onLogIn: (email) => dispatch(getLoggedUser(email))
+      // onUpdateCustomer: (userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses) => dispatch (updateLoggedCustomer(userName,firstName,lastName,email,contactNo,lastReportedLocation,deliveryAddresses)),
+      //onUpdateAvatar: (image) => dispatch (updateAvatar(image)),
+      onSetCart : (cart, price) => dispatch (setCart(cart, price))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (viewVendorProducts);

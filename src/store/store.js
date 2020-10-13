@@ -6,6 +6,7 @@ import uiReducer from './reducers/ui';
 import authReducer from './reducers/auth'
 import customerReducer from './reducers/customers'
 import vendorReducer from './reducers/vendor'
+import orderReducer from './reducers/order'
 
 const rootReducer = combineReducers({
     location: locationReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     customers: customerReducer,
     vendor: vendorReducer,
+    order: orderReducer, 
 });
 
 let composeEnhancers = compose;
