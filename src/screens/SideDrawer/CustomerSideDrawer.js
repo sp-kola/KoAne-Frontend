@@ -23,6 +23,8 @@ import Maps from '../CustomerMaps/MapContainer'
 import Profile from '../Customer/CustomerProfileContainer'
 import MessagesHome from '../Messages/MessageContainer'
 import AdminContact from '../AdminContact/ChatPage'
+import SearchHome from '../Search/SearchNav'
+import Order from '../Order/OrderContainer'
 
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput'
 import DefaultButton from '../../components/UI/DefaultButton/DefaultButton'
@@ -285,11 +287,27 @@ class MyDrawer extends Component {
       />
       <Drawer.Screen
         name="Search"
-        component={VendorSearch}
+        component={SearchHome}
         options={{ 
             drawerLabel:  'Search', 
             activeTintColor:'black',
             drawerIcon: () => <Icon color='white' size={20} name='search' />,
+            color: 'white',
+            contentOptions:{
+              labelStyle:{
+              fontColor: 'white',
+              fontWeight: 'bold'
+            }
+            }  
+        }}
+      />
+      <Drawer.Screen
+        name="Order"
+        component={Order}
+        options={{ 
+            drawerLabel:  'Order', 
+            activeTintColor:'black',
+            drawerIcon: () => <Icon color='white' size={20} name='archive' />,
             color: 'white',
             contentOptions:{
               labelStyle:{

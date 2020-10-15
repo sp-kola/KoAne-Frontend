@@ -3,6 +3,8 @@ import {View, Text, StyleSheet} from 'react-native'
 import { Container, Header, Left, Body, Right, Title, Subtitle , Button, Tab, Tabs, ScrollableTab } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import io from 'socket.io-client'
+import {connect} from 'react-redux'
+import { searchVendor, getAllVendors, getCustomerOrderDetails } from '../../store/actions/index'
 
 import Home from '../Customer/CustomerHome'
 
@@ -19,6 +21,11 @@ class CustomerHome extends Component {
     });
   }
 */
+  componentDidMount() {
+    this.props.onLoadVendors()
+    this.props.onGetCustomerOrders()
+  }
+
     render(){
         return(
             <Container>
@@ -52,4 +59,25 @@ const styles = StyleSheet.create({
     }
 })
 
-export default CustomerHome;
+const mapStateToProps = state => {
+  return{
+      // bills: state.bills.bills,
+      // searchBill: state.bills.searchBill,
+      // email: state.users.loggedUserEmail,
+      // userName: state.users.loggedUserName,
+      // contactNumber: state.users.loggedUserContactNumber,
+      //vendors: this.state.vendor.vendors
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onLoadVendors: () => dispatch(getAllVendors()),
+      onGetCustomerOrders: () => dispatch(getCustomerOrderDetails())
+      //onSearchVendor: (id) => dispatch(searchVendor(id))
+      // onSearchBill: (val) => dispatch(searchBill(val)),
+      // onStopSearchBill: () => dispatch(stopSearchBill()),
+      // onLoadUserBills: (email) => dispatch(getUserBills(email))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerHome);

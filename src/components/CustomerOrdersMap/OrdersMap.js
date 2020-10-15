@@ -245,7 +245,10 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     //console.log(state)
     return{
-        orders: state.location.orders
+        orders: state.location.orders,
+        otherTypeUserLocation: state.location.otherTypeUserLocation,
+        type: state.location.type,
+        currentLocationOfUser: state.location.currentLocationOfUser,
     }
 }
 

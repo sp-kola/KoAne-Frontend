@@ -26,21 +26,36 @@ export default class viewProduct extends Component {
     };
   }
 
+  // products() {
+  //   this.state.dataSource.map((val, key) => {
+  //     return (
+  //       <View key={key}>
+  //         <Product
+  //           id={val._id}
+  //           Name={val.productName}
+  //           price={val.price}
+  //           desc={val.details}
+  //         />
+  //       </View>
+  //     );
+  //   });
+  // }
+
   componentDidMount() {
     // cmd ipconfig ipv4
-    return fetch('http://192.168.1.103:3300/product/')
+    return fetch('https://sp-kola-koane.herokuapp.com/product/')
       .then(res => res.json())
       .then(resJson => {
         this.setState({
           isLoading: false,
           dataSource: resJson,
         });
+        // const objects = this.state.dataSource;
         // for (var i = 0; i < objects.length; i++) {
         //   console.log('Item Name: ' + objects[i].productName);
         //   console.log('Item Name: ' + objects[i].details);
         //   console.log('Item Name: ' + objects[i].price);
         // }
-        // console.log(this.state.dataSource);
       })
       .catch(err => {
         console.log(err);
@@ -70,8 +85,8 @@ export default class viewProduct extends Component {
 
       return (
         <View style={styles.background}>
-          <Search />
-          <Content>{products}</Content>
+          {/* <Search /> */}
+          <View>{products}</View>
         </View>
       );
     }
@@ -111,5 +126,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 30,
   },
-  loading: {flex: 1, alignContent: 'center'},
+  loading: {
+    flex: 1,
+    alignContent: 'center',
+  },
 });

@@ -1,56 +1,14 @@
 import React, {Component} from 'react';
 
 import {Text, StyleSheet, View, Image, ScrollView} from 'react-native';
-import {Form, Item, Input, Textarea, CheckBox, Button} from 'native-base';
+import {Form, Input, Textarea, CheckBox, Button} from 'native-base';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 // import img from '../../../assets/login1.jpg';
 import DefaultButton from '../UI/DefaultButton/DefaultButton';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ImagePicker from 'react-native-image-picker';
+import {Item} from 'native-base';
 
-// export default function addProduct() {
-//   return (
-//     // <Content style={styles.container}>
-//     <View style={styles.background}>
-//       <Form>
-//         <Item>
-//           <Input placeholder="PRODUCT NAME" style={styles.input} />
-//         </Item>
-//         <Item>
-//           <Input placeholder="PRICE" style={styles.input} />
-//         </Item>
-//         <Item>
-//           <Textarea
-//             rowSpan={5}
-//             placeholder="DETAILS"
-//             style={styles.inputMultiline}
-//           />
-//         </Item>
-//         <Item>
-//           <Text style={styles.text}>CATEGORY</Text>
-//         </Item>
-//         <Item style={styles.checkbox}>
-//           <CheckBox checked={false} color="black" />
-//         </Item>
-//         <Item>
-//           <TouchableOpacity>
-//             <Button transparent>
-//               <Text style={styles.button}>+</Text>
-//             </Button>
-//           </TouchableOpacity>
-//           <Text style={styles.text}>ADD A NEW CATEGORY</Text>
-//         </Item>
-//         <Item>
-//           <Text style={styles.text}>UPLOAD AN IMAGE</Text>
-//           {/* <Icon icon="camera" style={styles.icon} /> */}
-//           {/* <Icon icon="camera" style={styles.icon} /> */}
-//         </Item>
-
-//         <DefaultButton color="black" onPress={() => alert('Product succefully added')}>Add Product</DefaultButton>
-
-//       </Form>
-//     </View>
-//   );
 const options = {
   title: 'Select Image',
   // customButtons: [{name: 'fb', title: 'Choose Photo from Facebook'}],
@@ -68,6 +26,9 @@ export default class addProduct extends Component {
       dataSource: null,
       isUploading: false,
       imgSource: null,
+      name: '',
+      price: '',
+      details: '',
     };
   }
 
@@ -94,16 +55,28 @@ export default class addProduct extends Component {
     });
   };
 
-  // return fetch('http://192.168.1.103:3300/product/create', {
-  //   method: 'POST',
-  //   headers: {
-  //     Accept: 'application/json',
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     firstParam: 'yourValue'
-  //   })
-  // });
+  addProduct = () => {
+    try {
+      return fetch('https://sp-kola-koane.herokuapp.com/product/create', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productName: this.state.name,
+          price: this.state.price,
+          details: this.state.details,
+        }),
+      })
+        .then(res => res.json())
+        .then(resJson => {
+          console.log(resJson);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   render() {
     // if (this.state.isLoading) {
@@ -115,7 +88,7 @@ export default class addProduct extends Component {
     // } else {
     let img;
     if (this.state.imgSource) {
-    img = (
+      img = (
         <Image
           source={this.state.imgSource}
           style={{width: 200, height: 200, margin: 10}}
@@ -128,16 +101,25 @@ export default class addProduct extends Component {
       <View style={styles.background}>
         <Form>
           <Item>
-            <Input placeholder="PRODUCT NAME" style={styles.input} />
+            <Input
+              placeholder="PRODUCT NAME"
+              style={styles.input}
+              onChangeText={val => this.setState({name: val})}
+            />
           </Item>
           <Item>
-            <Input placeholder="PRICE" style={styles.input} />
+            <Input
+              placeholder="PRICE"
+              style={styles.input}
+              onChangeText={val => this.setState({price: val})}
+            />
           </Item>
           <Item>
             <Textarea
               rowSpan={5}
               placeholder="DETAILS"
               style={styles.inputMultiline}
+              onChangeText={val => this.setState({details: val})}
             />
           </Item>
           <Item>
@@ -146,15 +128,15 @@ export default class addProduct extends Component {
           <Item style={styles.checkbox}>
             <CheckBox checked={false} color="black" />
           </Item>
-          <Item>
+          {/* <Item>
             <TouchableOpacity>
               <Button transparent>
                 <Icon name="add" style={styles.inputIcon} />
                 <Text style={styles.text}>ADD A NEW CATEGORY</Text>
               </Button>
             </TouchableOpacity>
-          </Item>
-          <Item>
+          </Item> */}
+          {/* <Item>
             <TouchableOpacity>
               <Button transparent>
                 <Icon name="camera-alt" style={styles.inputIcon} />
@@ -164,15 +146,14 @@ export default class addProduct extends Component {
               </Button>
             </TouchableOpacity>
           </Item>
-          <Item>{img}</Item>
-
-          <DefaultButton
-            color="black"
-            onPress={() => alert('Product succefully added')}>
-            Add Product
-          </DefaultButton>
+          <Item>{img}</Item> */}
+          <TouchableOpacity>
+            <Button color="black" onPress={() => this.addProduct}>
+              <Text>Add Product</Text>
+            </Button>
+          </TouchableOpacity>
         </Form>
-      {/* </ScrollView> */}
+        {/* </ScrollView> */}
       </View>
     );
     // }

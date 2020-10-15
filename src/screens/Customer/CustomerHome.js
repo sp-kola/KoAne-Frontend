@@ -180,74 +180,7 @@ class CustomerHome extends Component
                 />
                 
                 <View style={{flexDirection: 'row',marginLeft:'15%',marginTop:12}}>    
-                
-                <TouchableOpacity onPress={()=> this.props.navigation.push('VenderSearch')}>
-                    <View style={{ borderRadius: 15,
-                                    width: '95%',
-                                    height: 25,
-                                    paddingVertical: 18,
-                                    paddingHorizontal: 20, 
-                                    backgroundColor: 'black',
-                                    alignItems:'center',
-                                    flexDirection: 'row',
-                                    flex: 1,
-                                    justifyContent: 'center',
-                                    marginTop: 5,
-                                    justifyContent:'space-between'}}>
-                        <Text style={{ color: 'white',
-                                        fontWeight: 'bold', 
-                                        fontSize:12,
-                                        textTransform: 'uppercase',
-                                        textAlign: 'center',
-                                        flexDirection:'row'}}>search
-                                       <Feather name="search" size={15} color="white" paddingLeft={10}/> 
-                                        </Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.ShowOrder}>
-                <View style={{ borderRadius: 15,
-                                    width: '95%',
-                                    height: 25,
-                                    paddingVertical: 18,
-                                    paddingHorizontal: 20, 
-                                    backgroundColor: 'black',
-                                    alignItems:'center',
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    marginTop: 5,
-                                    justifyContent:'space-between'}}>
-                        <Text style={{ color: 'white',
-                                        fontWeight: 'bold', 
-                                        fontSize:12,
-                                        textTransform: 'uppercase',
-                                        textAlign: 'center',
-                                        flexDirection:'row'}}>order
-                                       <Feather name="shopping-bag" size={15} color="white" paddingLeft={10} /> 
-                                        </Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=> this.props.navigation.push('CustomerMap')}>
-                <View style={{ borderRadius: 15,
-                                    width: '95%',
-                                    height: 25,
-                                    paddingVertical: 18,
-                                    paddingHorizontal: 26, 
-                                    backgroundColor: 'black',
-                                    alignItems:'center',
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    marginTop: 5,
-                                    justifyContent:'space-between'}}>
-                        <Text style={{ color: 'white',
-                                        fontWeight: 'bold', 
-                                        fontSize:12,
-                                        textTransform: 'uppercase',
-                                        textAlign: 'center',
-                                        flexDirection:'row'}}>Map
-                                       <Feather name="map-marker-alt" size={15} color="white" paddingLeft={10} /> 
-                                        </Text>
-                    </View>
-                </TouchableOpacity>
+               
 
                 </View>  
 

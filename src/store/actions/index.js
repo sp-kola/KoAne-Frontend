@@ -2,4 +2,5 @@ export {shareLocation, getCustomerOrders, getCustomerLastSavedLocation} from './
 export { login,authAutoSignIn,authClearStorage,authGetToken,authLogout,authRemoveToken,authSetToken,authStoreToken } from './auth'
 export { uiStartLoading, uiStopLoading } from './ui'
 export { signup, getLoggedCustomer,customerLogIn, updateLoggedCustomer, updateAvatar } from './customers'
-export { vendorSignup, getLoggedVendor } from './vendor'
+export { vendorSignup, getLoggedVendor, updateLoggedVendor, searchVendor, getAllVendors } from './vendor'
+export {setCart, clearCart, createOrder, getCustomerOrderDetails, cancelOrder} from './order'

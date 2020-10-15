@@ -16,7 +16,7 @@ class ChatPage extends Component {
     }
 
     componentDidMount() {
-        this.socket = io("http://192.168.1.101:3300");
+        this.socket = io("https://sp-kola-koane.herokuapp.com");
         this.socket.on("chat message", msg => {
             this.setState({
                 chatMessages: [...this.state.chatMessages, msg]

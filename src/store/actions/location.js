@@ -22,7 +22,7 @@ export const shareLocation = (lat,lon) => {
                 lattitude: lat,
                 longitude: lon
             }
-            let url = 'http://192.168.1.3:3300/location/'
+            let url = 'https://sp-kola-koane.herokuapp.com/location/'
             return fetch(url,{
                 method: "POST",
                 headers:{
@@ -141,7 +141,7 @@ export const getCustomerLastSavedLocation = () =>{
             alert('No valid token found')
         })
         .then(token => {
-            let url = 'http://192.168.1.3:3300/location/user/'
+            let url = 'https://sp-kola-koane.herokuapp.com/location/user/'
             return fetch(url,{
                 method: "GET",
                 headers:{
