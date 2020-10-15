@@ -21,9 +21,9 @@ class Message extends Component {
         formData.append('sender', this.props.email);
         formData.append('receiver', this.state.email);
         formData.append('text', this.state.text);
-        const url = 'http://192.168.1.101:3300/message/'
+        const url = 'https://sp-kola-koane.herokuapp.com/message/'
         console.log(url)
-        return fetch('http://192.168.1.101:3300/message/', {
+        return fetch('https://sp-kola-koane.herokuapp.com/message/', {
             method: 'POST',
             body: formData
         }).then(response => response.json())

@@ -43,7 +43,7 @@ export default class viewProduct extends Component {
 
   componentDidMount() {
     // cmd ipconfig ipv4
-    return fetch('http://192.168.1.3:3300/product/')
+    return fetch('https://sp-kola-koane.herokuapp.com/product/')
       .then(res => res.json())
       .then(resJson => {
         this.setState({

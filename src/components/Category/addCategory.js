@@ -16,7 +16,7 @@ export default class addCategory extends Component {
 
   saveCategory = () => {
     try {
-      return fetch('http://192.168.1.3:3300/category/add', {
+      return fetch('https://sp-kola-koane.herokuapp.com/category/add', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

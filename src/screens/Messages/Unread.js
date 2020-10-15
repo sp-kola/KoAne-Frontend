@@ -13,7 +13,7 @@ class UnRead extends Component {
     renderItem = ({ item }) => {
 
         deletemessage = (msgId) => {
-            const url = 'http://192.168.1.101:3300/message/' + msgId
+            const url = 'https://sp-kola-koane.herokuapp.com/message/' + msgId
 
             fetch(url, {
                 method: "DELETE"
@@ -22,7 +22,7 @@ class UnRead extends Component {
             .catch((error) => { console.log(error) })
 
             const userId = this.props.id
-            const uri = 'http://192.168.1.101:3300/message/' + userId
+            const uri = 'https://sp-kola-koane.herokuapp.com/message/' + userId
 
             fetch(uri, {
                 method: "GET"
@@ -50,7 +50,7 @@ class UnRead extends Component {
         }
 
         updatemessage = (msgId) => {
-            const url = 'http://192.168.1.101:3300/message/' + msgId
+            const url = 'https://sp-kola-koane.herokuapp.com/message/' + msgId
             fetch(url, {
                 method: "PUT"
             })
@@ -58,7 +58,7 @@ class UnRead extends Component {
                 .catch((error) => { console.log(error) })
 
             const userId = this.props.id
-            const uri = 'http://192.168.1.101:3300/message/' + userId
+            const uri = 'https://sp-kola-koane.herokuapp.com/message/' + userId
 
             fetch(uri, {
                 method: "GET"
@@ -105,13 +105,13 @@ class UnRead extends Component {
 
     componentDidMount() {
 
-        this.socket = io("http://192.168.1.101:3300");
+        this.socket = io("https://sp-kola-koane.herokuapp.com");
         this.socket.on("custome message", msg => {
             
         });
     
         const userId = this.props.id
-        const url = 'http://192.168.1.101:3300/message/'+ userId
+        const url = 'https://sp-kola-koane.herokuapp.com/message/'+ userId
 
         fetch(url, {
             method: "GET"
@@ -152,7 +152,7 @@ class UnRead extends Component {
     }
     
     updatemessage = (msgId) => {
-        const url = 'http://192.168.1.101:3300/message/' + msgId
+        const url = 'https://sp-kola-koane.herokuapp.com/message/' + msgId
         fetch(url, {
             method: "PUT"
         })

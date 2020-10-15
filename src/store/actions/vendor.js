@@ -4,7 +4,7 @@ import { VENDOR_ADDED, CLEAR_SELECT_VENDORS, DELETE_VENDOR, GET_VENDOR, LOGIN_VE
 export const vendorSignup = (signupData,nav) => {
     return dispatch => {
         console.log(signupData);
-        fetch('http://192.168.1.3:3300/vendor/signup',{
+        fetch('https://sp-kola-koane.herokuapp.com/vendor/signup',{
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -41,7 +41,7 @@ export const getLoggedVendor = () => {
       .then(token =>{
           console.log('token from auth get',token)
   
-          let url = 'http://192.168.1.3:3300/vendor/vendor'
+          let url = 'https://sp-kola-koane.herokuapp.com/vendor/vendor'
           return fetch(url, {
             method: 'GET',
             headers: {
@@ -96,7 +96,7 @@ export const getLoggedVendor = () => {
       .then(token =>{
           console.log('token from auth get',token)
   
-          let url = 'http://192.168.1.3:3300/vendor/search/'+id
+          let url = 'https://sp-kola-koane.herokuapp.com/vendor/search/'+id
           return fetch(url, {
             method: 'GET',
             headers: {
@@ -154,7 +154,7 @@ export const getLoggedVendor = () => {
       .then(token =>{
           console.log('token from auth get',token)
   
-          let url = 'http://192.168.1.3:3300/vendor/allVendors'
+          let url = 'https://sp-kola-koane.herokuapp.com/vendor/allVendors'
           return fetch(url, {
             method: 'GET',
             headers: {
@@ -214,7 +214,7 @@ export const getLoggedVendor = () => {
     })
     .then(token =>{
         console.log('token from auth get',token)
-        let url = 'http://192.168.1.3:3300/vendor'
+        let url = 'https://sp-kola-koane.herokuapp.com/vendor'
         return fetch(url, {
             method: "PATCH",
             headers: {

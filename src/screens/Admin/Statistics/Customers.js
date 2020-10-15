@@ -10,7 +10,7 @@ class Customers extends Component {
     }
 
     componentDidMount(){
-        const url = 'http://192.168.1.101:3300/customer/count'
+        const url = 'https://sp-kola-koane.herokuapp.com/customer/count'
 
         fetch(url, {
             method: "GET"

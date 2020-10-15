@@ -15,7 +15,7 @@ export default class Search extends Component {
 
   search = () => {
     return fetch(
-      'http://192.168.1.3:3300/product/getproduct/' + this.state.text,
+      'https://sp-kola-koane.herokuapp.com/product/getproduct/' + this.state.text,
     )
       .then(res => res.json())
       .then(resJson => {

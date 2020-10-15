@@ -13,7 +13,7 @@ class Vendor extends Component {
     }
     deletevendor =() =>{
         const usermail = this.email
-        const url = 'http://192.168.1.101:3300/vendor/' + usermail
+        const url = 'https://sp-kola-koane.herokuapp.com/vendor/' + usermail
         fetch(url, {
             method: "DELETE"
         })

@@ -8,7 +8,7 @@ export const signup = (signupData,nav) => {
     return dispatch => {
         //console.log(locationData);
 
-        fetch('http://192.168.1.3:3300/customer/signup',{
+        fetch('https://sp-kola-koane.herokuapp.com/customer/signup',{
 
             method: 'POST',
             headers: {
@@ -42,7 +42,7 @@ export const getLoggedCustomer = () => {
     .then(token =>{
         console.log('token from auth get',token)
 
-        let url = 'http://192.168.1.3:3300/customer/me'
+        let url = 'https://sp-kola-koane.herokuapp.com/customer/me'
         return fetch(url, {
           method: 'GET',
           headers: {
@@ -98,7 +98,7 @@ export const updateLoggedCustomer = (userName,firstName,lastName,email,contactNo
     })
     .then(token =>{
         console.log('token from auth get',token)
-        let url = 'http://192.168.1.3:3300/customer'
+        let url = 'https://sp-kola-koane.herokuapp.com/customer'
         return fetch(url, {
             method: "PATCH",
             headers: {
@@ -149,7 +149,7 @@ export const updateAvatar = (image) => {
     })
     .then(token =>{
         console.log('token from auth get',token)
-        let url = 'http://192.168.1.101:3300/customer/upload'
+        let url = 'https://sp-kola-koane.herokuapp.com/customer/upload'
         const data = new FormData();
         data.append('name', 'avatar');
         data.append('fileData', {

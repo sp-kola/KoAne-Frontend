@@ -9,7 +9,7 @@ class  DisplayCustomer extends Component {
     }
     componentDidMount() {
         const userId = this.props.id
-        const url = 'http://192.168.1.101:3300/message/' + userId
+        const url = 'https://sp-kola-koane.herokuapp.com/message/' + userId
 
         fetch(url, {
             method: "GET"

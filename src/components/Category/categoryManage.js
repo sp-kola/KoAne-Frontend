@@ -26,7 +26,7 @@ export default class categoryManage extends Component {
 
   componentDidMount() {
     // cmd ipconfig ipv4
-    return fetch('http://192.168.1.3:3300/categories/')
+    return fetch('https://sp-kola-koane.herokuapp.com/categories/')
       .then(res => res.json())
       .then(resJson => {
         this.setState({

@@ -24,7 +24,7 @@ export const createOrder = (orderData) => {
         .then(token =>{
             console.log('token from auth get',token)
     
-            let url = 'http://192.168.1.3:3300/order/'
+            let url = 'https://sp-kola-koane.herokuapp.com/order/'
             return fetch(url, {
               method: 'POST',
               headers: {
@@ -60,7 +60,7 @@ export const getCustomerOrderDetails = () => {
         .then(token =>{
             console.log('token from auth get',token)
     
-            let url = 'http://192.168.1.3:3300/order/customerOrders'
+            let url = 'https://sp-kola-koane.herokuapp.com/order/customerOrders'
             return fetch(url, {
               method: 'GET',
               headers: {
@@ -103,7 +103,7 @@ export const cancelOrder = (id) => {
         .then(token =>{
             console.log('token from auth get',token)
     
-            let url = 'http://192.168.1.3:3300/order/delete/'+id
+            let url = 'https://sp-kola-koane.herokuapp.com/order/delete/'+id
             return fetch(url, {
               method: 'DELETE',
               headers: {

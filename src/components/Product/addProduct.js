@@ -57,7 +57,7 @@ export default class addProduct extends Component {
 
   addProduct = () => {
     try {
-      return fetch('http://192.168.1.3:3300/product/create', {
+      return fetch('https://sp-kola-koane.herokuapp.com/product/create', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

@@ -13,7 +13,7 @@ class Read extends Component {
     
     renderItem = ({ item }) => {
         deletemessage = (msgId) => {
-            const url = 'http://192.168.1.101:3300/message/' + msgId
+            const url = 'https://sp-kola-koane.herokuapp.com/message/' + msgId
 
             fetch(url, {
                 method: "DELETE"
@@ -22,7 +22,7 @@ class Read extends Component {
                 .catch((error) => { console.log(error) })
 
             const userId = this.props.id
-            const uri = 'http://192.168.1.101:3300/message/' + userId
+            const uri = 'https://sp-kola-koane.herokuapp.com/message/' + userId
 
             fetch(uri, {
                 method: "GET"
@@ -70,7 +70,7 @@ class Read extends Component {
 
     componentDidMount() {
         const userId = this.props.id
-        const url = 'http://192.168.1.101:3300/message/' + userId
+        const url = 'https://sp-kola-koane.herokuapp.com/message/' + userId
 
         fetch(url, {
             method: "GET"

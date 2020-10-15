@@ -14,9 +14,9 @@ class Customer extends Component {
     deletecustomer = () => {
         console.log(this.state.email)
         const usermail = this.state.email
-        const url = 'http://192.168.1.101:3300/customer/' + usermail
+        const url = 'https://sp-kola-koane.herokuapp.com/customer/' + usermail
         console.log(url)
-        return fetch('http://192.168.1.101:3300/customer/', {
+        return fetch('https://sp-kola-koane.herokuapp.com/customer/', {
             method: 'DELETE',
             body: usermail
         }).then(response => response.json())

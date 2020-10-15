@@ -16,7 +16,7 @@ export default class addCategory extends Component {
 
   updateCategory = () => {
     try {
-    //   return fetch('http://192.168.1.101:3300/category/update/'+this.state, {
+    //   return fetch('https://sp-kola-koane.herokuapp.com/category/update/'+this.state, {
     //     method: 'POST',
     //     headers: {
     //       Accept: 'application/json',

@@ -163,7 +163,7 @@ class viewVendorProducts extends Component {
   };
   componentDidMount() {
     const url =
-      'http://192.168.1.3:3300/product/VendorProducts/'+this.props.selectedVendor.id;
+      'https://sp-kola-koane.herokuapp.com/product/VendorProducts/'+this.props.selectedVendor.id;
 
     fetch(url)
       .then(response => response.json())
