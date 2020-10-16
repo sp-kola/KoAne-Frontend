@@ -32,6 +32,28 @@ export default class addProduct extends Component {
     };
   }
 
+  componentDidMount() {
+    // cmd ipconfig ipv4
+    return fetch('http://192.168.1.101:3300/category/')
+      .then(res => res.json())
+      .then(resJson => {
+        this.setState({
+          isLoading: false,
+          dataSource: resJson,
+        });
+        // const objects = this.state.dataSource;
+        // for (var i = 0; i < objects.length; i++) {
+        //   console.log('Item Name: ' + objects[i].productName);
+        //   console.log('Item Name: ' + objects[i].details);
+        //   console.log('Item Name: ' + objects[i].price);
+        // }
+        // console.log(this.state.dataSource);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   selectImage = () => {
     ImagePicker.showImagePicker(options, response => {
       console.log('Response = ', response);

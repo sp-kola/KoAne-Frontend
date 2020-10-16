@@ -106,13 +106,13 @@ export default class adminViewProduct extends Component {
               isAdmin={true}
             />
             {/* <View> */}
-              {/* <Right> */}
-                <TouchableOpacity>
-                  <Button transparent>
-                    <Icon name="create" style={styles.inputIcon} />
-                  </Button>
-                </TouchableOpacity>
-              {/* </Right> */}
+            {/* <Right> */}
+            <TouchableOpacity>
+              <Button transparent onPress={this.updateProduct} >
+                <Icon name="create" style={styles.inputIcon} />
+              </Button>
+            </TouchableOpacity>
+            {/* </Right> */}
             {/* </View> */}
           </View>
         );
