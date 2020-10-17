@@ -1,0 +1,80 @@
+﻿________________
+  PROJECT TITLE: කෝAne
+PROJECT GROUP DETAILS
+1.     Group number: G11
+2.     Group members:
+ 
+Name
+	Reg. Number
+	Index Number
+	Email address
+	Mobile Phone
+	(i)  S.M.K.G.A.S. Subasinghe
+	 2017/CS/172
+	 17001722 
+	abhimanisubasinghe@gmail.com
+	 0766657425
+	(ii) P. A. A. Jayasinghe
+	 2017/CS/066
+	 17000661 
+	jayasinghepumudi08@gmail.com
+	 0717325661
+	(iii) S.H.J.H Ranawake
+	 2017/CS/140
+	 17001404 
+	 sula.ranawake@gmail.com
+	 0711005756
+	(iv) T.L.S Fonseka
+	 2017/CS/044
+	 17000442
+	 limalifonseka@gmail.com
+	 0719899413
+	(v) O.A Amarasiriwardena
+	 2017/IS/008
+	 17020085
+	 amanthi1995@gmail.com
+	 0714715116
+	(vi) K.K Rajanayake
+	 2017/IS/067
+	 17020697
+	 rajanayakekk@gmail.com
+	 0702344941
+
+
+1. SOFTWARE LICENSE AGREEMENT
+   1. Acceptance
+ THIS APPLICATION IS LICENSED TO YOU ON THE CONDITION YOU ACCEPT ALL OF THE TERMS CONTAINED HEREIN. YOU ARE STRONGLY ADVISED TO READ THE LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE APPLICATION. BY INSTALLING OR USING THE APPLICATION, YOU AGREE TO BE BOUND BY THE TERMS OF THE LICENSE AGREEMENT. IF YOU DO NOT AGREE TO THESE TERMS, KO- ANE TEAM CAN NOT GRANT LICENSE OF THE APPLICATION TO YOU AND YOU SHOULD NOT INSTALL OR USE THE APPLICATION.
+   2. Ownership
+This is a license agreement and NOT an agreement for sale. KoAne team retains ownership of the application. 
+This application is protected by Sri Lankan copyrights law. 
+2. SUPPORT POLICY
+Free technical support is included with your license during the time period you use our application. Technical support is provided via phone or email and does not include on-site support. KoAne team reserves the right to limit support in cases of abuse or misuse, or to discontinue or limit the time period for free support in the future.
+       2.1      Period of Coverage
+The support period begins on the date of registration to the system. After completing the installation you are required to create an account to continue. After the installation date, your support contract will still be in effect starting on the date of registration.
+        2.2       Support Included
+* Supports provide for vendors to keep track of the daily progress via progress graphs.
+* Repairing bugs
+        2.3       Support Not Included 
+∙ Customizing the program for you. 
+∙ Updating a modified (not off-the-shelf) version of the program.
+∙ Recovering data deleted by users.
+∙ Resolving issues with your network, device or other applications. 
+∙ Repairing problems caused by you.
+3. INSTALLATION
+We offer an android application for installation. No need to set up anything. Installation includes all the settings that are required. All the data loads to the device when the device connects to the internet. 
+   3. Change to the services
+KoAne team reserves the right to change, modify, update, upgrade or discontinue the services at any time without any notification to you.
+4. SOFTWARE FREEDOM
+Users receive the freedom to run the program as you wish. 
+5. MAINTENANCE
+We will maintain your database, and apply updates for you while you keep the maintenance of your account. We will notify you at least 24 hours in advance of any scheduled maintenance.
+6. BACKUP
+We will maintain daily backups of your database for the last 30 days. Redundant backups from the last 7 days will be maintained in a separate location. For an additional fee, you may request to have your database restored from backup.
+7. PAYMENT METHOD
+We accept credit cards, bank deposits and mobile payments.
+A 10% of fee will be charged by the vendors from the monthly sales. Late payment service charges may also apply. If the late monthly payment is over Rs.2000 Ko-ane team has the authority to keep your account hold until you pay a settlement fee.
+All fees are SL rupees and subject to change without notice.  
+8. PRIVACY AND CONFIDENTIALITY
+Ko- ane team will never use any of your personal information for any purpose without your permission. We will never give or sell any user data to anyone for any reason without your explicit consent. We do not track any identifying system usage data about you.
+Any confidential information or data shared by the customer will be kept confidential by Ko- ane team. All user data files are treated as confidential.
+If a user performs any act violating the Sri Lankan laws and regulations, KoAne team will share the recorded data of the user with respected authorities.
